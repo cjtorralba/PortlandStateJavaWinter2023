@@ -1,4 +1,4 @@
-package edu.pdx.cs410J.torral2;
+package edu.pdx.cs410J.whitlock;
 
 import edu.pdx.cs410J.AirlineParser;
 import edu.pdx.cs410J.ParserException;
