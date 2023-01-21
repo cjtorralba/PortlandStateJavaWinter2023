@@ -1,6 +1,7 @@
 package edu.pdx.cs410J.torral2;
 
 import edu.pdx.cs410J.InvokeMainTestCase;
+import edu.pdx.cs410J.whitlock.Project1;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.containsString;
@@ -27,4 +28,26 @@ class Project1IT extends InvokeMainTestCase {
     assertThat(result.getTextWrittenToStandardError(), containsString("Missing command line arguments"));
   }
 
+  @Test
+    void testNotValidFlightNumber() {
+        MainMethodResult result = invokeMain("American",  "fourtwenty", "PDX", "departDate", "departTime",  "LAX", "arrivalDate", "arrivalTime");
+        assertThat(result.getTextWrittenToStandardError(), containsString("Not a valid flight number, must be a digit - ex: 458"));
+  }
+
+  @Test
+    void testTooManyArguments() {
+      MainMethodResult result = invokeMain("American", "Airlines",  "fourtwenty", "PDX", "departDate", "departeTime", "LAX", "arrivalDate", "arrivalTime");
+      assertThat(result.getTextWrittenToStandardError(), containsString("usage: java -jar target/airline-2023.0.0.jar [options] <args>\n" +
+      "args are (in this order):\n" +
+              "airline The name of the airline\n" +
+              "flightNumber The flight number\n" +
+              "src Three-letter code of departure airport\n" +
+              "depart Departure date and time (24-hour time)\n" +
+              "dest Three-letter code of arrival airport\n" +
+              "arrive Arrival date and time (24-hour time)\n" +
+              "options are (options may appear in any order):\n" +
+              "-print Prints a description of the new flight\n" +
+              "-README Prints a README for this project and exits\n" +
+              "Date and time should be in the format: mm/dd/yyyy hh:mm\n"));
+  }
 }

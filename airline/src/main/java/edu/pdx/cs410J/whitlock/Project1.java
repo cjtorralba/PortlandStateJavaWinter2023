@@ -2,6 +2,10 @@ package edu.pdx.cs410J.whitlock;
 
 import com.google.common.annotations.VisibleForTesting;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,14 +21,37 @@ public class Project1 {
     return true;
   }
 
+  /**
+   *
+   * @return
+   */
+  static boolean readTheREADME(){
+    try (
+            InputStream readme = Project1.class.getResourceAsStream("README.txt")
+    ) {
+      BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
+      String line = reader.readLine();
+    } catch (Exception e) {
+      System.err.println("Could not parse README file");
+      return false;
+    }
+    return true;
+  }
+
+
+
+
+
  /*
   command line arguments go in this order:
     airline          name of airline
     flightnumber    the flight number
     src               three letter code of departure
-    depart            departure date and time (24 hour time)
+    departDate            departure date and time (24 hour time)
+    departTime
     dest              three letter code of arrival airport
-    arrive             arrival date and time (24 hour format)
+    arriveDate             arrival date and time (24 hour format)
+    arriveTime
 
     optiona are
       -print      prints a description of the new flight
@@ -43,36 +70,26 @@ public class Project1 {
     ArrayList<String> list = new ArrayList<>(List.of(args));
 
     if(list.contains("-README")) {
-      System.out.println("usage: java -jar target/airline-2023.0.0.jar [options] <args>" +
-              "args are (in this order):" +
-              "airline The name of the airline" +
-              "flightNumber The flight number" +
-              "src Three-letter code of departure airport" +
-              "depart Departure date and time (24-hour time)" +
-              "dest Three-letter code of arrival airport" +
-              "arrive Arrival date and time (24-hour time)" +
-              "options are (options may appear in any order):" +
-              "-print Prints a description of the new flight" +
-              "-README Prints a README for this project and exits" +
-              "Date and time should be in the format: mm/dd/yyyy hh:mm");
+      System.out.println();
+      return;
     }
     boolean print = list.contains("-print");
     list.remove("-print");
 
     //not enough arguments
-    if(list.size() != 6) {
-      System.err.println("Not enough arguments, args are (in this order):" +
-              "airline The name of the airline" +
-              "flightNumber The flight number" +
-              "src Three-letter code of departure airport" +
-              "depart Departure date and time (24-hour time)" +
-              "dest Three-letter code of arrival airport" +
-              "arrive Arrival date and time (24-hour time)" +
-              "options are (options may appear in any order):" +
-              "-print Prints a description of the new flight" +
-              "-README Prints a README for this project and exits" +
-              "Date and time should be in the format: mm/dd/yyyy hh:mm" +
-              "\nCommand line usage: java -jar target/airline-2023.0.0.jar [options] <args>");
+    if(list.size() != 8) {
+      System.err.println("usage: java -jar target/airline-2023.0.0.jar [options] <args>\n" +
+              "args are (in this order):\n" +
+              "airline The name of the airline\n" +
+              "flightNumber The flight number\n" +
+              "src Three-letter code of departure airport\n" +
+              "depart Departure date and time (24-hour time)\n" +
+              "dest Three-letter code of arrival airport\n" +
+              "arrive Arrival date and time (24-hour time)\n" +
+              "options are (options may appear in any order):\n" +
+              "-print Prints a description of the new flight\n" +
+              "-README Prints a README for this project and exits\n" +
+              "Date and time should be in the format: mm/dd/yyyy hh:mm\n");
       return;
     }
 
@@ -97,19 +114,20 @@ public class Project1 {
     }
 
     String src = list.get(2);
-    String departure = list.get(3);
-    String destination = list.get(4);
-    String arrival = list.get(5);
+    String departureDate = list.get(3);
+    String departureTime = list.get(4);
+    String destination = list.get(5);
+    String arrivalDate = list.get(6);
+    String arrivalTime = list.get(7);
 
 
 
 
-    flight = new Flight(flightNumber, src, departure, destination, arrival);
+    flight = new Flight(flightNumber, src, departureDate + " " + departureTime, destination, arrivalDate + " " + arrivalTime);
     airline = new Airline(airlineName, new ArrayList<Flight>(List.of(flight)));
 
     if(print){
       System.out.println(flight.toString());
     }
-
   }
 }

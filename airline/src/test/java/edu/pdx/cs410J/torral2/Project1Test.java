@@ -1,5 +1,6 @@
 package edu.pdx.cs410J.torral2;
 
+import edu.pdx.cs410J.whitlock.Project1;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
