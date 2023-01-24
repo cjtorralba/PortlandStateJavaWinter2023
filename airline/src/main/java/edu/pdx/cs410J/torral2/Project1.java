@@ -7,33 +7,30 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * The main class for the CS410J airline Project
  */
 public class Project1 {
 
-
   /**
    *
-   * @param dateAndTime
    * @return
    */
   @VisibleForTesting
-  static boolean isValidDateAndTime(String dateAndTime) {
-    return true;
-  }
-
-  /**
-   *
-   * @return
-   */
   static boolean readTheREADME(){
     try (
             InputStream readme = Project1.class.getResourceAsStream("README.txt")
     ) {
       BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
       String line = reader.readLine();
+      System.out.printf(line);
+      while(line != null){
+        line = reader.readLine();
+        System.out.println(line);
+      }
     } catch (Exception e) {
       System.err.println("Could not parse README file");
       return false;
@@ -75,6 +72,11 @@ public class Project1 {
 
     //arraylist or command line arguments
     ArrayList<String> list = new ArrayList<>(List.of(args));
+
+    if(list.size() == 0) {
+      System.err.println("Missing command line arguments");
+      return;
+    }
 
     if(list.contains("-README")) {
       readTheREADME();
@@ -130,11 +132,35 @@ public class Project1 {
 
 
 
+
+    boolean isArrivalTimeValid = arrivalTime.matches("\\d?\\d:\\d?\\d");
+    boolean isArrivalDateValid = arrivalDate.matches("\\d?\\d/\\d?\\d/\\d{4}");
+    boolean isDepartureTimeValid = departureTime.matches("\\d?\\d:\\d?\\d");
+    boolean isDepartureDateValid = departureDate.matches("\\d?\\d/\\d?\\d/\\d{4}");
+
+    if(!isArrivalDateValid){
+      System.err.println("Format for arrival date is invalid, you entered " + arrivalDate + "\nPlease use correct format, example: 12/31/2022 or 1/2/2022");
+      return;
+    }
+    if(!isArrivalTimeValid){
+      System.err.println("Format for arrival time is invalid, you entered " + arrivalTime + "\nPlease use correct format, example: 10:32 or 1:06");
+      return;
+    }
+    if(!isDepartureDateValid) {
+      System.err.println("Format for departure date is invalid, you entered " + departureDate + "\nPlease use correct format, example: 12/31/2022 or 1/2/2022");
+      return;
+    }
+    if(!isDepartureTimeValid){
+      System.err.println("Format for departure time is invalid, you entered " + departureTime + "\nPlease use correct format, example: 10:32 or 1:06");
+      return;
+    }
+
+
     flight = new Flight(flightNumber, src, departureDate + " " + departureTime, destination, arrivalDate + " " + arrivalTime);
     airline = new Airline(airlineName, new ArrayList<Flight>(List.of(flight)));
 
     if(print){
-      System.out.println(flight.toString());
+      System.out.println(flight);
     }
 
     airline.addFlight(flight);
