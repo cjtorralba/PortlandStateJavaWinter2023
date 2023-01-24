@@ -1,6 +1,5 @@
 package edu.pdx.cs410J.torral2;
 
-import edu.pdx.cs410J.whitlock.Project1;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
@@ -26,7 +25,7 @@ class Project1Test {
       assertThat(readme, not(nullValue()));
       BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
       String line = reader.readLine();
-      assertThat(line, containsString("This is a README file!"));
+      assertThat(line, containsString("usage: java"));
     }
   }
 }

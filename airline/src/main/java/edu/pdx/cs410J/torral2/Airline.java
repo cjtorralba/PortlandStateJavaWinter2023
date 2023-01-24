@@ -1,4 +1,4 @@
-package edu.pdx.cs410J.whitlock;
+package edu.pdx.cs410J.torral2;
 
 import edu.pdx.cs410J.AbstractAirline;
 

@@ -1,7 +1,6 @@
 package edu.pdx.cs410J.torral2;
 
 import edu.pdx.cs410J.InvokeMainTestCase;
-import edu.pdx.cs410J.whitlock.Project1;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.containsString;

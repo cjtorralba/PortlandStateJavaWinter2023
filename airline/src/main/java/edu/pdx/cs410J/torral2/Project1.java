@@ -1,14 +1,11 @@
-package edu.pdx.cs410J.whitlock;
+package edu.pdx.cs410J.torral2;
 
 import com.google.common.annotations.VisibleForTesting;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -16,6 +13,12 @@ import java.util.List;
  */
 public class Project1 {
 
+
+  /**
+   *
+   * @param dateAndTime
+   * @return
+   */
   @VisibleForTesting
   static boolean isValidDateAndTime(String dateAndTime) {
     return true;
@@ -60,6 +63,10 @@ public class Project1 {
       Date and time format:  mm/dd/yyyy HH:mm
   */
 
+  /**
+   *
+   * @param args
+   */
   public static void main(String[] args) {
 
     Flight flight;
@@ -70,7 +77,7 @@ public class Project1 {
     ArrayList<String> list = new ArrayList<>(List.of(args));
 
     if(list.contains("-README")) {
-      System.out.println();
+      readTheREADME();
       return;
     }
     boolean print = list.contains("-print");
@@ -129,5 +136,7 @@ public class Project1 {
     if(print){
       System.out.println(flight.toString());
     }
+
+    airline.addFlight(flight);
   }
 }

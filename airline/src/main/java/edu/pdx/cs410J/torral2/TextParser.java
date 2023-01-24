@@ -1,11 +1,10 @@
-package edu.pdx.cs410J.whitlock;
+package edu.pdx.cs410J.torral2;
 
 import edu.pdx.cs410J.AirlineParser;
 import edu.pdx.cs410J.ParserException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.Reader;
 
 /**

@@ -1,9 +1,6 @@
 package edu.pdx.cs410J.torral2;
 
 import edu.pdx.cs410J.ParserException;
-import edu.pdx.cs410J.whitlock.Airline;
-import edu.pdx.cs410J.whitlock.TextDumper;
-import edu.pdx.cs410J.whitlock.TextParser;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 

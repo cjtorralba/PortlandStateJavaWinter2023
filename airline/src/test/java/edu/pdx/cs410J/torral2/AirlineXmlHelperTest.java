@@ -1,6 +1,5 @@
 package edu.pdx.cs410J.torral2;
 
-import edu.pdx.cs410J.whitlock.AirlineXmlHelper;
 import org.junit.jupiter.api.Test;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
