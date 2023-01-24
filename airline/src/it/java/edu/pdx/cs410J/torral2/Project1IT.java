@@ -80,27 +80,27 @@ class Project1IT extends InvokeMainTestCase {
     void testIncorrectArrivalDateFormat() {
       String arrivalDate = "123/23/2023";
       MainMethodResult result = invokeMain("American Airlines", "123", "PDX", "10/23/2022", "12:40", "LAX", arrivalDate, "12:42");
-        assertThat(result.getTextWrittenToStandardError(), containsString("Format for arrival date is invalid, you entered " + arrivalDate + "\nPlease use correct format, example: 12/31/2022 or 1/2/2022"));
+        assertThat(result.getTextWrittenToStandardError(), containsString("Format for arrival date is invalid, you entered " + arrivalDate + ". Please use correct format, example: 12/31/2022 or 1/2/2022"));
     }
     @Test
     void testIncorrectArrivalTimeFormat() {
       String arrivalTime = "123:32";
       MainMethodResult result = invokeMain("American Airlines", "123", "PDX", "10/23/2022", "12:40", "LAX", "11/23/2022", arrivalTime);
-      assertThat(result.getTextWrittenToStandardError(), containsString("Format for arrival date is invalid, you entered " + arrivalTime + "\nPlease use correct format, example: 12/31/2022 or 1/2/2022"));
+      assertThat(result.getTextWrittenToStandardError(), containsString("Format for arrival time is invalid, you entered " + arrivalTime + ". Please use correct format, example: 10:32 or 1:06"));
     }
 
     @Test
     void testIncorrectDepartureDateFormat() {
       String departureDate = "123/23/2023";
-      MainMethodResult result = invokeMain("American Airlines", "123", "PDX", "10/23/2022", "12:40", "LAX", departureDate, "12:42");
-      assertThat(result.getTextWrittenToStandardError(), containsString("Format for arrival date is invalid, you entered " + departureDate + "\nPlease use correct format, example: 12/31/2022 or 1/2/2022"));
+      MainMethodResult result = invokeMain("American Airlines", "123", "PDX", departureDate, "12:40", "LAX", "10/23/2022", "12:42");
+      assertThat(result.getTextWrittenToStandardError(), containsString("Format for departure date is invalid, you entered " + departureDate + ". Please use correct format, example: 12/31/2022 or 1/2/2022"));
     }
 
     @Test
     void testIncorrectDepartureTimeFormat() {
       String departureTime = "12:111";
-      MainMethodResult result = invokeMain("American Airlines", "123", "PDX", "10/23/2022", "12:40", "LAX", "12/23/202", departureTime);
-      assertThat(result.getTextWrittenToStandardError(), containsString("Format for arrival date is invalid, you entered " + departureTime + "\nPlease use correct format, example: 12/31/2022 or 1/2/2022"));
+      MainMethodResult result = invokeMain("American Airlines", "123", "PDX", "10/23/2022", departureTime, "LAX", "12/23/2022", "12:45");
+      assertThat(result.getTextWrittenToStandardError(), containsString("Format for departure time is invalid, you entered " + departureTime + ". Please use correct format, example: 10:32 or 1:06"));
 
     }
 

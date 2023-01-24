@@ -139,19 +139,19 @@ public class Project1 {
     boolean isDepartureDateValid = departureDate.matches("\\d?\\d/\\d?\\d/\\d{4}");
 
     if(!isArrivalDateValid){
-      System.err.println("Format for arrival date is invalid, you entered " + arrivalDate + "\nPlease use correct format, example: 12/31/2022 or 1/2/2022");
+      System.err.println("Format for arrival date is invalid, you entered " + arrivalDate + ". Please use correct format, example: 12/31/2022 or 1/2/2022");
       return;
     }
     if(!isArrivalTimeValid){
-      System.err.println("Format for arrival time is invalid, you entered " + arrivalTime + "\nPlease use correct format, example: 10:32 or 1:06");
+      System.err.println("Format for arrival time is invalid, you entered " + arrivalTime + ". Please use correct format, example: 10:32 or 1:06");
       return;
     }
     if(!isDepartureDateValid) {
-      System.err.println("Format for departure date is invalid, you entered " + departureDate + "\nPlease use correct format, example: 12/31/2022 or 1/2/2022");
+      System.err.println("Format for departure date is invalid, you entered " + departureDate + ". Please use correct format, example: 12/31/2022 or 1/2/2022");
       return;
     }
     if(!isDepartureTimeValid){
-      System.err.println("Format for departure time is invalid, you entered " + departureTime + "\nPlease use correct format, example: 10:32 or 1:06");
+      System.err.println("Format for departure time is invalid, you entered " + departureTime + ". Please use correct format, example: 10:32 or 1:06");
       return;
     }
 
