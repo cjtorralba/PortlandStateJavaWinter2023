@@ -120,6 +120,6 @@ public class Flight extends AbstractFlight {
 
   @Override
   public String getArrivalString() {
-    return this.arriveDate + " " + this.departTime;
+    return this.arriveDate + " " + this.arriveTime;
   }
 }
