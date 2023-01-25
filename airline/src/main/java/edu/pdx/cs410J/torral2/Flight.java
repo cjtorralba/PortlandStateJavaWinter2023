@@ -75,16 +75,16 @@ public class Flight extends AbstractFlight {
     this.src = src;
 
     if(!Project1.validDateFormat(departDate))
-      throw new IllegalArgumentException("Invalid departure date provided\n.");
+      throw new IllegalArgumentException("Invalid departure date provided.");
 
     if(!Project1.validDateFormat(arriveDate))
-      throw new IllegalArgumentException("Invalid arrival date provided\n.");
+      throw new IllegalArgumentException("Invalid arrival date provided.");
 
     if(!Project1.validTimeFormat(departTime))
-      throw new IllegalArgumentException("Invalid departure time provided.\n");
+      throw new IllegalArgumentException("Invalid departure time provided.");
 
     if(!Project1.validTimeFormat(arriveTime))
-      throw new IllegalArgumentException("Invalid arrival time provided.\n");
+      throw new IllegalArgumentException("Invalid arrival time provided.");
 
 
     this.departDate = departDate;
