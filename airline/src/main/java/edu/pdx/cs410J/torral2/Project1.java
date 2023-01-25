@@ -28,8 +28,8 @@ public class Project1 {
       String line = reader.readLine();
       System.out.printf(line);
       while(line != null){
-        line = reader.readLine();
         System.out.println(line);
+        line = reader.readLine();
       }
     } catch (Exception e) {
       System.err.println("Could not parse README file");
