@@ -26,7 +26,6 @@ public class Project1 {
     ) {
       BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
       String line = reader.readLine();
-      System.out.printf(line);
       while(line != null){
         System.out.println(line);
         line = reader.readLine();
