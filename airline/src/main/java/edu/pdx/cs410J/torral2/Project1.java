@@ -38,27 +38,17 @@ public class Project1 {
     return true;
   }
 
+ @VisibleForTesting
+  static boolean validTimeFormat(String time) {
+    return time.matches("\\d?\\d:\\d?\\d");
+
+ }
 
 
-
-
- /*
-  command line arguments go in this order:
-    airline          name of airline
-    flightnumber    the flight number
-    src               three letter code of departure
-    departDate            departure date and time (24 hour time)
-    departTime
-    dest              three letter code of arrival airport
-    arriveDate             arrival date and time (24 hour format)
-    arriveTime
-
-    optiona are
-      -print      prints a description of the new flight
-      -README     Prints a README for this project and exits
-
-      Date and time format:  mm/dd/yyyy HH:mm
-  */
+  @VisibleForTesting
+ static boolean validDateFormat(String date) {
+    return date.matches("\\d?\\d/\\d?\\d/\\d{4}");
+ }
 
   /**
    *
@@ -102,16 +92,6 @@ public class Project1 {
       return;
     }
 
-      /*
-      date and time format (mm/dd/yyyy hh:mm)
-      1 - name of airline
-      2 - flight number
-      3 - three letter departure code (src)
-      4 - departure date and time
-      5 - destination three letter code of arrival
-      6 - arrival date and time (24 hour time)
-       */
-
     String airlineName = list.get(0);
 
     int flightNumber = 0;
@@ -130,33 +110,32 @@ public class Project1 {
     String arrivalTime = list.get(7);
 
 
-
-
-
-    boolean isArrivalTimeValid = arrivalTime.matches("\\d?\\d:\\d?\\d");
-    boolean isArrivalDateValid = arrivalDate.matches("\\d?\\d/\\d?\\d/\\d{4}");
-    boolean isDepartureTimeValid = departureTime.matches("\\d?\\d:\\d?\\d");
-    boolean isDepartureDateValid = departureDate.matches("\\d?\\d/\\d?\\d/\\d{4}");
-
-    if(!isArrivalDateValid){
+    //testing for valid format for arrival date
+    if(!validDateFormat(arrivalDate)){
       System.err.println("Format for arrival date is invalid, you entered " + arrivalDate + ". Please use correct format, example: 12/31/2022 or 1/2/2022");
       return;
     }
-    if(!isArrivalTimeValid){
+
+    //checking for valid arrival time
+    if(!validTimeFormat(arrivalTime)){
       System.err.println("Format for arrival time is invalid, you entered " + arrivalTime + ". Please use correct format, example: 10:32 or 1:06");
       return;
     }
-    if(!isDepartureDateValid) {
+
+    //testubg fir vakud departure date format
+    if(!validDateFormat(departureDate)) {
       System.err.println("Format for departure date is invalid, you entered " + departureDate + ". Please use correct format, example: 12/31/2022 or 1/2/2022");
       return;
     }
-    if(!isDepartureTimeValid){
+
+    //testing for valid departure time format
+    if(!validTimeFormat(departureTime)){
       System.err.println("Format for departure time is invalid, you entered " + departureTime + ". Please use correct format, example: 10:32 or 1:06");
       return;
     }
 
 
-    flight = new Flight(flightNumber, src, departureDate + " " + departureTime, destination, arrivalDate + " " + arrivalTime);
+    flight = new Flight(flightNumber, src, departureDate, departureTime, destination, arrivalDate, arrivalTime);
     airline = new Airline(airlineName, new ArrayList<Flight>(List.of(flight)));
 
     if(print){

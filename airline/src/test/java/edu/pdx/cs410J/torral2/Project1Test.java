@@ -28,4 +28,13 @@ class Project1Test {
       assertThat(line, containsString("usage: java"));
     }
   }
+
+
+  @Test
+  void getFlightNumberTest() {
+
+ // Flight testFlight = new Flight();
+
+
+  }
 }
