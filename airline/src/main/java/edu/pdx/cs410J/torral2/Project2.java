@@ -2,9 +2,7 @@ package edu.pdx.cs410J.torral2;
 
 import com.google.common.annotations.VisibleForTesting;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,10 +53,14 @@ public class Project2 {
 
     Flight flight;
     Airline airline;
+    TextParser textParser;
+    TextDumper textdumper;
 
 
     //arraylist or command line arguments
     ArrayList<String> list = new ArrayList<>(List.of(args));
+
+
 
     if(list.size() == 0) {
       System.err.println("Missing command line arguments");
@@ -71,6 +73,17 @@ public class Project2 {
     }
     boolean print = list.contains("-print");
     list.remove("-print");
+
+    boolean writeToFile = list.contains("-textFile");
+    String fileName = null;
+
+    if(writeToFile) {
+      fileName = list.get(list.indexOf("-textFile") + 1);
+      list.remove("-textFile");
+      list.remove(fileName);
+      //System.out.println("File name: " + fileName);
+    }
+
 
     //not enough arguments
     if(list.size() != 8) {
@@ -86,7 +99,7 @@ public class Project2 {
               "-print Prints a description of the new flight\n" +
               "-README Prints a README for this project and exits\n" +
               "Date and time should be in the format: mm/dd/yyyy hh:mm\n");
-      return;
+//      return;
     }
 
     String airlineName = list.get(0);
@@ -99,6 +112,8 @@ public class Project2 {
       return;
     }
 
+
+   //Aquiring information from command line
     String src = list.get(2);
     String departureDate = list.get(3);
     String departureTime = list.get(4);
@@ -119,7 +134,7 @@ public class Project2 {
       return;
     }
 
-    //testubg fir vakud departure date format
+    //testing for valid departure date format
     if(!validDateFormat(departureDate)) {
       System.err.println("Format for departure date is invalid, you entered " + departureDate + ". Please use correct format, example: 12/31/2022 or 1/2/2022");
       return;
@@ -134,6 +149,46 @@ public class Project2 {
 
     flight = new Flight(flightNumber, src, departureDate, departureTime, destination, arrivalDate, arrivalTime);
     airline = new Airline(airlineName, new ArrayList<Flight>(List.of(flight)));
+
+
+    // Reading/writing airline to file.
+    File file = null;
+    PrintWriter printWriter = null;
+
+    FileReader fileReader = null;
+
+    file = new File(fileName);
+
+
+    /*
+     * Creating file object with location 'fileName'
+     */
+    try {
+      file.createNewFile();
+    } catch (IOException e){
+      System.err.println("There was an issue creating the file in location: " + fileName);
+    }
+
+    /*
+     * Creating printWriter
+     */
+    try {
+      printWriter = new PrintWriter(file);
+    } catch (FileNotFoundException fnf) {
+      System.err.println("File could not be created, please try re-running the program with a different path.");
+      return;
+    }
+
+    try {
+      fileReader = new FileReader(file);
+    }catch (FileNotFoundException fnf){
+      System.err.println("File could not be located.");
+      return;
+    }
+
+
+
+
 
     if(print){
       System.out.println(flight);
