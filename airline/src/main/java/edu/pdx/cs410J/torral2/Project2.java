@@ -7,13 +7,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
 
 /**
  * The main class for the CS410J airline Project
  */
-public class Project1 {
+public class Project2 {
 
   /**
    *
@@ -22,7 +20,7 @@ public class Project1 {
   @VisibleForTesting
   static boolean readTheREADME(){
     try (
-            InputStream readme = Project1.class.getResourceAsStream("README.txt")
+            InputStream readme = Project2.class.getResourceAsStream("README.txt")
     ) {
       BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
       String line = reader.readLine();
