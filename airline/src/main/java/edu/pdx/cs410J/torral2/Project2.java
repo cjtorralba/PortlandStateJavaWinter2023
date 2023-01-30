@@ -161,10 +161,13 @@ public class Project2 {
     /*
      * Creating file object with location 'fileName'
      */
-    try {
-      file.createNewFile();
-    } catch (IOException e){
-      System.err.println("There was an issue creating the file in location: " + fileName);
+    if(!file.exists()) {
+      try {
+        file.createNewFile();
+        System.out.println("Created file");
+      } catch (IOException e) {
+        System.err.println("There was an issue creating the file in location: " + fileName);
+      }
     }
 
     /*
