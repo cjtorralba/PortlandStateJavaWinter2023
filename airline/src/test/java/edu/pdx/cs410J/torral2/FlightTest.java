@@ -65,4 +65,7 @@ public class FlightTest {
       Flight flight = new Flight(testFlightNumber, "PDX", "10/23/2923", "12:42", "LAX", "12/23/2003", "3:03");
       assertThat(flight.getNumber(), equalTo(testFlightNumber));
   }
+
+
+
 }

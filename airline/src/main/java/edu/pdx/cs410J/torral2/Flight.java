@@ -1,5 +1,6 @@
 package edu.pdx.cs410J.torral2;
 
+import com.google.common.annotations.VisibleForTesting;
 import edu.pdx.cs410J.AbstractFlight;
 
 
@@ -95,6 +96,10 @@ public class Flight extends AbstractFlight {
     this.arriveDate = arriveDate;
     this.arriveTime = arriveTime;
 
+  }
+
+  public String getFlightAsTextFileString() {
+    return this.getNumber() + " | " + this.getDepartureString() + " | " + this.getDestination() + " | " + this.getArrivalString();
   }
 
 

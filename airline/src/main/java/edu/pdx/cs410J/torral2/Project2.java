@@ -12,9 +12,10 @@ import java.util.List;
 public class Project2 {
 
   /**
+   * Printer
    *
-   * @return
    */
+
   @VisibleForTesting
   static boolean readTheREADME(){
     try (
@@ -59,6 +60,8 @@ public class Project2 {
 
     //arraylist or command line arguments
     ArrayList<String> list = new ArrayList<>(List.of(args));
+
+
 
 
 
@@ -146,11 +149,6 @@ public class Project2 {
       return;
     }
 
-
-    flight = new Flight(flightNumber, src, departureDate, departureTime, destination, arrivalDate, arrivalTime);
-    airline = new Airline(airlineName, new ArrayList<Flight>(List.of(flight)));
-
-
     // Reading/writing airline to file.
     File file = null;
     PrintWriter printWriter = null;
@@ -174,6 +172,7 @@ public class Project2 {
      */
     try {
       printWriter = new PrintWriter(file);
+
     } catch (FileNotFoundException fnf) {
       System.err.println("File could not be created, please try re-running the program with a different path.");
       return;
@@ -187,13 +186,18 @@ public class Project2 {
     }
 
 
+    // First we will write all the contents of the flight to the textfile
+    // Then we will add all flights in the file to the airline
+    if(writeToFile){
+       // writeToFile(printWriter, flightNumber, src, departureDate, departureTime, destination, arrivalDate, arrivalTime);
 
-
-
-    if(print){
-      System.out.println(flight);
     }
 
-    airline.addFlight(flight);
+    // Populating the Airline with flights from the textFile
+  airline = null;
+   if(print) {
+     System.out.println(airline);
+   }
+
   }
 }

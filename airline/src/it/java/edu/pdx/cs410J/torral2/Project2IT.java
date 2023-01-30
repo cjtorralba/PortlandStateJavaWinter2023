@@ -103,4 +103,11 @@ class Project2IT extends InvokeMainTestCase {
 
     }
 
+
+  @Test
+  void testWriteToFile() {
+    MainMethodResult result = invokeMain("-textFile", "outputFile", "737", "PDX", "10/23/2923", "12:42", "LAX", "12/23/2003", "3:03");
+
+
+  }
 }
