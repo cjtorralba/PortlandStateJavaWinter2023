@@ -47,6 +47,11 @@ public class Project2 {
     return date.matches("\\d?\\d/\\d?\\d/\\d{4}");
  }
 
+ @VisibleForTesting
+ static boolean validAirportCode(String code) {
+    return code.matches("[a-zA-Z]{3}");
+ }
+
   /**
    *
    * @param args
@@ -90,6 +95,7 @@ public class Project2 {
 
 
     //not enough arguments
+    /*
     if(list.size() != 8) {
       System.err.println("usage: java -jar target/airline-2023.0.0.jar [options] <args>\n" +
               "args are (in this order):\n" +
@@ -103,8 +109,10 @@ public class Project2 {
               "-print Prints a description of the new flight\n" +
               "-README Prints a README for this project and exits\n" +
               "Date and time should be in the format: mm/dd/yyyy hh:mm\n");
-//      return;
+      return;
     }
+
+     */
 
     String airlineName = list.get(0);
 
@@ -154,14 +162,11 @@ public class Project2 {
     airline = new Airline(airlineName);
     flight = new Flight(flightNumber, src, departureDate, departureTime, destination, arrivalDate, arrivalTime);
 
-    //Adding current flight to airline
-    airline.addFlight(flight);
-
 
 
     // Reading/writing airline to file.
     File file = null;
-    PrintWriter printWriter = null;
+    FileWriter fileWriter = null;
 
     FileReader fileReader = null;
 
@@ -180,17 +185,6 @@ public class Project2 {
       }
     }
 
-    /*
-     * Creating printWriter
-     */
-    try {
-      printWriter = new PrintWriter(file);
-      textdumper = new TextDumper(printWriter);
-      textdumper.dump(airline);
-    } catch (FileNotFoundException fnf) {
-      System.err.println("File could not be created, please try re-running the program with a different path.");
-      return;
-    }
 
     try {
       fileReader = new FileReader(file);
@@ -198,7 +192,7 @@ public class Project2 {
       try {
         airline = textParser.parse();
       } catch (ParserException parse) {
-        System.err.println("Error processing text file.");
+        System.err.println(parse.getMessage());
         return;
       }
 
@@ -206,6 +200,25 @@ public class Project2 {
       System.err.println("File could not be located.");
       return;
     }
+
+    System.out.println(airline.getFlights());
+
+
+    airline.addFlight(flight);
+
+    System.out.println(airline.getFlights());
+    /*
+     * Creating printWriter
+     */
+    try {
+      fileWriter = new FileWriter(file);
+      textdumper = new TextDumper(fileWriter);
+      textdumper.dump(airline);
+    } catch (IOException fnf) {
+      System.err.println("File could not be created, please try re-running the program with a different path.");
+      return;
+    }
+
 
 
     // First we will write all the contents of the flight to the textfile
