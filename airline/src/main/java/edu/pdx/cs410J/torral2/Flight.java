@@ -99,7 +99,7 @@ public class Flight extends AbstractFlight {
   }
 
   public String getFlightAsTextFileString() {
-    return this.getNumber() + " | " + this.getDepartureStringForTextFile() + " | " + this.getDestination() + " | " + this.getArrivalStringForTextFile();
+    return this.getNumber() + " | " + this.src + " | " + this.getDepartureStringForTextFile() + " | " + this.getDestination() + " | " + this.getArrivalStringForTextFile();
   }
 
 

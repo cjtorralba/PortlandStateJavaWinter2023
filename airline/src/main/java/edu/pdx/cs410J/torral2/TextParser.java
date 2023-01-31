@@ -30,7 +30,7 @@ public class TextParser implements AirlineParser<Airline> {
       // Aquiring very first airline from the text file to make sure all following airline names must be the same
       String textFileString = br.readLine();
       textFileString = textFileString.replaceAll("\\s", "");
-      String[] listOfWords = textFileString.split("\n");
+      String[] listOfWords = textFileString.split("\\|");
 
       String airlineNmae = listOfWords[0];
 
@@ -60,14 +60,30 @@ public class TextParser implements AirlineParser<Airline> {
         // Removing all spaces from string
         textFileString = textFileString.replaceAll("\\s", "");
 
-        // Parsing string and putting each individual segment into an array, string is deliminated by '|"
+        // Parsing string and putting each individual segment into an array, string is deliminated by '|'
          listOfWords = textFileString.split("\\|");
+
+         if(airline.getName() != )
 
         // Check to make sure string is not null
         if (textFileString != null) {
           // Creating flight with current contents
-          for (String s : listOfWords)
-            System.out.println(s);
+          try{
+            flightNumber = Integer.parseInt(listOfWords[1]);
+          } catch (NumberFormatException NFE) {
+            throw new ParserException("Issue parsing flight number from text file.");
+          }
+
+          src = listOfWords[2];
+          departureDate = listOfWords[3];
+          departureTime = listOfWords[4];
+          destination = listOfWords[5];
+          arrivalDate = listOfWords[6];
+          arrivalTime = listOfWords[7];
+
+          flight = new Flight(flightNumber, src, departureDate, departureTime, destination, arrivalDate, arrivalTime);
+
+
         }
       }
 
