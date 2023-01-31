@@ -1,6 +1,7 @@
 package edu.pdx.cs410J.torral2;
 
 import com.google.common.annotations.VisibleForTesting;
+import edu.pdx.cs410J.ParserException;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -149,6 +150,15 @@ public class Project2 {
       return;
     }
 
+    //adding current flight to airline
+    airline = new Airline(airlineName);
+    flight = new Flight(flightNumber, src, departureDate, departureTime, destination, arrivalDate, arrivalTime);
+
+    //Adding current flight to airline
+    airline.addFlight(flight);
+
+
+
     // Reading/writing airline to file.
     File file = null;
     PrintWriter printWriter = null;
@@ -175,7 +185,8 @@ public class Project2 {
      */
     try {
       printWriter = new PrintWriter(file);
-
+      textdumper = new TextDumper(printWriter);
+      textdumper.dump(airline);
     } catch (FileNotFoundException fnf) {
       System.err.println("File could not be created, please try re-running the program with a different path.");
       return;
@@ -183,6 +194,14 @@ public class Project2 {
 
     try {
       fileReader = new FileReader(file);
+      textParser = new TextParser(fileReader);
+      try {
+        airline = textParser.parse();
+      } catch (ParserException parse) {
+        System.err.println("Error processing text file.");
+        return;
+      }
+
     }catch (FileNotFoundException fnf){
       System.err.println("File could not be located.");
       return;

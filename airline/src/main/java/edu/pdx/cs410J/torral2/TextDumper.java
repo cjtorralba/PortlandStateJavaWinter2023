@@ -22,9 +22,9 @@ public class TextDumper implements AirlineDumper<Airline> {
     try (
       PrintWriter pw = new PrintWriter(this.writer);
       ) {
-      pw.println(airline.getName());
       Collection<Flight> list = airline.getFlights();
       for(Flight f : list) {
+        pw.print(airline.getName() + " | ");
         pw.println(f.getFlightAsTextFileString());
       }
       pw.flush();

@@ -99,7 +99,7 @@ public class Flight extends AbstractFlight {
   }
 
   public String getFlightAsTextFileString() {
-    return this.getNumber() + " | " + this.getDepartureString() + " | " + this.getDestination() + " | " + this.getArrivalString();
+    return this.getNumber() + " | " + this.getDepartureStringForTextFile() + " | " + this.getDestination() + " | " + this.getArrivalStringForTextFile();
   }
 
 
@@ -118,6 +118,10 @@ public class Flight extends AbstractFlight {
     return this.departDate + " " + this.departTime;
   }
 
+  public String getDepartureStringForTextFile() {
+    return this.departDate + " | " + this.departTime;
+  }
+
   @Override
   public String getDestination() {
     return this.dest;
@@ -126,5 +130,9 @@ public class Flight extends AbstractFlight {
   @Override
   public String getArrivalString() {
     return this.arriveDate + " " + this.arriveTime;
+  }
+
+  public String getArrivalStringForTextFile() {
+    return this.arriveDate + " | " + this.arriveTime;
   }
 }
