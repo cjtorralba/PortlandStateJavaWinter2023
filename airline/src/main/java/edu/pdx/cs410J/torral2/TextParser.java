@@ -69,7 +69,6 @@ public class TextParser implements AirlineParser<Airline> {
 
         // Reading each individual line till end of file
         while((textFileString = br.readLine()) != null && textFileString.length() != 0) {
-            br.readLine();
 
             // Removing all spaces from string
             textFileString = textFileString.replaceAll("\\s", "");
