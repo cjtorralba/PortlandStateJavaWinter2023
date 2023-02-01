@@ -140,7 +140,7 @@ public class Project2 {
     String arrivalTime = list.get(7);
 
     // Testing for valid airport codes
-    if (!(validAirportCode(src) || validAirportCode(destination))) {
+    if (!validAirportCode(src) || !validAirportCode(destination)) {
       System.err.println("Airport code must be three letters only, please run again with a valid airport code.");
       return;
     }
@@ -172,8 +172,6 @@ public class Project2 {
     // Adding current flight to airline
     if (!writeToFile) {
       airline = new Airline(airlineName);
-    } else {
-      airline = null;
     }
     flight = new Flight(flightNumber, src, departureDate, departureTime, destination, arrivalDate, arrivalTime);
 
@@ -224,16 +222,15 @@ public class Project2 {
           System.err.println("Airline name from text file does not match airline name given on command line. Please check text file or change command line arguments.");
           return;
         }
-
         // Reaching this point means the airline names do match, so we can assign airline to airlineFromTextFile and add current flight
         airline = textFileAirline;
         airline.addFlight(flight);
-
-
       }
 
         // Writing all information in airline to text file
         try {
+          airline = new Airline(airlineName);
+          airline.addFlight(flight);
 
           FileWriter fileWriter = new FileWriter(file);
           textdumper = new TextDumper(fileWriter);

@@ -3,8 +3,13 @@ package edu.pdx.cs410J.torral2;
 import edu.pdx.cs410J.InvokeMainTestCase;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
+
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 /**
  * An integration test for the {@link Project2} main class.
@@ -105,11 +110,28 @@ class Project2IT extends InvokeMainTestCase {
 
   }
 
+  @Test
+  void testInvalidAirportCode() {
+    String source = "ABDC";
+
+    MainMethodResult result = invokeMain("American Airlines", "123", source, "10/23/2022", "12:34", "LAX", "12/23/2022", "12:45");
+    assertThat(result.getTextWrittenToStandardError(), containsString("Airport code must be three letters only, please run again with a valid airport code"));
+  }
 
   @Test
-  void testWriteToFile() {
-    MainMethodResult result = invokeMain("-textFile", "outputFile", "737", "PDX", "10/23/2923", "12:42", "LAX", "12/23/2003", "3:03");
+  void testWriteToFileWIthNonExistentFile() {
+    String file = "testfile-" + UUID.randomUUID() + ".txt";
+    assertThat(new File(file).exists(), equalTo(false));
+    MainMethodResult result = invokeMain("-textFile", file, "AirlineName","737", "PDX", "10/23/2923", "12:42", "LAX", "12/23/2003", "3:03");
+    MainMethodResult result2 = invokeMain("-textFile", file, "AirlineName","737", "PDX", "10/23/2923", "12:42", "LAX", "12/23/2003", "3:03");
+    assertThat(new File(file).exists(), equalTo(true));
+  }
 
-
+  @Test
+  void testWriteToFileWithExistentFile() throws IOException {
+  String fileName = "testfile-" + UUID.randomUUID() + ".txt";
+  assertThat(new File(fileName).createNewFile(), equalTo(true));
+  MainMethodResult result = invokeMain("-textFile", fileName, "737", "PDX", "10/23/2923", "12:42", "LAX", "12/23/2003", "3:03");
+  assertThat(new File(fileName).exists(), equalTo(true));
   }
 }
