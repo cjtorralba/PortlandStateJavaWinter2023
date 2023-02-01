@@ -34,5 +34,14 @@ public class TextParserTest {
     assertThrows(ParserException.class, parser::parse);
   }
 
+  @Test
+  void extraInformationInTextFile() throws ParserException{
+    InputStream resource = getClass().getResourceAsStream("invalid-airline.txt");
+    assertThat(resource, notNullValue());
+
+    TextParser tp = new TextParser(new InputStreamReader(resource));
+    assertThrows(ParserException.class, tp::parse);
+  }
+
 
 }

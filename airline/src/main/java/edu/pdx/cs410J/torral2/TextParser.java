@@ -91,7 +91,7 @@ public class TextParser implements AirlineParser<Airline> {
                 } catch (NumberFormatException NFE) {
                     throw new ParserException("Issue parsing flight number from text file.");
                 }
-                src = listOfWords[2];
+                src = listOfWords[2].trim();
                 departureDate = listOfWords[3].trim();
                 departureTime = listOfWords[4].trim();
                 destination = listOfWords[5].trim();
@@ -125,16 +125,16 @@ public class TextParser implements AirlineParser<Airline> {
      */
     private boolean parseSegments(String src, String departureDate, String departureTime, String destination, String arrivalDate, String arrivalTime) throws ParserException {
 
-       if(!(Project2.validAirportCode(src) || Project2.validAirportCode(destination))) {
+       if(!Project2.validAirportCode(src) || !Project2.validAirportCode(destination)) {
            throw new ParserException("Error parsing text file: Invalid airport code provided, must be exactly three characters");
        }
-        if(!(Project2.validAirportCode(src) || Project2.validAirportCode(destination))) {
+        if(!Project2.validAirportCode(src) || !Project2.validAirportCode(destination)) {
             throw new ParserException("Error parsing text file: Invalid airport code supplied, must be exactly 3 letters, no numbers allowed");
         }
-        if(!(Project2.validDateFormat(departureDate) || Project2.validDateFormat(arrivalDate))) {
+        if(!Project2.validDateFormat(departureDate) || !Project2.validDateFormat(arrivalDate)) {
             throw new ParserException("Error parsing text file: Invalid arrival/departure date format recieved " + departureDate + " and " + arrivalDate);
         }
-        if(!(Project2.validTimeFormat(departureTime) || Project2.validTimeFormat(arrivalTime))) {
+        if(!Project2.validTimeFormat(departureTime) || !Project2.validTimeFormat(arrivalTime)) {
             throw new ParserException("Error parsing text file: Invalid arrival/departure time format");
         }
         return true;
