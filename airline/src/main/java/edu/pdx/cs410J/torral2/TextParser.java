@@ -11,7 +11,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * A skeletal implementation of the <code>TextParser</code> class for Project 2.
+ * This class is used to parse information from a text file and add it all into a flight.
+ * The text in the file should be deliminated with the '|' character
+ *
+ * @author Christian Torralba
+ * @version 1.0
+ * @since 1.0
  */
 public class TextParser implements AirlineParser<Airline> {
   private final Reader reader;

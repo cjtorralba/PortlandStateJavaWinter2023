@@ -10,6 +10,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+
+/**
+ * This class is used to test the TextParser class and the range of possibilities that could happen to it
+ *
+ * @author Christian Torralba
+ * @version 1.0
+ * @since 1.0
+ */
 public class TextParserTest {
 
   @Test

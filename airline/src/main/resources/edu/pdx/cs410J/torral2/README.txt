@@ -1,12 +1,9 @@
-usage: java -jar target/airline-2023.0.0.jar [options] <args>
-args are (in this order):
-airline The name of the airline
-flightNumber The flight number
-src Three-letter code of departure airport\n
-depart Departure date and time (24-hour time)
-dest Three-letter code of arrival airport
-arrive Arrival date and time (24-hour time)
-options are (options may appear in any order):
--print Prints a description of the new flight
--README Prints a README for this project and exits
-Date and time should be in the format: mm/dd/yyyy hh:mm
+The purpose of this program is made to be a simple way to store flights associated with certain airlines.
+For example, if you were to be traveling via plane soon, it would be a good idea to run this with information
+about the flight number, the departing and arrival airport code, the departure date and time, as well as
+the arrival date and time, and the name of the airline you will be flying with.
+
+This program was written by Christian Torralba for the Advanced Java class (CS410P) taught by David Whitlock
+Winter term of 2023.
+
+To see usage for this program please run with [-print] as a command line argument.

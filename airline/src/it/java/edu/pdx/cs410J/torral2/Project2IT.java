@@ -13,6 +13,11 @@ import static org.hamcrest.Matchers.equalTo;
 
 /**
  * An integration test for the {@link Project2} main class.
+ * This test will be used to test the functionality of the program as a whole
+ *
+ * @author Christian Torralba
+ * @version 1.0
+ * @since 1.0
  */
 class Project2IT extends InvokeMainTestCase {
 

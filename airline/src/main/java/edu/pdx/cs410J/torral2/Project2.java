@@ -9,12 +9,16 @@ import java.util.List;
 
 /**
  * The main class for the CS410J airline Project
+ * This class contains the main logic of the program
+ *
+ * @author Christian Torralba
+ * @Version 1.0
+ * @Since 1.0
  */
 public class Project2 {
 
   /**
-   *
-   * @return
+   * Reads the readme to the user when main is run with -README as argument
    */
   @VisibleForTesting
   static boolean readTheREADME(){
@@ -35,9 +39,8 @@ public class Project2 {
   }
 
   /**
-   *
-   * @param time
-   * @return
+   * @param time String to test for against proper format, for example: 10:23 or 1:04
+   * @return True if time is in correct format
    */
  @VisibleForTesting
   static boolean validTimeFormat(String time) {
@@ -46,9 +49,8 @@ public class Project2 {
  }
 
   /**
-   *
-   * @param date
-   * @return
+   * @param date - String to test for against proper date format, example: 12/23/2013 or 1/1/2023.
+   * @return True if string is in valid date format
    */
   @VisibleForTesting
  static boolean validDateFormat(String date) {
@@ -56,9 +58,8 @@ public class Project2 {
  }
 
   /**
-   *
-   * @param code
-   * @return
+   * @param code Three letter airport code
+   * @return True if and only if code is exactly 3 letters
    */
  @VisibleForTesting
  static boolean validAirportCode(String code) {
@@ -104,18 +105,7 @@ public class Project2 {
 
     // Not enough arguments
     if (list.size() != 8) {
-      System.err.println("usage: java -jar target/airline-2023.0.0.jar [options] <args>\n" +
-              "args are (in this order):\n" +
-              "airline The name of the airline\n" +
-              "flightNumber The flight number\n" +
-              "src Three-letter code of departure airport\n" +
-              "depart Departure date and time (24-hour time)\n" +
-              "dest Three-letter code of arrival airport\n" +
-              "arrive Arrival date and time (24-hour time)\n" +
-              "options are (options may appear in any order):\n" +
-              "-print Prints a description of the new flight\n" +
-              "-README Prints a README for this project and exits\n" +
-              "Date and time should be in the format: mm/dd/yyyy hh:mm\n");
+      System.err.println("Error: Invalid number of command line arguments, please run with [-usage] for a full list of options");
       return;
     }
 

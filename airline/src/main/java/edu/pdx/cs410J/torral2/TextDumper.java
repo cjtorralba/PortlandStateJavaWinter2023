@@ -8,15 +8,31 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * A skeletal implementation of the <code>TextDumper</code> class for Project 2.
+ * This class is used to write information from an airline into a specified text file
+ *
+ * @author Christian TOrralba
+ * @version 1.0
+ * @since 1.0
  */
 public class TextDumper implements AirlineDumper<Airline> {
+
+  /**
+   * Abstract data type so developer can use which ever writer they desire
+   */
   private final Writer writer;
 
+  /**
+   * Creates a new TextDumper object
+   * @param writer The type of writer the developer wishes to use
+   */
   public TextDumper(Writer writer) {
     this.writer = writer;
   }
 
+  /**
+   * Writes contents of airline, including flights, to a text file, sections are deliminated with '|'
+   * @param airline Airline we will be reading information from to write ot text file
+   */
   @Override
   public void dump(Airline airline) {
     try (

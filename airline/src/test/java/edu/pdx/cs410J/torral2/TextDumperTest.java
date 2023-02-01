@@ -7,8 +7,17 @@ import org.junit.jupiter.api.io.TempDir;
 import java.io.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
+
+
+/**
+ * This class is used to test the TextDumper class. The goal is to ensure the information being dumped is correct,
+ * and formated properly
+ *
+ * @author Christian Toralba
+ * @version 1.0
+ * @since 1.0
+ */
 
 
 public class TextDumperTest {
