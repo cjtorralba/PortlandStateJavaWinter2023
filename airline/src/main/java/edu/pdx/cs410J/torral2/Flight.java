@@ -1,6 +1,5 @@
 package edu.pdx.cs410J.torral2;
 
-import com.google.common.annotations.VisibleForTesting;
 import edu.pdx.cs410J.AbstractFlight;
 
 
@@ -102,36 +101,57 @@ public class Flight extends AbstractFlight {
     return this.getNumber() + "|" + this.src + "|" + this.getDepartureStringForTextFile() + "|" + this.getDestination() + "|" + this.getArrivalStringForTextFile();
   }
 
-
+  /**
+   * @return The flight number for current flight
+   */
   @Override
   public int getNumber() {
     return this.flightNumber;
   }
 
+  /**
+   * @return The airport code for the source airport
+   */
   @Override
   public String getSource() {
     return this.src;
   }
 
+  /**
+   * @return The departure date and time
+   */
   @Override
   public String getDepartureString() {
     return this.departDate + " " + this.departTime;
   }
 
+  /**
+   * @return The departure date and time formatted for the text file, using '|' to separate the two
+   */
   public String getDepartureStringForTextFile() {
     return this.departDate + "|" + this.departTime;
   }
 
+  /**
+   * @return Returns the airport code for the destination airport
+   */
   @Override
   public String getDestination() {
     return this.dest;
   }
 
+
+  /**
+   * @return The arrival date and time formatted together
+   */
   @Override
   public String getArrivalString() {
     return this.arriveDate + " " + this.arriveTime;
   }
 
+  /**
+   * @return The arrival date and time formatted for a text file, using '|' as a delimiter
+   */
   public String getArrivalStringForTextFile() {
     return this.arriveDate + "|" + this.arriveTime;
   }

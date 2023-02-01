@@ -37,12 +37,18 @@ class Project2IT extends InvokeMainTestCase {
     assertThat(result.getTextWrittenToStandardError(), containsString("Missing command line arguments"));
   }
 
+  /**
+   * Test main with an invalid flight number
+   */
   @Test
     void testNotValidFlightNumber() {
         MainMethodResult result = invokeMain("American",  "fourtwenty", "PDX", "10/23/2023", "1:32",  "LAX", "11/12/2022", "10:06");
         assertThat(result.getTextWrittenToStandardError(), containsString("Not a valid flight number, must be a digit - ex: 458"));
   }
 
+  /**
+   * Tests the -print as a command line argument
+   */
   @Test
   void testPrintAsArgument() {
     String flightNumber = "10";
@@ -61,12 +67,19 @@ class Project2IT extends InvokeMainTestCase {
     assertThat(result.getTextWrittenToStandardOut(), containsString("Airline " + airlineName + " has flights:"));
   }
 
+  /**
+   * Tests too many arguments
+   */
   @Test
   void testTooManyArguments() {
     MainMethodResult result = invokeMain("American", "Airlines",  "fourtwenty", "PDX", "10/23/2023", "1:32", "LAX", "11/12/2022", "10:06");
     assertThat(result.getTextWrittenToStandardError(), containsString("Invalid number of command line arguments"));
   }
 
+
+  /**
+   * Tests -README as a command line argument
+   */
   @Test
   void testReadAsArgument(){
 
@@ -75,12 +88,20 @@ class Project2IT extends InvokeMainTestCase {
   }
 
 
+  /**
+   * Tests incorrect arrival date format
+   */
   @Test
   void testIncorrectArrivalDateFormat() {
     String arrivalDate = "123/23/2023";
     MainMethodResult result = invokeMain("American Airlines", "123", "PDX", "10/23/2022", "12:40", "LAX", arrivalDate, "12:42");
     assertThat(result.getTextWrittenToStandardError(), containsString("Format for arrival date is invalid, you entered " + arrivalDate + ". Please use correct format, example: 12/31/2022 or 1/2/2022"));
   }
+
+
+  /**
+   * Tests incorrect arrival time format
+   */
   @Test
   void testIncorrectArrivalTimeFormat() {
     String arrivalTime = "123:32";
@@ -88,6 +109,9 @@ class Project2IT extends InvokeMainTestCase {
     assertThat(result.getTextWrittenToStandardError(), containsString("Format for arrival time is invalid, you entered " + arrivalTime + ". Please use correct format, example: 10:32 or 1:06"));
   }
 
+  /**
+   * Tests incorrect departure date format
+   */
   @Test
   void testIncorrectDepartureDateFormat() {
     String departureDate = "123/23/2023";
@@ -95,6 +119,9 @@ class Project2IT extends InvokeMainTestCase {
     assertThat(result.getTextWrittenToStandardError(), containsString("Format for departure date is invalid, you entered " + departureDate + ". Please use correct format, example: 12/31/2022 or 1/2/2022"));
   }
 
+  /**
+   * Tests incorrect departure time format
+   */
   @Test
   void testIncorrectDepartureTimeFormat() {
     String departureTime = "12:111";
@@ -103,6 +130,9 @@ class Project2IT extends InvokeMainTestCase {
 
   }
 
+  /**
+   * Tests invalid airport code
+   */
   @Test
   void testInvalidAirportCode() {
     String source = "ABDC";
@@ -111,6 +141,9 @@ class Project2IT extends InvokeMainTestCase {
     assertThat(result.getTextWrittenToStandardError(), containsString("Airport code must be three letters only, please run again with a valid airport code"));
   }
 
+  /**
+   * Tests dumping to a file that does not exist
+   */
   @Test
   void testWriteToFileWIthNonExistentFile() {
     String file = "testfile-" + UUID.randomUUID() + ".txt";
@@ -120,6 +153,11 @@ class Project2IT extends InvokeMainTestCase {
     assertThat(new File(file).exists(), equalTo(true));
   }
 
+
+  /**
+   * Tests dumping to a file that does exist
+   * @throws IOException Unable to open file
+   */
   @Test
   void testWriteToFileWithExistentFile() throws IOException {
   String fileName = "testfile-" + UUID.randomUUID() + ".txt";

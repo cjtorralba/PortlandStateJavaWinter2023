@@ -4,7 +4,6 @@ import edu.pdx.cs410J.AirlineDumper;
 
 import java.io.PrintWriter;
 import java.io.Writer;
-import java.util.ArrayList;
 import java.util.Collection;
 
 /**

@@ -11,12 +11,20 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
- * A unit test for code in the <code>Project2</code> class.  This is different
- * from <code>Project2IT</code> which is an integration test and can capture data
- * written to {@link System#out} and the like.
+ *  This class is used to test units of the Project2 class, such as things like getting information from
+ *  certain flights after they have been created.
+ *
+ * @author Christian Torralba
+ * @version 1.0
+ * @since 1.0
  */
 class Project2Test {
 
+
+  /**
+   * This test is to ensure that the readme is being stored in an external file
+   * @throws IOException When readme cannot be found
+   */
   @Test
   void readmeCanBeReadAsResource() throws IOException {
     try (
@@ -30,6 +38,9 @@ class Project2Test {
   }
 
 
+  /**
+   * Tests the function getNumber() for the Flight class
+   */
   @Test
   void testGetFlightNumber() {
     int testFlightNumber = 123;
@@ -38,6 +49,9 @@ class Project2Test {
   }
 
 
+  /**
+   * Tests the function getDepartureString() for a given Flight
+   */
   @Test
   void testGetDepartureString() {
     String departeTime = "10:53";
@@ -49,6 +63,10 @@ class Project2Test {
     assertThat(departureDateAndTime, containsString(testFlight.getDepartureString()));
   }
 
+
+  /**
+   * Tests the getArrivalString function for a flight
+   */
   @Test
   void testGetArrivalString() {
     String arriveTime = "10:53";
@@ -61,6 +79,9 @@ class Project2Test {
   }
 
 
+  /**
+   * Tests getSource() function
+   */
   @Test
   void testGetSource() {
     String src = "SOURCE";
@@ -69,6 +90,9 @@ class Project2Test {
   }
 
 
+  /**
+   * Tests getDestination() function
+   */
   @Test
   void testGetDestination() {
     String dest = "DESTINATION";

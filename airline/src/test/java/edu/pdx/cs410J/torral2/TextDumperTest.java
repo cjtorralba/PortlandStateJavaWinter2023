@@ -12,7 +12,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 /**
  * This class is used to test the TextDumper class. The goal is to ensure the information being dumped is correct,
- * and formated properly
+ * and formatted properly
  *
  * @author Christian Toralba
  * @version 1.0
@@ -22,6 +22,10 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class TextDumperTest {
 
+
+  /**
+   * This test is to ensure that the dumper does not write and airline with no flights to the file
+   */
   @Test
   void airlineNameIsDumpedInTextFormat() {
     String airlineName = "Test Airline";
@@ -35,6 +39,14 @@ public class TextDumperTest {
     assertThat(text.isBlank(), equalTo(true));
   }
 
+
+  /**
+   *  This function is to make sure that we can parse properly formatted text withing the text file
+   *
+   * @param tempDir Temporary directory
+   * @throws IOException If unable to open file
+   * @throws ParserException If unable to parse
+   */
   @Test
   void canParseTextWrittenByTextDumper(@TempDir File tempDir) throws IOException, ParserException {
     String airlineName = "Test Airline";
@@ -52,6 +64,4 @@ public class TextDumperTest {
     Airline read = parser.parse();
     assertThat(read.getName(), equalTo(airlineName));
   }
-
-
 }
