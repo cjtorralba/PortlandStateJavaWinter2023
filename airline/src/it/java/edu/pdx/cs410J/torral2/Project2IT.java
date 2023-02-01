@@ -64,26 +64,14 @@ class Project2IT extends InvokeMainTestCase {
   @Test
   void testTooManyArguments() {
     MainMethodResult result = invokeMain("American", "Airlines",  "fourtwenty", "PDX", "10/23/2023", "1:32", "LAX", "11/12/2022", "10:06");
-    assertThat(result.getTextWrittenToStandardError(), containsString("usage: java -jar target/airline-2023.0.0.jar [options] <args>\n" +
-            "args are (in this order):\n" +
-            "airline The name of the airline\n" +
-            "flightNumber The flight number\n" +
-            "src Three-letter code of departure airport\n" +
-            "depart Departure date and time (24-hour time)\n" +
-            "dest Three-letter code of arrival airport\n" +
-            "arrive Arrival date and time (24-hour time)\n" +
-            "options are (options may appear in any order):\n" +
-            "-print Prints a description of the new flight\n" +
-            "-README Prints a README for this project and exits\n" +
-            "Date and time should be in the format: mm/dd/yyyy hh:mm\n"));
+    assertThat(result.getTextWrittenToStandardError(), containsString("Invalid number of command line arguments"));
   }
-
 
   @Test
   void testReadAsArgument(){
 
     MainMethodResult result = invokeMain("-README", "American Airlines", "123", "PDX", "10/23/2022", "12:40", "LAX", "10/23/1963", "12:42");
-    assertThat(result.getTextWrittenToStandardOut(), containsString("usage: java -jar target/airline-2023.0.0.jar [options] <args>"));
+    assertThat(result.getTextWrittenToStandardOut(), containsString("The purpose of this program"));
   }
 
 

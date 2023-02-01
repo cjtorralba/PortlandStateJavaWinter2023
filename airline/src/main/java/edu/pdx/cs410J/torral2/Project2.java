@@ -12,8 +12,8 @@ import java.util.List;
  * This class contains the main logic of the program
  *
  * @author Christian Torralba
- * @Version 1.0
- * @Since 1.0
+ * @version 1.0
+ * @since 1.0
  */
 public class Project2 {
 

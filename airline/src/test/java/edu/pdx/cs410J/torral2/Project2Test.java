@@ -25,8 +25,7 @@ class Project2Test {
       assertThat(readme, not(nullValue()));
       BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
       String line = reader.readLine();
-      assertThat(line, containsString("The purpose of this program:w" +
-              ""));
+      assertThat(line, containsString("The purpose of this program"));
     }
   }
 
