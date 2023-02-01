@@ -82,7 +82,19 @@ public class Project2 {
 
 
     if (list.size() == 0) {
-      System.err.println("Missing command line arguments");
+      System.err.println("" +
+              "usage: java -jar target/airline-2023.0.0.jar [options] <args>\n" +
+              "\targs are (in this order):\n" +
+              "\t\tairline                The name of the airline\n" +
+              "\t\tflightNumber           The flight number\n" +
+              "\t\tsrc                    Three-letter code of departure airport\n" +
+              "\t\tdepart                 Departure date and time (24-hour time)\n" +
+              "\t\tdest                   Three-letter code of arrival airport\n" +
+              "\tarrive                   Arrival date and time (24-hour time)\n" +
+              "\toptions are (options may appear in any order):\n" +
+              "\t\t-print                 Prints a description of the new flight\n" +
+              "\t\t-README                Prints a README for this project and exits\n" +
+              "Date and time should be in the format: mm/dd/yyyy hh:mm");
       return;
     }
 
@@ -217,23 +229,23 @@ public class Project2 {
         airline.addFlight(flight);
       }
 
-        // Writing all information in airline to text file
-        try {
-          airline = new Airline(airlineName);
-          airline.addFlight(flight);
+      // Writing all information in airline to text file
+      try {
+        airline = new Airline(airlineName);
+        airline.addFlight(flight);
 
-          FileWriter fileWriter = new FileWriter(file);
-          textdumper = new TextDumper(fileWriter);
-          textdumper.dump(airline);
-        } catch (IOException fnf) {
-          System.err.println("File could not be created, please try re-running the program with a different path.");
-          return;
-        }
+        FileWriter fileWriter = new FileWriter(file);
+        textdumper = new TextDumper(fileWriter);
+        textdumper.dump(airline);
+      } catch (IOException fnf) {
+        System.err.println("File could not be created, please try re-running the program with a different path.");
+        return;
+      }
     } else {  // Not working with external file, so only information adding to airline will be via command line
       airline = new Airline(airlineName);
       airline.addFlight(flight);
     }
-  // If print has been added as argument, we will print out airline name and its flights.
+    // If print has been added as argument, we will print out airline name and its flights.
     if(print) {
       System.out.println("Airline " + airline.getName() + " has flights: ");
       for(Flight f : airline.getFlights())
