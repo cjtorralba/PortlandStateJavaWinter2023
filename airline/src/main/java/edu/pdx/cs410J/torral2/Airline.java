@@ -9,7 +9,6 @@ public class Airline extends AbstractAirline<Flight> {
   private final String name;
   private final Collection<Flight> flightList;
 
-  //🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍👤🐱‍🐉🐱‍🐉
   public Airline(String name, Collection<Flight> flightList) {
     this.flightList = flightList;
     this.name = name;

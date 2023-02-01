@@ -3,10 +3,7 @@ package edu.pdx.cs410J.torral2;
 import edu.pdx.cs410J.ParserException;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -20,6 +17,8 @@ public class TextParserTest {
   void validTextFileCanBeParsed() throws ParserException {
     InputStream resource = getClass().getResourceAsStream("valid-airline.txt");
     assertThat(resource, notNullValue());
+
+
 
     TextParser parser = new TextParser(new InputStreamReader(resource));
     Airline airline = parser.parse();

@@ -69,26 +69,23 @@ public class Project2 {
 
   public static void main(String[] args) {
 
-    Flight flight;
-    Airline airline;
-    Airline textFileAirline;
-    TextParser textParser;
-    TextDumper textdumper;
+    Flight flight = null;
+    Airline airline = null;
+    Airline textFileAirline = null;
+    TextParser textParser = null;
+    TextDumper textdumper = null;
 
 
     //arraylist or command line arguments
     ArrayList<String> list = new ArrayList<>(List.of(args));
 
 
-
-
-
-    if(list.size() == 0) {
+    if (list.size() == 0) {
       System.err.println("Missing command line arguments");
       return;
     }
 
-    if(list.contains("-README")) {
+    if (list.contains("-README")) {
       readTheREADME();
       return;
     }
@@ -98,7 +95,7 @@ public class Project2 {
     boolean writeToFile = list.contains("-textFile");
     String fileName = null;
 
-    if(writeToFile) {
+    if (writeToFile) {
       fileName = list.get(list.indexOf("-textFile") + 1);
       list.remove("-textFile");
       list.remove(fileName);
@@ -106,7 +103,7 @@ public class Project2 {
 
 
     // Not enough arguments
-    if(list.size() != 8) {
+    if (list.size() != 8) {
       System.err.println("usage: java -jar target/airline-2023.0.0.jar [options] <args>\n" +
               "args are (in this order):\n" +
               "airline The name of the airline\n" +
@@ -128,13 +125,13 @@ public class Project2 {
     int flightNumber = 0;
     try {
       flightNumber = Integer.parseInt(list.get(1));
-    } catch(NumberFormatException exception) {
+    } catch (NumberFormatException exception) {
       System.err.println("Not a valid flight number, must be a digit - ex: 458");
       return;
     }
 
 
-   // Parsing information from command line
+    // Parsing information from command line
     String src = list.get(2);
     String departureDate = list.get(3);
     String departureTime = list.get(4);
@@ -143,56 +140,58 @@ public class Project2 {
     String arrivalTime = list.get(7);
 
     // Testing for valid airport codes
-    if(!(validAirportCode(src) || validAirportCode(destination))) {
+    if (!(validAirportCode(src) || validAirportCode(destination))) {
       System.err.println("Airport code must be three letters only, please run again with a valid airport code.");
       return;
     }
 
     // Testing for valid format for arrival date
-    if(!validDateFormat(arrivalDate)){
+    if (!validDateFormat(arrivalDate)) {
       System.err.println("Format for arrival date is invalid, you entered " + arrivalDate + ". Please use correct format, example: 12/31/2022 or 1/2/2022");
       return;
     }
 
     // Checking for valid arrival time
-    if(!validTimeFormat(arrivalTime)){
+    if (!validTimeFormat(arrivalTime)) {
       System.err.println("Format for arrival time is invalid, you entered " + arrivalTime + ". Please use correct format, example: 10:32 or 1:06");
       return;
     }
 
     // Testing for valid departure date format
-    if(!validDateFormat(departureDate)) {
+    if (!validDateFormat(departureDate)) {
       System.err.println("Format for departure date is invalid, you entered " + departureDate + ". Please use correct format, example: 12/31/2022 or 1/2/2022");
       return;
     }
 
     // Testing for valid departure time format
-    if(!validTimeFormat(departureTime)){
+    if (!validTimeFormat(departureTime)) {
       System.err.println("Format for departure time is invalid, you entered " + departureTime + ". Please use correct format, example: 10:32 or 1:06");
       return;
     }
 
     // Adding current flight to airline
-    if(!writeToFile) {
+    if (!writeToFile) {
       airline = new Airline(airlineName);
     } else {
       airline = null;
     }
     flight = new Flight(flightNumber, src, departureDate, departureTime, destination, arrivalDate, arrivalTime);
 
+
     // If our read/write flag was set, we will first read all information from text file and put it into the airline
     // object, then we will add out current flight passed in via command line, then we will write back to the file all
     // the flights added to the airline.
-    if(writeToFile) {
+    if (writeToFile) {
+
       // Reading/writing airline to file.
       File file = new File(fileName);
 
-      FileWriter fileWriter = null;
-      FileReader fileReader = null;
+
 
 
       // Checking to see if the file exists, if not we create it.
-      if (!file.exists()) {
+      boolean exists = file.exists();
+      if (!exists) {
         try {
           file.createNewFile();
           System.out.println("Created file");
@@ -204,46 +203,50 @@ public class Project2 {
 
       // Attempting to create FileReader and parse all information from
       // text file to store it into airline.
-      try {
-        fileReader = new FileReader(file);
-        textParser = new TextParser(fileReader);
+      if (exists) {
         try {
-          textFileAirline = textParser.parse();
-        } catch (ParserException parse) {
-          System.err.println(parse.getMessage());
+          FileReader fileReader = new FileReader(file);
+          textParser = new TextParser(fileReader);
+          try {
+            textFileAirline = textParser.parse();
+          } catch (ParserException parse) {
+            System.err.println(parse.getMessage());
+            return;
+          }
+
+        } catch (FileNotFoundException fnf) {
+          System.err.println("File could not be located.");
           return;
         }
 
-      } catch (FileNotFoundException fnf) {
-        System.err.println("File could not be located.");
-        return;
+        // Checking to make sure airline name from textfile matches airline name given via command line
+        if (!textFileAirline.getName().equals(airlineName)) {
+          System.err.println("Airline name from text file does not match airline name given on command line. Please check text file or change command line arguments.");
+          return;
+        }
+
+        // Reaching this point means the airline names do match, so we can assign airline to airlineFromTextFile and add current flight
+        airline = textFileAirline;
+        airline.addFlight(flight);
+
+
       }
 
-      // Checking to make sure airline name from textfile matches airline name given via command line
-      if(!textFileAirline.getName().equals(airlineName)) {
-        System.err.println("Airline name from text file does not match airline name given on command line. Please check text file or change command line arguments.");
-        return;
-      }
+        // Writing all information in airline to text file
+        try {
 
-      // Reaching this point means the airline names do match, so we can assignment airline to airlineFromTextFile and add current flight
-      airline = textFileAirline;
-      airline.addFlight(flight);
-
-      // Writing all information in airline to text file
-      try {
-        fileWriter = new FileWriter(file);
-        textdumper = new TextDumper(fileWriter);
-        textdumper.dump(airline);
-      } catch (IOException fnf) {
-        System.err.println("File could not be created, please try re-running the program with a different path.");
-        return;
-      }
+          FileWriter fileWriter = new FileWriter(file);
+          textdumper = new TextDumper(fileWriter);
+          textdumper.dump(airline);
+        } catch (IOException fnf) {
+          System.err.println("File could not be created, please try re-running the program with a different path.");
+          return;
+        }
     } else {  // Not working with external file, so only information adding to airline will be via command line
       airline = new Airline(airlineName);
       airline.addFlight(flight);
     }
-
-    // If print has been added as argument, we will print out airline name and its flights.
+  // If print has been added as argument, we will print out airline name and its flights.
     if(print) {
       System.out.println("Airline " + airline.getName() + " has flights: ");
       for(Flight f : airline.getFlights())

@@ -29,7 +29,10 @@ public class TextParser implements AirlineParser<Airline> {
 
       // Aquiring very first airline from the text file to make sure all following airline names must be the same
       String textFileString = br.readLine();
-      textFileString = textFileString.replaceAll("\\s", "");
+      if(textFileString == null || textFileString.isBlank()) {
+          throw new ParserException("Error: File to be parsed appears to be blank");
+      }
+//      textFileString = textFileString.replaceAll("\\s", "");
       String[] listOfWords = textFileString.split("\\|");
 
 
@@ -46,17 +49,18 @@ public class TextParser implements AirlineParser<Airline> {
       int flightNumber;
       try{
         flightNumber = Integer.parseInt(listOfWords[1]);
+
       } catch (NumberFormatException NFE) {
           throw new ParserException("Unable to parse file: Issue parsing flight number from text file.");
       }
 
         // Parsing text into individual Strings
-        String src = listOfWords[2];
-        String departureDate = listOfWords[3];
-        String departureTime = listOfWords[4];
-        String destination = listOfWords[5];
-        String arrivalDate = listOfWords[6];
-        String arrivalTime = listOfWords[7];
+        String src = listOfWords[2].trim();
+        String departureDate = listOfWords[3].trim();
+        String departureTime = listOfWords[4].trim();
+        String destination = listOfWords[5].trim();
+        String arrivalDate = listOfWords[6].trim();
+        String arrivalTime = listOfWords[7].trim();
 
 
         // Testing parsed text
@@ -88,11 +92,11 @@ public class TextParser implements AirlineParser<Airline> {
                     throw new ParserException("Issue parsing flight number from text file.");
                 }
                 src = listOfWords[2];
-                departureDate = listOfWords[3];
-                departureTime = listOfWords[4];
-                destination = listOfWords[5];
-                arrivalDate = listOfWords[6];
-                arrivalTime = listOfWords[7];
+                departureDate = listOfWords[3].trim();
+                departureTime = listOfWords[4].trim();
+                destination = listOfWords[5].trim();
+                arrivalDate = listOfWords[6].trim();
+                arrivalTime = listOfWords[7].trim();
 
                 parseSegments(src, departureDate, departureTime, destination, arrivalDate, arrivalTime);
 
@@ -110,7 +114,6 @@ public class TextParser implements AirlineParser<Airline> {
 
 
     /**
-     *
      * @param src Three letter airport code
      * @param departureDate Date of departure for flight
      * @param departureTime Time of departure for flight
@@ -121,11 +124,15 @@ public class TextParser implements AirlineParser<Airline> {
      * @throws ParserException
      */
     private boolean parseSegments(String src, String departureDate, String departureTime, String destination, String arrivalDate, String arrivalTime) throws ParserException {
+
+       if(!(Project2.validAirportCode(src) || Project2.validAirportCode(destination))) {
+           throw new ParserException("Error parsing text file: Invalid airport code provided, must be exactly three characters");
+       }
         if(!(Project2.validAirportCode(src) || Project2.validAirportCode(destination))) {
             throw new ParserException("Error parsing text file: Invalid airport code supplied, must be exactly 3 letters, no numbers allowed");
         }
         if(!(Project2.validDateFormat(departureDate) || Project2.validDateFormat(arrivalDate))) {
-            throw new ParserException("Error parsing text file: Invalid arrival/departure date format");
+            throw new ParserException("Error parsing text file: Invalid arrival/departure date format recieved " + departureDate + " and " + arrivalDate);
         }
         if(!(Project2.validTimeFormat(departureTime) || Project2.validTimeFormat(arrivalTime))) {
             throw new ParserException("Error parsing text file: Invalid arrival/departure time format");
