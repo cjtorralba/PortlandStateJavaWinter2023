@@ -38,4 +38,17 @@ public class TextDumperTest {
     Airline read = parser.parse();
     assertThat(read.getName(), equalTo(airlineName));
   }
+
+  @Test
+  void testInvalidFormatOfTextToBeDumped() throws ParserException {
+      String airlineName = "airlineName";
+      Flight flight = new Flight(737, "PDX", "10/27/2022", "10:15", "LAX", "10/23/2023", "11:59");
+      Airline airline = new Airline(airlineName);
+
+      StringWriter sw = new StringWriter();
+      TextDumper dumper = new TextDumper(sw);
+      dumper.dump(airline);
+
+      String text = sw.toString();
+  }
 }

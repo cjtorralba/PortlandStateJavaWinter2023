@@ -88,7 +88,7 @@ public class TextParser implements AirlineParser<Airline> {
                     throw new ParserException("Issue parsing flight number from text file.");
                 }
                 src = listOfWords[2];
-                departureDate = listOfWords[3];                // Testing parsed text
+                departureDate = listOfWords[3];
                 departureTime = listOfWords[4];
                 destination = listOfWords[5];
                 arrivalDate = listOfWords[6];
@@ -108,6 +108,18 @@ public class TextParser implements AirlineParser<Airline> {
     }
   }
 
+
+    /**
+     *
+     * @param src Three letter airport code
+     * @param departureDate Date of departure for flight
+     * @param departureTime Time of departure for flight
+     * @param destination   Three letter airport code for arriving airport
+     * @param arrivalDate   Date of arrival for flight
+     * @param arrivalTime   Time of arrival for flight
+     * @return Returns true if passes all checks, throws ParserException if there is an issue with any formats.
+     * @throws ParserException
+     */
     private boolean parseSegments(String src, String departureDate, String departureTime, String destination, String arrivalDate, String arrivalTime) throws ParserException {
         if(!(Project2.validAirportCode(src) || Project2.validAirportCode(destination))) {
             throw new ParserException("Error parsing text file: Invalid airport code supplied, must be exactly 3 letters, no numbers allowed");
