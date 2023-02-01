@@ -74,23 +74,25 @@ public class TextParser implements AirlineParser<Airline> {
         // Reading each individual line till end of file
         while((textFileString = br.readLine()) != null && textFileString.length() != 0) {
 
-            // Removing all spaces from string
-            textFileString = textFileString.replaceAll("\\s", "");
-
             // Parsing string and putting each individual segment into an array, string is deliminated by '|'
             listOfWords = textFileString.split("\\|");
             if(!airline.getName().equals(listOfWords[0])) {
                 throw new ParserException("Unable to parse text file: cannot have multiple airlines with different names.");
             }
 
+
             // Check to make sure string is not null
             if (textFileString != null) {
+
+
                 // Creating flight with current contents
                 try{
                     flightNumber = Integer.parseInt(listOfWords[1]);
                 } catch (NumberFormatException NFE) {
                     throw new ParserException("Issue parsing flight number from text file.");
                 }
+
+                // Trimming padded spaces
                 src = listOfWords[2].trim();
                 departureDate = listOfWords[3].trim();
                 departureTime = listOfWords[4].trim();
@@ -98,6 +100,7 @@ public class TextParser implements AirlineParser<Airline> {
                 arrivalDate = listOfWords[6].trim();
                 arrivalTime = listOfWords[7].trim();
 
+                // Ensuring all variables are valid
                 parseSegments(src, departureDate, departureTime, destination, arrivalDate, arrivalTime);
 
                 flight = new Flight(flightNumber, src, departureDate, departureTime, destination, arrivalDate, arrivalTime);
@@ -108,7 +111,7 @@ public class TextParser implements AirlineParser<Airline> {
         return airline;
 
     } catch (IOException e) {
-        throw new ParserException("While parsing airline text", e);
+        throw new ParserException("While parsing airline text");
     }
   }
 
@@ -128,9 +131,6 @@ public class TextParser implements AirlineParser<Airline> {
        if(!Project2.validAirportCode(src) || !Project2.validAirportCode(destination)) {
            throw new ParserException("Error parsing text file: Invalid airport code provided, must be exactly three characters");
        }
-        if(!Project2.validAirportCode(src) || !Project2.validAirportCode(destination)) {
-            throw new ParserException("Error parsing text file: Invalid airport code supplied, must be exactly 3 letters, no numbers allowed");
-        }
         if(!Project2.validDateFormat(departureDate) || !Project2.validDateFormat(arrivalDate)) {
             throw new ParserException("Error parsing text file: Invalid arrival/departure date format recieved " + departureDate + " and " + arrivalDate);
         }

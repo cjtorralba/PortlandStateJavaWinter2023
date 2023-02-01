@@ -23,7 +23,6 @@ public class TextDumper implements AirlineDumper<Airline> {
       PrintWriter pw = new PrintWriter(this.writer);
       ) {
       Collection<Flight> list = airline.getFlights();
-//      airline.getFlights().stream().map(f -> airline.getName() + f.getFlightAsTextFileString()).forEach(pw::println);
       for(Flight f : list) {
         pw.println(airline.getName() + "|" + f.getFlightAsTextFileString());
       }

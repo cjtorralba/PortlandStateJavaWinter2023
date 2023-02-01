@@ -7,8 +7,7 @@ import java.io.*;
 import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TextParserTest {
@@ -36,12 +35,100 @@ public class TextParserTest {
 
   @Test
   void extraInformationInTextFile() throws ParserException{
-    InputStream resource = getClass().getResourceAsStream("invalid-airline.txt");
+    InputStream resource = getClass().getResourceAsStream("invalid-num-args-airline.txt");
     assertThat(resource, notNullValue());
 
     TextParser tp = new TextParser(new InputStreamReader(resource));
     assertThrows(ParserException.class, tp::parse);
   }
+
+  @Test
+  void invalidFlightNumber() {
+    InputStream resource = getClass().getResourceAsStream("invalid-flightnumber-airline.txt");
+    assertThat(resource, notNullValue());
+
+    TextParser tp = new TextParser(new InputStreamReader(resource));
+    assertThrows(ParserException.class, tp::parse);
+  }
+
+
+  @Test
+  void testMultiLineValidFlights() throws ParserException {
+      InputStream resource = getClass().getResourceAsStream("valid-multiline-airline.txt");
+      assertThat(resource, notNullValue());
+
+      TextParser tp = new TextParser(new InputStreamReader(resource));
+      Airline airline = tp.parse();
+
+      assertThat(airline.getName(), containsString("valid Flight Airline"));
+  }
+
+  @Test
+  void testMultiLineInvalidFlights() throws ParserException {
+    InputStream resource = getClass().getResourceAsStream("multiline-invalid-airline.txt");
+    assertThat(resource, notNullValue());
+
+    TextParser tp = new TextParser(new InputStreamReader(resource));
+
+    assertThrows(ParserException.class, tp::parse);
+  }
+
+  @Test
+  void testMultiLineInvalidFlightNames() throws ParserException {
+    InputStream resource = getClass().getResourceAsStream("multiline-invalid-flight-names.txt");
+    assertThat(resource, notNullValue());
+
+    TextParser tp = new TextParser(new InputStreamReader(resource));
+
+    assertThrows(ParserException.class, tp::parse);
+  }
+
+  @Test
+  void testInvalidFlightNumberAfterValidFlightNumber() {
+    InputStream resource = getClass().getResourceAsStream("multiline-invalid-flight-numbers.txt");
+    assertThat(resource, notNullValue());
+
+    TextParser tp = new TextParser(new InputStreamReader(resource));
+
+    assertThrows(ParserException.class, tp::parse);
+  }
+
+
+
+
+  @Test
+  void testInvalidArrivalTimeFormat() {
+    InputStream resource = getClass().getResourceAsStream("multiline-invalid-arrivaltime-format.txt");
+    assertThat(resource, notNullValue());
+
+    TextParser tp = new TextParser(new InputStreamReader(resource));
+
+    assertThrows(ParserException.class, tp::parse);
+  }
+
+
+  @Test
+  void testInvalidArrivalDateFormat() {
+    InputStream resource = getClass().getResourceAsStream("multiline-invalid-arrivaldate-format.txt");
+    assertThat(resource, notNullValue());
+
+    TextParser tp = new TextParser(new InputStreamReader(resource));
+
+    assertThrows(ParserException.class, tp::parse);
+  }
+
+
+  @Test
+  void testInvalidAirportCodeFormat() {
+    InputStream resource = getClass().getResourceAsStream("multiline-invalid-airportcode-format.txt");
+    assertThat(resource, notNullValue());
+
+    TextParser tp = new TextParser(new InputStreamReader(resource));
+
+    assertThrows(ParserException.class, tp::parse);
+  }
+
+
 
 
 }
