@@ -2,13 +2,10 @@ package edu.pdx.cs410J.torral2;
 
 import edu.pdx.cs410J.AirlineParser;
 import edu.pdx.cs410J.ParserException;
-import org.checkerframework.checker.regex.qual.Regex;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * This class is used to parse information from a text file and add it all into a flight.
@@ -40,8 +37,7 @@ public class TextParser implements AirlineParser<Airline> {
 //      textFileString = textFileString.replaceAll("\\s", "");
       String[] listOfWords = textFileString.split("\\|");
 
-
-      if(listOfWords.length != 8) {
+      if(listOfWords.length != 6) {
         throw new ParserException("Error parsing file: Invalid number of arguments for a flight");
       }
 
@@ -64,8 +60,8 @@ public class TextParser implements AirlineParser<Airline> {
         String departureDate = listOfWords[3].trim();
         String departureTime = listOfWords[4].trim();
         String destination = listOfWords[5].trim();
-        String arrivalDate = listOfWords[6].trim();
-        String arrivalTime = listOfWords[7].trim();
+//        String arrivalDate = listOfWords[6].trim();
+//        String arrivalTime = listOfWords[7].trim();
 
 
         // Testing parsed text
@@ -133,13 +129,13 @@ public class TextParser implements AirlineParser<Airline> {
      */
     private boolean parseSegments(String src, String departureDate, String departureTime, String destination, String arrivalDate, String arrivalTime) throws ParserException {
 
-       if(!Project2.validAirportCode(src) || !Project2.validAirportCode(destination)) {
+       if(!Project3.validAirportCode(src) || !Project3.validAirportCode(destination)) {
            throw new ParserException("Error parsing text file: Invalid airport code provided, must be exactly three characters");
        }
-        if(!Project2.validDateFormat(departureDate) || !Project2.validDateFormat(arrivalDate)) {
+        if(!Project3.validDateFormat(departureDate) || !Project3.validDateFormat(arrivalDate)) {
             throw new ParserException("Error parsing text file: Invalid arrival/departure date format recieved " + departureDate + " and " + arrivalDate);
         }
-        if(!Project2.validTimeFormat(departureTime) || !Project2.validTimeFormat(arrivalTime)) {
+        if(!Project3.validTimeFormat(departureTime) || !Project3.validTimeFormat(arrivalTime)) {
             throw new ParserException("Error parsing text file: Invalid arrival/departure time format");
         }
         return true;

@@ -2,10 +2,13 @@ package edu.pdx.cs410J.torral2;
 
 import com.google.common.annotations.VisibleForTesting;
 import edu.pdx.cs410J.ParserException;
+import org.checkerframework.checker.units.qual.A;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The main class for the CS410J airline Project
@@ -15,7 +18,7 @@ import java.util.List;
  * @version 1.0
  * @since 1.0
  */
-public class Project2 {
+public class Project3 {
 
   /**
    * Reads the readme to the user when main is run with -README as argument
@@ -23,7 +26,7 @@ public class Project2 {
   @VisibleForTesting
   static boolean readTheREADME(){
     try (
-            InputStream readme = Project2.class.getResourceAsStream("README.txt")
+            InputStream readme = Project3.class.getResourceAsStream("README.txt")
     ) {
       BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
       String line = reader.readLine();
@@ -44,8 +47,7 @@ public class Project2 {
    */
  @VisibleForTesting
   static boolean validTimeFormat(String time) {
-    return time.matches("\\d?\\d:\\d?\\d");
-
+    return time.matches("\\d?\\d:\\d?\\d\\s[pP|aA][mM]");
  }
 
   /**
@@ -102,16 +104,31 @@ public class Project2 {
       readTheREADME();
       return;
     }
+
+
+  /*
+   * Checking for command line arguments
+   */
+
     boolean print = list.contains("-print");
     list.remove("-print");
 
     boolean writeToFile = list.contains("-textFile");
     String fileName = null;
 
+    boolean prettyPrint = list.contains("-pretty");
+    String prettyFileName = null;
+
     if (writeToFile) {
       fileName = list.get(list.indexOf("-textFile") + 1);
       list.remove("-textFile");
       list.remove(fileName);
+    }
+
+    if(prettyPrint) {
+      prettyFileName = list.get(list.indexOf("-pretty") + 1);
+      list.remove("-pretty");
+      list.remove(prettyFileName);
     }
 
 
@@ -229,6 +246,14 @@ public class Project2 {
         airline.addFlight(flight);
       }
 
+      // Sorting list
+       List<Flight> newList = airline.getFlights().stream().sorted(Flight::compareTo).collect(Collectors.toList());
+
+      for (Flight flight1 : newList) {
+        System.out.println(flight1);
+      }
+
+
       // Writing all information in airline to text file
       try {
         airline = new Airline(airlineName);
@@ -245,6 +270,21 @@ public class Project2 {
       airline = new Airline(airlineName);
       airline.addFlight(flight);
     }
+
+   // Working with pretty print now
+    if(prettyPrint) {
+
+
+      // If filename provided was '-' we are print to stdout
+      if(prettyFileName.equals("-")) {
+
+      } else { // Printing to file provided by the user
+
+
+      }
+    }
+
+
     // If print has been added as argument, we will print out airline name and its flights.
     if(print) {
       System.out.println("Airline " + airline.getName() + " has flights: ");
