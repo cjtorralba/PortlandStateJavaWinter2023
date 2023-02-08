@@ -3,7 +3,9 @@ package edu.pdx.cs410J.torral2;
 import edu.pdx.cs410J.InvokeMainTestCase;
 import org.junit.jupiter.api.Test;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -16,7 +18,7 @@ import static org.hamcrest.Matchers.equalTo;
  * This test will be used to test the functionality of the program as a whole
  *
  * @author Christian Torralba
- * @version 1.0
+ * @version 3.0
  * @since 1.0
  */
 class Project3IT extends InvokeMainTestCase {
@@ -163,8 +165,42 @@ class Project3IT extends InvokeMainTestCase {
   @Test
   void testWriteToFileWithExistentFile() throws IOException {
   String fileName = "testfile-" + UUID.randomUUID() + ".txt";
-  assertThat(new File(fileName).createNewFile(), equalTo(true));
-  MainMethodResult result = invokeMain("-textFile", fileName, "737", "PDX", "10/23/2923", "12:42", "LAX", "12/23/2003", "3:03");
-  assertThat(new File(fileName).exists(), equalTo(true));
+  File file = new File(fileName);
+  assertThat(file.createNewFile(), equalTo(true));
+  MainMethodResult result = invokeMain("-textFile", fileName, "737", "PDX", "10/23/2923", "12:42 pm", "LAX", "12/23/2003", "3:03 pm");
+  assertThat(file.exists(), equalTo(true));
+  file.delete();
   }
+
+
+  /**
+   * Tests '-' as a command line argument after -pretty is specified, hopefully printing to stdout.
+   * @throws IOException If unable to open file.
+   */
+  @Test
+  void testDashWorksForPrettyPrint() throws IOException {
+    MainMethodResult result = invokeMain("-pretty", "-", "MyAirline", "737", "PDX", "10/23/2923", "12:42 pm", "LAX", "12/23/2003", "3:03 pm");
+    assertThat(result.getTextWrittenToStandardOut(), containsString("The MyAirline has the following flights"));
+  }
+
+
+  /**
+   * Tests that PrettyPrinter can write to a valid file that already exists.
+   * @throws IOException If file could not be created.
+   */
+  @Test
+  void prettyPrintWritesToFileThatExists() throws IOException {
+    String fileName = "testFile-" + UUID.randomUUID() + ".txt";
+    File file = new File(fileName);
+
+    assertThat(file.createNewFile(), equalTo(true));
+    MainMethodResult result = invokeMain("-pretty", fileName, "MyAirline", "737", "PDX", "10/23/2923", "12:42 pm", "LAX", "12/23/2003", "3:03 pm");
+
+    BufferedReader br = new BufferedReader(new FileReader(file));
+    String line = br.readLine();
+
+    assertThat(line, containsString("The MyAirline has the following flights:"));
+    file.delete();
+  }
+
 }

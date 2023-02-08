@@ -5,7 +5,6 @@ import edu.pdx.cs410J.AbstractFlight;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.Locale;
 
@@ -16,16 +15,11 @@ import java.util.Locale;
  *  It also includes information about the arriving airport, being the 3-letter code of the airport,
  *  and the arrival time and date.
  *
- * @author Christian Julio Torralba
- * @version 1.0
+ * @author Christian Torralba
+ * @version 3.0
  * @since 1.0
  */
 public class Flight extends AbstractFlight implements Comparable<Flight> {
-
-
-
-
-
   /**
    * Flight number of the flight.
    */
@@ -35,8 +29,6 @@ public class Flight extends AbstractFlight implements Comparable<Flight> {
    * 3-letter Airport code for departing flight.
    */
   private final String src;
-
-
 
 
   /**
@@ -52,23 +44,22 @@ public class Flight extends AbstractFlight implements Comparable<Flight> {
   private final String departTime;
 
 
-
+  /**
+   * Proper format for Arrival date and time, using MM/dd/yy h:mm
+   */
  private final Date arrivalDateAndTime;
 
 
-private final Date departureDateAndTime;
+  /**
+   * Proper format for Departure date and time, using MM/dd/yy h:mm
+   */
+  private final Date departureDateAndTime;
 
   /**
    *  3-letter code for arrival airport.
    */
 
   private final String dest;
-
-
-
-
-
-
 
 
   /**
@@ -174,16 +165,6 @@ private final Date departureDateAndTime;
     return DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.US).format(this.departureDateAndTime);
   }
 
-
-
-
-  /**
-   * @return The departure date and time formatted for the text file, using '|' to separate the two
-   */
-//  public String getDepartureStringForTextFile() {
-  //   return this.departDate + "|" + this.departTime;
-  // }
-
   /**
    * @return Returns the airport code for the destination airport
    */
@@ -194,7 +175,8 @@ private final Date departureDateAndTime;
 
 
   /**
-   * @return The arrival date and time formatted together
+   * Returns the arrival date and time in String form with MM/dd/yy h:mm:ss format
+   * @return String The arrival date and time formatted together
    */
   @Override
   public String getArrivalString() {
@@ -203,9 +185,11 @@ private final Date departureDateAndTime;
 
 
   /**
-   *
-   * @param flight the object to be compared.
-   * @return
+   * This function compares two flights, flights with source codes that come first in the alphabet
+   * have a higher value, if both flights have the same source, the flights with a earlier flight time
+   * have higher priority.
+   * @param flight The flight we are comparing to.
+   * @return int Value 0 if flights are equal
    */
   @Override
   public int compareTo(Flight flight) {
@@ -215,13 +199,4 @@ private final Date departureDateAndTime;
     }
     return result;
   }
-
-  // /**
-  //  * @return The arrival date and time formatted for a text file, using '|' as a delimiter
-  //  */
-  // public String getArrivalStringForTextFile() {
-  //   return this.arriveDate + "|" + this.arriveTime;
-  // }
-
-
 }

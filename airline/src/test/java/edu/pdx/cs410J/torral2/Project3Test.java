@@ -6,10 +6,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.util.Date;
-import java.util.Locale;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -19,7 +15,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  *  certain flights after they have been created.
  *
  * @author Christian Torralba
- * @version 1.0
+ * @version 3.0
  * @since 1.0
  */
 class Project3Test {
@@ -42,6 +38,14 @@ class Project3Test {
   }
 
 
-
+  /**
+   * Tests to ensure that program recognizes valid format
+   */
+  @Test
+  void testValidTimeFormat() {
+    assertThat(Project3.validTimeFormat("10:15 pm"), equalTo(true));
+    assertThat(Project3.validTimeFormat("1:15 AM"), equalTo(true));
+    assertThat(Project3.validTimeFormat("1:05 pm"), equalTo(true));
+  }
 }
 

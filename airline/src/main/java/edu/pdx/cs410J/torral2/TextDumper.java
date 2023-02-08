@@ -10,7 +10,7 @@ import java.util.Collection;
  * This class is used to write information from an airline into a specified text file
  *
  * @author Christian TOrralba
- * @version 1.0
+ * @version 3.0
  * @since 1.0
  */
 public class TextDumper implements AirlineDumper<Airline> {

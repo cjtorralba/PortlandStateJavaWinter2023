@@ -1,5 +1,6 @@
 package edu.pdx.cs410J.torral2;
 
+import edu.pdx.cs410J.InvokeMainTestCase;
 import edu.pdx.cs410J.ParserException;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * This class is used to test the TextParser class and the range of possibilities that could happen to it
  *
  * @author Christian Torralba
- * @version 1.0
+ * @version 3.0
  * @since 1.0
  */
 public class TextParserTest {
@@ -169,6 +170,4 @@ public class TextParserTest {
 
     assertThrows(ParserException.class, tp::parse);
   }
-
-
 }

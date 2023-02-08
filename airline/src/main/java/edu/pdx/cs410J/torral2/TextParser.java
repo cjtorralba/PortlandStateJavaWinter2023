@@ -12,16 +12,30 @@ import java.io.Reader;
  * The text in the file should be deliminated with the '|' character
  *
  * @author Christian Torralba
- * @version 1.0
+ * @version 3.0
  * @since 1.0
  */
 public class TextParser implements AirlineParser<Airline> {
-  private final Reader reader;
 
+
+    /**
+     * Abstract type reader to be able to implement whichever for of reader you desire.
+     */
+    private final Reader reader;
+
+    /**
+     * Creates a new TextParser object.
+     * @param reader Any reader which will be read from.
+     */
   public TextParser(Reader reader) {
     this.reader = reader;
   }
 
+    /**
+     * Parses a given file for a collection of Flights to assign to an Airline, returns that new airline with given flight list.
+     * @return Airline filled with Flights from text file
+     * @throws ParserException If unable to read file, or if there is malformed data in the file.
+     */
   @Override
   public Airline parse() throws ParserException {
     try (
@@ -125,7 +139,7 @@ public class TextParser implements AirlineParser<Airline> {
      * @param arrivalDate   Date of arrival for flight
      * @param arrivalTime   Time of arrival for flight
      * @return Returns true if passes all checks, throws ParserException if there is an issue with any formats.
-     * @throws ParserException
+     * @throws ParserException If unable to parse file.
      */
     private boolean parseSegments(String src, String departureDate, String departureTime, String destination, String arrivalDate, String arrivalTime) throws ParserException {
 

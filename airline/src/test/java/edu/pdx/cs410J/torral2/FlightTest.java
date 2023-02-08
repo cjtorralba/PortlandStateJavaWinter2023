@@ -1,13 +1,9 @@
 package edu.pdx.cs410J.torral2;
 
-import org.checkerframework.checker.units.qual.A;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.util.Date;
-import java.util.Locale;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
@@ -18,8 +14,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * Unit tests for the {@link Flight} class.
  * This class contains unit tests for the Flight class.
  *
- * @author Christian Julio Torralba
- * @version 1.0
+ * @author Christian Torralba
+ * @version 3.0
  * @since 1.0
  */
 public class FlightTest {
@@ -98,10 +94,7 @@ public class FlightTest {
         String arriveTime = "10:53 PM";
         String arriveDate = "10/24/2023";
 
-
-
         Flight testFlight = new Flight(722, "PDX", "10/23/2021", "3:53 am", "LAX", arriveDate, arriveTime);
-
 
         arriveDate = "10/24/23";
         String departureDateAndTime = arriveDate + ", " + arriveTime;
@@ -120,7 +113,6 @@ public class FlightTest {
         assertThat(src, CoreMatchers.containsString(testFlight.getSource()));
     }
 
-
     /**
      * Tests getDestination() function
      */
@@ -130,6 +122,4 @@ public class FlightTest {
         Flight testFlight = new Flight(123, "PDX", "10/12/1234", "10:23 pm", dest, "1/23/2009", "11:20 am");
         assertThat(dest, CoreMatchers.containsString(testFlight.getDestination()));
     }
-
-
 }

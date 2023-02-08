@@ -3,11 +3,9 @@ package edu.pdx.cs410J.torral2;
 import com.google.common.annotations.VisibleForTesting;
 import edu.pdx.cs410J.AirportNames;
 import edu.pdx.cs410J.ParserException;
-import org.checkerframework.checker.units.qual.A;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,7 +14,7 @@ import java.util.stream.Collectors;
  * This class contains the main logic of the program
  *
  * @author Christian Torralba
- * @version 1.0
+ * @version 3.0
  * @since 1.0
  */
 public class Project3 {

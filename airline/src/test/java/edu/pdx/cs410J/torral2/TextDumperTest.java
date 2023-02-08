@@ -15,11 +15,9 @@ import static org.hamcrest.Matchers.equalTo;
  * and formatted properly
  *
  * @author Christian Toralba
- * @version 1.0
+ * @version 3.0
  * @since 1.0
  */
-
-
 public class TextDumperTest {
 
 
@@ -63,5 +61,7 @@ public class TextDumperTest {
     TextParser parser = new TextParser(new FileReader(textFile));
     Airline read = parser.parse();
     assertThat(read.getName(), equalTo(airlineName));
+
+
   }
 }
