@@ -55,10 +55,10 @@ class Project3IT extends InvokeMainTestCase {
     String airlineName = "MyAirline";
     String src = "LAX";
     String departureDate = "10/23/2022";
-    String departureTime = "10:32";
+    String departureTime = "10:32 pm";
     String destination = "PDX";
     String arrivalDate = "1/9/2022";
-    String arrivalTime = "1:09";
+    String arrivalTime = "1:09 pm";
 
     MainMethodResult result;
 
@@ -115,7 +115,7 @@ class Project3IT extends InvokeMainTestCase {
   @Test
   void testIncorrectDepartureDateFormat() {
     String departureDate = "123/23/2023";
-    MainMethodResult result = invokeMain("American Airlines", "123", "PDX", departureDate, "12:40", "LAX", "10/23/2022", "12:42");
+    MainMethodResult result = invokeMain("American Airlines", "123", "PDX", departureDate, "12:40 PM", "LAX", "10/23/2022", "12:42 PM");
     assertThat(result.getTextWrittenToStandardError(), containsString("Format for departure date is invalid, you entered " + departureDate + ". Please use correct format, example: 12/31/2022 or 1/2/2022"));
   }
 
@@ -125,7 +125,7 @@ class Project3IT extends InvokeMainTestCase {
   @Test
   void testIncorrectDepartureTimeFormat() {
     String departureTime = "12:111";
-    MainMethodResult result = invokeMain("American Airlines", "123", "PDX", "10/23/2022", departureTime, "LAX", "12/23/2022", "12:45");
+    MainMethodResult result = invokeMain("American Airlines", "123", "PDX", "10/23/2022", departureTime, "LAX", "12/23/2022", "12:45 PM");
     assertThat(result.getTextWrittenToStandardError(), containsString("Format for departure time is invalid, you entered " + departureTime + ". Please use correct format, example: 10:32 or 1:06"));
 
   }
@@ -147,10 +147,12 @@ class Project3IT extends InvokeMainTestCase {
   @Test
   void testWriteToFileWIthNonExistentFile() {
     String file = "testfile-" + UUID.randomUUID() + ".txt";
-    assertThat(new File(file).exists(), equalTo(false));
-    MainMethodResult result = invokeMain("-textFile", file, "AirlineName","737", "PDX", "10/23/2923", "12:42", "LAX", "12/23/2003", "3:03");
-    MainMethodResult result2 = invokeMain("-textFile", file, "AirlineName","737", "PDX", "10/23/2923", "12:42", "LAX", "12/23/2003", "3:03");
-    assertThat(new File(file).exists(), equalTo(true));
+    File newFile = new File(file);
+    assertThat(newFile.exists(), equalTo(false));
+    MainMethodResult result = invokeMain("-textFile", file, "AirlineName","737", "PDX", "10/23/2923", "12:42 pm", "LAX", "12/23/2003", "3:03 pm");
+    MainMethodResult result2 = invokeMain("-textFile", file, "AirlineName","737", "PDX", "10/23/2923", "12:42 pm", "LAX", "12/23/2003", "3:03 pm");
+    assertThat(newFile.exists(), equalTo(true));
+    newFile.delete();
   }
 
 

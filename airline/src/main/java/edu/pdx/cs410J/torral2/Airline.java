@@ -75,4 +75,7 @@ public class Airline extends AbstractAirline<Flight> {
   public Collection<Flight> getFlights() {
     return this.flightList;
   }
+
+
+
 }

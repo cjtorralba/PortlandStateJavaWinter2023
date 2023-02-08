@@ -1,6 +1,7 @@
 package edu.pdx.cs410J.torral2;
 
 import com.google.common.annotations.VisibleForTesting;
+import edu.pdx.cs410J.AirportNames;
 import edu.pdx.cs410J.ParserException;
 import org.checkerframework.checker.units.qual.A;
 
@@ -47,7 +48,7 @@ public class Project3 {
    */
  @VisibleForTesting
   static boolean validTimeFormat(String time) {
-    return time.matches("\\d?\\d:\\d?\\d\\s[pP|aA][mM]");
+    return time.matches("\\d?\\d:\\d?\\d\\s?[pP|aA][mM]");
  }
 
   /**
@@ -65,7 +66,7 @@ public class Project3 {
    */
  @VisibleForTesting
  static boolean validAirportCode(String code) {
-    return code.matches("[a-zA-Z]{3}");
+    return code.matches("[a-zA-Z]{3}") && (AirportNames.getName(code) != null);
  }
 
 
@@ -110,8 +111,7 @@ public class Project3 {
    * Checking for command line arguments
    */
 
-    boolean print = list.contains("-print");
-    list.remove("-print");
+    boolean print = list.remove("-print");
 
     boolean writeToFile = list.contains("-textFile");
     String fileName = null;
@@ -134,7 +134,7 @@ public class Project3 {
 
     // Not enough arguments
     if (list.size() != 8) {
-      System.err.println("Error: Invalid number of command line arguments, please run with [-usage] for a full list of options");
+      System.err.println("Error: Invalid number of command line arguments, please run with no arguments for a full list of options");
       return;
     }
 
@@ -247,18 +247,18 @@ public class Project3 {
       }
 
       // Sorting list
-       List<Flight> newList = airline.getFlights().stream().sorted(Flight::compareTo).collect(Collectors.toList());
-
-      for (Flight flight1 : newList) {
-        System.out.println(flight1);
+      List<Flight> sortedList = null;
+      if(airline != null) {
+       sortedList = airline.getFlights().stream().sorted(Flight::compareTo).collect(Collectors.toList());
+       airline = new Airline(airlineName, sortedList);
+      } else {
+        airline = new Airline(airlineName, List.of(flight));
       }
+
 
 
       // Writing all information in airline to text file
       try {
-        airline = new Airline(airlineName);
-        airline.addFlight(flight);
-
         FileWriter fileWriter = new FileWriter(file);
         textdumper = new TextDumper(fileWriter);
         textdumper.dump(airline);
@@ -273,14 +273,19 @@ public class Project3 {
 
    // Working with pretty print now
     if(prettyPrint) {
-
-
-      // If filename provided was '-' we are print to stdout
-      if(prettyFileName.equals("-")) {
-
-      } else { // Printing to file provided by the user
-
-
+      try {
+        // If filename provided was '-' we are print to stdout
+        if(prettyFileName.equals("-")) {
+            PrettyPrinter ppw = new PrettyPrinter(new OutputStreamWriter(System.out));
+            ppw.dump(airline);
+        } else { // Printing to file provided by the user
+          FileWriter fileWriter = new FileWriter(new File(prettyFileName));
+          PrettyPrinter ppw = new PrettyPrinter(fileWriter);
+          ppw.dump(airline);
+        }
+      } catch (IOException fnf) {
+        System.err.println("File could not be created, please try re-running the program with a different path.");
+        return;
       }
     }
 

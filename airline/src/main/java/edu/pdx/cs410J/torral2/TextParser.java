@@ -37,7 +37,7 @@ public class TextParser implements AirlineParser<Airline> {
 //      textFileString = textFileString.replaceAll("\\s", "");
       String[] listOfWords = textFileString.split("\\|");
 
-      if(listOfWords.length != 6) {
+      if(listOfWords.length != 8) {
         throw new ParserException("Error parsing file: Invalid number of arguments for a flight");
       }
 
@@ -51,7 +51,7 @@ public class TextParser implements AirlineParser<Airline> {
       try{
         flightNumber = Integer.parseInt(listOfWords[1]);
 
-      } catch (NumberFormatException NFE) {
+      } catch (NumberFormatException nfe) {
           throw new ParserException("Unable to parse file: Issue parsing flight number from text file.");
       }
 
@@ -60,8 +60,8 @@ public class TextParser implements AirlineParser<Airline> {
         String departureDate = listOfWords[3].trim();
         String departureTime = listOfWords[4].trim();
         String destination = listOfWords[5].trim();
-//        String arrivalDate = listOfWords[6].trim();
-//        String arrivalTime = listOfWords[7].trim();
+        String arrivalDate = listOfWords[6].trim();
+        String arrivalTime = listOfWords[7].trim();
 
 
         // Testing parsed text

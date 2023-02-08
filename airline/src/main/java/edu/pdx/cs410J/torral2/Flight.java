@@ -37,20 +37,20 @@ public class Flight extends AbstractFlight implements Comparable<Flight> {
   private final String src;
 
 
- //
- //
- // /**
- //  * Departure date, format MM/DD/YYYY
- //  * Month and day can be one or two digit, year will always be four digits.
- //  */
- // private final String departDate;
 
- // /**
- //  * Departure time, format HH:MM
- //  * Hour and minute may be one or two digits.
- //  */
- // private final String departTime;
- //
+
+  /**
+   * Departure date, format MM/DD/YYYY
+   * Month and day can be one or two digit, year will always be four digits.
+   */
+  private final String departDate;
+
+  /**
+   * Departure time, format HH:MM
+   * Hour and minute may be one or two digits.
+   */
+  private final String departTime;
+
 
 
  private final Date arrivalDateAndTime;
@@ -70,18 +70,18 @@ private final Date departureDateAndTime;
 
 
 
-//
-//  /**
-//   * Date of arrival, format MM/DD/YYYY
-//   * Month and day can be one or two digit, year will always be four digits.
-//   */
-//  private final String arriveDate;
-//
-//  /**
-//   * Arrival time, format HH:MM
-//   * Hour and minute may be one or two digits.
-//   */
-//  private final String arriveTime;
+
+  /**
+   * Date of arrival, format MM/DD/YYYY
+   * Month and day can be one or two digit, year will always be four digits.
+   */
+  private final String arriveDate;
+
+  /**
+   * Arrival time, format HH:MM
+   * Hour and minute may be one or two digits.
+   */
+  private final String arriveTime;
 
 
   /**
@@ -96,12 +96,12 @@ private final Date departureDateAndTime;
    * @param arriveTime Time or arrival, as a String
    */
   public Flight(int flightNumber, String src, String departDate, String departTime, String dest, String arriveDate, String arriveTime) {
+    DateFormat df = new SimpleDateFormat("MM/dd/yyyy h:mm a");
 
     this.flightNumber = flightNumber;
 
     this.src = src;
     this.dest = dest;
-
 
     if (!Project3.validDateFormat(departDate))
       throw new IllegalArgumentException("Invalid departure date provided.");
@@ -115,40 +115,29 @@ private final Date departureDateAndTime;
     if (!Project3.validTimeFormat(arriveTime))
       throw new IllegalArgumentException("Invalid arrival time provided.");
 
-
-//    DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.ENGLISH);
-
-    DateFormat df = new SimpleDateFormat("MM/dd/yyyy h:mm a");
-
     try {
       arrivalDateAndTime = df.parse(arriveDate + " " + arriveTime);
     } catch (ParseException pe) {
       throw new IllegalArgumentException("Incorrect arrival date or time format.");
     }
 
-
     try {
       departureDateAndTime = df.parse(departDate + " " + departTime);
     } catch (ParseException PE) {
       throw new IllegalArgumentException("Incorrect departure date or time format.");
     }
-    System.out.println("Printing time and date.");
-    System.out.println(departureDateAndTime);
-    System.out.println(arrivalDateAndTime);
 
-    // this.departDate = departDate;
-    // this.departTime = departTime;
+    this.departDate = departDate;
+    this.departTime = departTime;
 
-
-
-//    this.arriveDate = arriveDate;
-//    this.arriveTime = arriveTime;
+    this.arriveDate = arriveDate;
+    this.arriveTime = arriveTime;
   }
 
 
 
   public String getFlightAsTextFileString() {
-    return this.getNumber() + "|" + this.src + "|" + this.departureDateAndTime + "|" + this.getDestination() + "|" + this.arrivalDateAndTime;
+    return this.flightNumber + "|" + this.src + "|" + this.departDate+ "|" + this.departTime+ "|" + this.dest + "|" + this.arriveDate + "|" + this.arriveTime;
   }
 
   /**
@@ -169,20 +158,20 @@ private final Date departureDateAndTime;
 
   @Override
   public Date getArrival() {
-      return this.arrivalDateAndTime;
+    return this.arrivalDateAndTime;
   }
 
 
   @Override
   public Date getDeparture() {
-      return this.departureDateAndTime;
+    return this.departureDateAndTime;
   }
   /**
    * @return The departure date and time
    */
   @Override
   public String getDepartureString() {
-    return this.departureDateAndTime.toString();
+    return DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.US).format(this.departureDateAndTime);
   }
 
 
@@ -192,8 +181,8 @@ private final Date departureDateAndTime;
    * @return The departure date and time formatted for the text file, using '|' to separate the two
    */
 //  public String getDepartureStringForTextFile() {
- //   return this.departDate + "|" + this.departTime;
- // }
+  //   return this.departDate + "|" + this.departTime;
+  // }
 
   /**
    * @return Returns the airport code for the destination airport
@@ -209,7 +198,7 @@ private final Date departureDateAndTime;
    */
   @Override
   public String getArrivalString() {
-    return this.arrivalDateAndTime.toString();
+    return DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.US).format(this.arrivalDateAndTime);
   }
 
 
@@ -220,16 +209,19 @@ private final Date departureDateAndTime;
    */
   @Override
   public int compareTo(Flight flight) {
-    // TODO Check to make sure compareTo sorts in ascending not descending
-    return flight.src.compareTo(this.src);
+    int result = this.src.compareTo(flight.src);
+    if(result == 0) { // The sources are equal
+      return this.departureDateAndTime.compareTo(flight.departureDateAndTime);
+    }
+    return result;
   }
 
   // /**
- //  * @return The arrival date and time formatted for a text file, using '|' as a delimiter
- //  */
- // public String getArrivalStringForTextFile() {
- //   return this.arriveDate + "|" + this.arriveTime;
- // }
+  //  * @return The arrival date and time formatted for a text file, using '|' as a delimiter
+  //  */
+  // public String getArrivalStringForTextFile() {
+  //   return this.arriveDate + "|" + this.arriveTime;
+  // }
 
 
 }

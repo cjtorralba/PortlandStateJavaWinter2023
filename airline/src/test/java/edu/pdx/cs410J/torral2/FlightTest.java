@@ -1,7 +1,13 @@
 package edu.pdx.cs410J.torral2;
 
 import org.checkerframework.checker.units.qual.A;
+import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Date;
+import java.util.Locale;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
@@ -23,7 +29,7 @@ public class FlightTest {
    */
   @Test
  void testInvalidArrivalTimeFormatInConstructor(){
-   IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new Flight(123, "PDX", "10/23/2023", "12:42", "LAX", "12/23/2022", "3:063"));
+   IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new Flight(123, "PDX", "10/23/2023", "12:42 pm", "LAX", "12/23/2022", "3:63"));
    assertThat(exception.getMessage(), containsString("Invalid arrival time provided."));
  }
 
@@ -33,7 +39,7 @@ public class FlightTest {
    */
   @Test
   void testInvalidArrivalDateFormatInConstructor(){
-    IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new Flight(123, "PDX", "10/23/2023", "12:42", "LAX", "12/23/3", "3:03"));
+    IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new Flight(123, "PDX", "10/23/2023", "12:42 pm", "LAX", "12/23/3", "3:03 pm"));
     assertThat(exception.getMessage(), containsString("Invalid arrival date provided."));
   }
 
@@ -42,7 +48,7 @@ public class FlightTest {
    */
   @Test
   void testInvalidDepartureDateFormatInConstructor(){
-  IllegalArgumentException exception =  assertThrows(IllegalArgumentException.class, () -> new Flight(123, "PDX", "10/23/", "12:42", "LAX", "12/23/2003", "3:03"));
+  IllegalArgumentException exception =  assertThrows(IllegalArgumentException.class, () -> new Flight(123, "PDX", "10/23/", "12:42 pm", "LAX", "12/23/2003", "3:03 pm"));
     assertThat(exception.getMessage(), containsString("Invalid departure date provided."));
   }
 
@@ -51,7 +57,7 @@ public class FlightTest {
    */
   @Test
   void testInvalidDepartureTimeFormatInConstructor(){
-    IllegalArgumentException exception =  assertThrows(IllegalArgumentException.class, () -> new Flight(123, "PDX", "10/23/2923", "122:423", "LAX", "12/23/2003", "3:03"));
+    IllegalArgumentException exception =  assertThrows(IllegalArgumentException.class, () -> new Flight(123, "PDX", "10/23/2923", "122:423", "LAX", "12/23/2003", "3:03 pm"));
     assertThat(exception.getMessage(), containsString("Invalid departure time provided."));
   }
 
@@ -62,10 +68,68 @@ public class FlightTest {
   @Test
   void testGetFlightNumber() {
       int testFlightNumber = 123;
-      Flight flight = new Flight(testFlightNumber, "PDX", "10/23/2923", "12:42", "LAX", "12/23/2003", "3:03");
+      Flight flight = new Flight(testFlightNumber, "PDX", "10/23/2923", "12:42 pm", "LAX", "12/23/2003", "3:03 pm");
       assertThat(flight.getNumber(), equalTo(testFlightNumber));
   }
 
+
+    /**
+     * Tests the function getDepartureString() for a given Flight
+     */
+    @Test
+    void testGetDepartureString() {
+        String departeTime = "10:53 PM";
+        String departureDate = "10/24/2023";
+
+        Flight testFlight = new Flight(722, "PDX",departureDate, departeTime, "LAX", "10/24/2022", "1:15 pm");
+
+        departureDate = "10/24/23";
+        String departureDateAndTime = departureDate + ", " + departeTime;
+
+        assertThat(departureDateAndTime, CoreMatchers.containsString(testFlight.getDepartureString()));
+    }
+
+
+    /**
+     * Tests the getArrivalString function for a flight
+     */
+    @Test
+    void testGetArrivalString() throws ParseException {
+        String arriveTime = "10:53 PM";
+        String arriveDate = "10/24/2023";
+
+
+
+        Flight testFlight = new Flight(722, "PDX", "10/23/2021", "3:53 am", "LAX", arriveDate, arriveTime);
+
+
+        arriveDate = "10/24/23";
+        String departureDateAndTime = arriveDate + ", " + arriveTime;
+
+        assertThat(departureDateAndTime, CoreMatchers.containsString(testFlight.getArrivalString()));
+    }
+
+
+    /**
+     * Tests getSource() function
+     */
+    @Test
+    void testGetSource() {
+        String src = "LAX";
+        Flight testFlight = new Flight(123, src, "10/12/1234", "10:23 am", "PDX", "11/23/2009", "11:20 pm");
+        assertThat(src, CoreMatchers.containsString(testFlight.getSource()));
+    }
+
+
+    /**
+     * Tests getDestination() function
+     */
+    @Test
+    void testGetDestination() {
+        String dest = "PDX";
+        Flight testFlight = new Flight(123, "PDX", "10/12/1234", "10:23 pm", dest, "1/23/2009", "11:20 am");
+        assertThat(dest, CoreMatchers.containsString(testFlight.getDestination()));
+    }
 
 
 }
