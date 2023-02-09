@@ -99,7 +99,7 @@ public class TextParserTest {
 
     TextParser tp = new TextParser(new InputStreamReader(resource));
 
-    assertThrows(ParserException.class, tp::parse);
+    assertThrows(IllegalArgumentException.class, tp::parse);
   }
 
   /**
@@ -113,7 +113,7 @@ public class TextParserTest {
 
     TextParser tp = new TextParser(new InputStreamReader(resource));
 
-    assertThrows(ParserException.class, tp::parse);
+    assertThrows(IllegalArgumentException.class, tp::parse);
   }
 
   /**
@@ -126,7 +126,7 @@ public class TextParserTest {
 
     TextParser tp = new TextParser(new InputStreamReader(resource));
 
-    assertThrows(ParserException.class, tp::parse);
+    assertThrows(IllegalArgumentException.class, tp::parse);
   }
 
 

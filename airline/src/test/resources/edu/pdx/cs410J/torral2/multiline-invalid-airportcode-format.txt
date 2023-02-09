@@ -1,4 +1,4 @@
-valid Flight Airline|123|PDXXX3|10/23/4567|10:46|LAX|10/56/2902|12:29
-valid Flight Airline|123|PDX|10/23/4567|10:46|LAX|10/56/1290|10:23
-valid Flight Airline|123|PDX|10/23/4567|10:46|LAX|10/56/1290|10:03
-valid Flight Airline|123|PDX|10/23/4567|10:46|LAX|10/56/1290|1:23
+valid Flight Airline|123|PDXXX3|10/23/4567|10:46 pm|LAX|10/56/2902|12:29 pm
+valid Flight Airline|123|PDX|10/23/4567|10:46 pm|LAX|10/56/1290|10:23 pm
+valid Flight Airline|123|PDX|10/23/4567|10:46 pm|LAX|10/56/1290|10:03 pm
+valid Flight Airline|123|PDX|10/23/4567|10:46 pm|LAX|10/56/1290|1:23 pm

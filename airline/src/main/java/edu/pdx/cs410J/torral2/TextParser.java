@@ -118,7 +118,12 @@ public class TextParser implements AirlineParser<Airline> {
                 // Ensuring all variables are valid
                 parseSegments(src, departureDate, departureTime, destination, arrivalDate, arrivalTime);
 
-                flight = new Flight(flightNumber, src, departureDate, departureTime, destination, arrivalDate, arrivalTime);
+                try {
+                    flight = new Flight(flightNumber, src, departureDate, departureTime, destination, arrivalDate, arrivalTime);
+                } catch (IllegalArgumentException e) {
+                    System.err.println(e.getMessage());
+                    return null;
+                }
                 airline.addFlight(flight);
             }
         }

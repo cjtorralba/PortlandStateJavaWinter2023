@@ -5,8 +5,13 @@ import edu.pdx.cs410J.AirportNames;
 import edu.pdx.cs410J.ParserException;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -95,6 +100,8 @@ public class Project3 {
               "\toptions are (options may appear in any order):\n" +
               "\t\t-print                 Prints a description of the new flight\n" +
               "\t\t-README                Prints a README for this project and exits\n" +
+              "\t\t-textFile fileName     Prints output of airline and its flights to file specified\n" +
+              "\t\t-pretty prettyFileName Prints output of airline in a human-readable format to specified file, use '-' to print to console\n" +
               "Date and time should be in the format: mm/dd/yyyy hh:mm");
       return;
     }
@@ -131,7 +138,7 @@ public class Project3 {
 
 
     // Not enough arguments
-    if (list.size() != 8) {
+    if (list.size() != 10) {
       System.err.println("Error: Invalid number of command line arguments, please run with no arguments for a full list of options");
       return;
     }
@@ -151,10 +158,10 @@ public class Project3 {
     // Parsing information from command line
     String src = list.get(2);
     String departureDate = list.get(3);
-    String departureTime = list.get(4);
-    String destination = list.get(5);
-    String arrivalDate = list.get(6);
-    String arrivalTime = list.get(7);
+    String departureTime = list.get(4) + " " + list.get(5).toUpperCase();
+    String destination = list.get(6);
+    String arrivalDate = list.get(7);
+    String arrivalTime = list.get(8) + " " + list.get(9).toUpperCase();
 
     // Testing for valid airport codes
     if (!validAirportCode(src) || !validAirportCode(destination)) {
@@ -190,7 +197,13 @@ public class Project3 {
     if (!writeToFile) {
       airline = new Airline(airlineName);
     }
-    flight = new Flight(flightNumber, src, departureDate, departureTime, destination, arrivalDate, arrivalTime);
+
+    try {
+      flight = new Flight(flightNumber, src, departureDate, departureTime, destination, arrivalDate, arrivalTime);
+    } catch (IllegalArgumentException e) {
+      System.err.println(e.getMessage());
+      return;
+    }
 
 
     // If our read/write flag was set, we will first read all information from text file and put it into the airline
@@ -208,8 +221,14 @@ public class Project3 {
       boolean exists = file.exists();
       if (!exists) {
         try {
+            Pattern pattern = Pattern.compile(".*[/\\\\]");
+            Matcher match = pattern.matcher(fileName);
+            String filePath = null;
+            if(match.find()) {
+              filePath = match.group(0);
+              Files.createDirectories(Paths.get(filePath));
+            }
           file.createNewFile();
-          System.out.println("Created file");
         } catch (IOException e) {
           System.err.println("There was an issue creating the file in location: " + fileName);
         }

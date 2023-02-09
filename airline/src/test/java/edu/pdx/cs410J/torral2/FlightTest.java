@@ -53,7 +53,7 @@ public class FlightTest {
    */
   @Test
   void testInvalidDepartureTimeFormatInConstructor(){
-    IllegalArgumentException exception =  assertThrows(IllegalArgumentException.class, () -> new Flight(123, "PDX", "10/23/2923", "122:423", "LAX", "12/23/2003", "3:03 pm"));
+    IllegalArgumentException exception =  assertThrows(IllegalArgumentException.class, () -> new Flight(123, "PDX", "10/23/2003", "122:423", "LAX", "12/23/2003", "3:03 pm"));
     assertThat(exception.getMessage(), containsString("Invalid departure time provided."));
   }
 
@@ -64,7 +64,7 @@ public class FlightTest {
   @Test
   void testGetFlightNumber() {
       int testFlightNumber = 123;
-      Flight flight = new Flight(testFlightNumber, "PDX", "10/23/2923", "12:42 pm", "LAX", "12/23/2003", "3:03 pm");
+      Flight flight = new Flight(testFlightNumber, "PDX", "10/23/1002", "12:42 pm", "LAX", "12/23/2003", "3:03 pm");
       assertThat(flight.getNumber(), equalTo(testFlightNumber));
   }
 
@@ -77,9 +77,8 @@ public class FlightTest {
         String departeTime = "10:53 PM";
         String departureDate = "10/24/2023";
 
-        Flight testFlight = new Flight(722, "PDX",departureDate, departeTime, "LAX", "10/24/2022", "1:15 pm");
-
-        departureDate = "10/24/23";
+        Flight testFlight = new Flight(722, "PDX",departureDate, departeTime, "LAX", "10/24/2024", "1:15 pm");
+       departureDate = "10/24/23";
         String departureDateAndTime = departureDate + ", " + departeTime;
 
         assertThat(departureDateAndTime, CoreMatchers.containsString(testFlight.getDepartureString()));
@@ -99,7 +98,7 @@ public class FlightTest {
         arriveDate = "10/24/23";
         String departureDateAndTime = arriveDate + ", " + arriveTime;
 
-        assertThat(departureDateAndTime, CoreMatchers.containsString(testFlight.getArrivalString()));
+        assertThat(departureDateAndTime, containsString(testFlight.getArrivalString()));
     }
 
 

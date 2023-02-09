@@ -6,4 +6,4 @@ the arrival date and time, and the name of the airline you will be flying with.
 This program was written by Christian Torralba for the Advanced Java class (CS410P) taught by David Whitlock
 Winter term of 2023.
 
-To see usage for this program please run with [-print] as a command line argument.
+To see usage for this program please run with no arguments.

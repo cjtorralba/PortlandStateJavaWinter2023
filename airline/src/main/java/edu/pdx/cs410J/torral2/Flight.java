@@ -118,6 +118,10 @@ public class Flight extends AbstractFlight implements Comparable<Flight> {
       throw new IllegalArgumentException("Incorrect departure date or time format.");
     }
 
+    if(arrivalDateAndTime.before(departureDateAndTime)) {
+        throw new IllegalArgumentException("Cannot have arrival date before departure date.");
+    }
+
     this.departDate = departDate;
     this.departTime = departTime;
 

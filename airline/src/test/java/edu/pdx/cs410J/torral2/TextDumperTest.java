@@ -49,7 +49,7 @@ public class TextDumperTest {
   void canParseTextWrittenByTextDumper(@TempDir File tempDir) throws IOException, ParserException {
     String airlineName = "Test Airline";
     Airline airline = new Airline(airlineName);
-    Flight flight = new Flight(123, "PDX", "10/23/2345", "10:45 PM", "LAX", "12/13/1234", "1:23 AM");
+    Flight flight = new Flight(123, "PDX", "10/23/2345", "10:45 PM", "LAX", "12/13/3234", "1:23 AM");
     airline.addFlight(flight);
 
     File textFile = new File(tempDir, "airline.txt");
@@ -61,7 +61,5 @@ public class TextDumperTest {
     TextParser parser = new TextParser(new FileReader(textFile));
     Airline read = parser.parse();
     assertThat(read.getName(), equalTo(airlineName));
-
-
   }
 }
