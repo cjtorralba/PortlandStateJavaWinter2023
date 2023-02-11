@@ -47,4 +47,5 @@ public class AboutVarArgs {
     public void youCanHaveOtherTypesInTheMethodSignature() {
         assertEquals(new ExampleClass().verboseLength("This is how many items were passed in: ", 1, 2, 3, 4), "This is how many items were passed in: 4");
     }
+
 }
