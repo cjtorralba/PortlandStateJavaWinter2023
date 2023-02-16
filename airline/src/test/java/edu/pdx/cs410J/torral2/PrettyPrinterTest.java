@@ -41,7 +41,7 @@ public class PrettyPrinterTest {
 
         String line = br.readLine();
 
-        assertThat(line, equalTo("The " + airline.getName() + " has the following flights: "));
+        assertThat(line, equalTo("Airline: " + airlineName));
 
         textFile.delete();
     }

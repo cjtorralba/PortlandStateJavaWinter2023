@@ -192,7 +192,7 @@ class Project3IT extends InvokeMainTestCase {
   @Test
   void testDashWorksForPrettyPrint() throws IOException {
     MainMethodResult result = invokeMain("-pretty", "-", "MyAirline", "737", "PDX", "10/23/1923", "12:42", "pm", "LAX", "12/23/2003", "3:03", "pm");
-    assertThat(result.getTextWrittenToStandardOut(), containsString("The MyAirline has the following flights"));
+    assertThat(result.getTextWrittenToStandardOut(), containsString("Airline: MyAirline"));
   }
 
 
@@ -211,7 +211,7 @@ class Project3IT extends InvokeMainTestCase {
     BufferedReader br = new BufferedReader(new FileReader(file));
     String line = br.readLine();
 
-    assertThat(line, containsString("The MyAirline has the following flights:"));
+    assertThat(line, containsString("Airline: MyAirline"));
     file.delete();
   }
 
