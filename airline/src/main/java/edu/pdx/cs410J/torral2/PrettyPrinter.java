@@ -41,13 +41,12 @@ public class PrettyPrinter implements AirlineDumper<Airline> {
 
             Collection<Flight> list = airline.getFlights();
 
-            pw.println("The " + airline.getName() + " has the following flights: ");
+            pw.println("Airline: " + airline.getName());
             for(Flight f : list) {
                 long minutes = Math.abs(TimeUnit.MILLISECONDS.toMinutes(f.getArrival().toInstant().toEpochMilli() - f.getDeparture().toInstant().toEpochMilli()));
-                pw.println("\tFlight " + f.getNumber() + " leaving from " + AirportNames.getName(f.getSource()) + "(" +
-                        f.getSource() + ") " + f.getDepartureString() + " arrives in " +
-                        AirportNames.getName(f.getDestination()) + "(" + f.getDestination() + ")" +
-                        " at " + f.getArrivalString() + ", the length of this flight is " + minutes + " minutes.");
+                pw.println("Flight Number\t\tSource Airport\t\tDeparture Time\t\tArrival Time\t\tArrival Airport\t\tLength of flight (Minutes)\n" +
+                                   "------------------------------------------------------------------------------------------------------------------------------\n" +
+                                   "\t" + f.getNumber() + "\t\t\t|\t" + AirportNames.getName(f.getSource()) + "\t| " + f.getDepartureString() + " | " + f.getArrivalString() + " | " + AirportNames.getName(f.getDestination()) + " |\t\t" + minutes);
             }
             pw.flush();
         }
