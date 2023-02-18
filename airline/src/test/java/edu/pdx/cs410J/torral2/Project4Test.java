@@ -18,7 +18,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @version 3.0
  * @since 1.0
  */
-class Project3Test {
+class Project4Test {
 
 
   /**
@@ -28,7 +28,7 @@ class Project3Test {
   @Test
   void readmeCanBeReadAsResource() throws IOException {
     try (
-      InputStream readme = Project3.class.getResourceAsStream("README.txt")
+      InputStream readme = Project4.class.getResourceAsStream("README.txt")
     ) {
       assertThat(readme, not(nullValue()));
       BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
@@ -43,9 +43,9 @@ class Project3Test {
    */
   @Test
   void testValidTimeFormat() {
-    assertThat(Project3.validTimeFormat("10:15 pm"), equalTo(true));
-    assertThat(Project3.validTimeFormat("1:15 AM"), equalTo(true));
-    assertThat(Project3.validTimeFormat("1:05 pm"), equalTo(true));
+    assertThat(Project4.validTimeFormat("10:15 pm"), equalTo(true));
+    assertThat(Project4.validTimeFormat("1:15 AM"), equalTo(true));
+    assertThat(Project4.validTimeFormat("1:05 pm"), equalTo(true));
   }
 }
 

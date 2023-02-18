@@ -6,7 +6,6 @@ import edu.pdx.cs410J.ParserException;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,7 @@ import java.util.stream.Collectors;
  * @version 3.0
  * @since 1.0
  */
-public class Project3 {
+public class Project4 {
 
   /**
    * Reads the readme to the user when main is run with -README as argument
@@ -30,7 +29,7 @@ public class Project3 {
   @VisibleForTesting
   static boolean readTheREADME(){
     try (
-            InputStream readme = Project3.class.getResourceAsStream("README.txt")
+            InputStream readme = Project4.class.getResourceAsStream("README.txt")
     ) {
       BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
       String line = reader.readLine();
@@ -118,11 +117,17 @@ public class Project3 {
 
     boolean print = list.remove("-print");
 
+    // Textfile
     boolean writeToFile = list.contains("-textFile");
     String fileName = null;
 
+    // Pretty print
     boolean prettyPrint = list.contains("-pretty");
     String prettyFileName = null;
+
+    // XMLFile
+    boolean xmlFile = list.contains("-xmlFile");
+    String xmlFileName = null;
 
     if (writeToFile) {
       fileName = list.get(list.indexOf("-textFile") + 1);
@@ -136,6 +141,11 @@ public class Project3 {
       list.remove(prettyFileName);
     }
 
+    if(xmlFile) {
+      xmlFileName = list.get(list.indexOf("-xmlFile") + 1);
+      list.remove("-xmlFile");
+      list.remove(xmlFileName);
+    }
 
     // Not enough arguments
     if (list.size() != 10) {

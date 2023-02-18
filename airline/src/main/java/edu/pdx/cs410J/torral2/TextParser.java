@@ -148,13 +148,13 @@ public class TextParser implements AirlineParser<Airline> {
      */
     private boolean parseSegments(String src, String departureDate, String departureTime, String destination, String arrivalDate, String arrivalTime) throws ParserException {
 
-       if(!Project3.validAirportCode(src) || !Project3.validAirportCode(destination)) {
+       if(!Project4.validAirportCode(src) || !Project4.validAirportCode(destination)) {
            throw new ParserException("Error parsing text file: Invalid airport code provided, must be exactly three characters");
        }
-        if(!Project3.validDateFormat(departureDate) || !Project3.validDateFormat(arrivalDate)) {
+        if(!Project4.validDateFormat(departureDate) || !Project4.validDateFormat(arrivalDate)) {
             throw new ParserException("Error parsing text file: Invalid arrival/departure date format recieved " + departureDate + " and " + arrivalDate);
         }
-        if(!Project3.validTimeFormat(departureTime) || !Project3.validTimeFormat(arrivalTime)) {
+        if(!Project4.validTimeFormat(departureTime) || !Project4.validTimeFormat(arrivalTime)) {
             throw new ParserException("Error parsing text file: Invalid arrival/departure time format");
         }
         return true;

@@ -94,16 +94,16 @@ public class Flight extends AbstractFlight implements Comparable<Flight> {
     this.src = src;
     this.dest = dest;
 
-    if (!Project3.validDateFormat(departDate))
+    if (!Project4.validDateFormat(departDate))
       throw new IllegalArgumentException("Invalid departure date provided.");
 
-    if (!Project3.validDateFormat(arriveDate))
+    if (!Project4.validDateFormat(arriveDate))
       throw new IllegalArgumentException("Invalid arrival date provided.");
 
-    if (!Project3.validTimeFormat(departTime))
+    if (!Project4.validTimeFormat(departTime))
       throw new IllegalArgumentException("Invalid departure time provided.");
 
-    if (!Project3.validTimeFormat(arriveTime))
+    if (!Project4.validTimeFormat(arriveTime))
       throw new IllegalArgumentException("Invalid arrival time provided.");
 
     try {

@@ -1,17 +1,29 @@
 package edu.pdx.cs410J.torral2;
 
 import edu.pdx.cs410J.AirlineDumper;
-import org.checkerframework.checker.units.qual.C;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.IOException;
+import java.io.Writer;
 import java.util.Calendar;
 
 public class XmlDumper implements AirlineDumper<Airline> {
+
+
+    private final Writer writer;
+
+
+    public XmlDumper(Writer writer) { this.writer = writer; }
 
 
     @Override
@@ -101,7 +113,24 @@ public class XmlDumper implements AirlineDumper<Airline> {
                 depart.appendChild(date);
                 depart.appendChild(time);
             }
+        }
 
+        // Creating XML file
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer;
+        try {
+            transformer = transformerFactory.newTransformer();
+        } catch (TransformerConfigurationException e) {
+            throw new RuntimeException(e);
+        }
+
+        DOMSource domSource = new DOMSource(doc);
+        StreamResult streamResult = new StreamResult(this.writer);
+
+        try {
+            transformer.transform(domSource, streamResult);
+        } catch (TransformerException e) {
+            throw new RuntimeException(e);
         }
     }
 }

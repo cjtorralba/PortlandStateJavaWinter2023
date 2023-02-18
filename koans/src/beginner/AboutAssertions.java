@@ -2,7 +2,6 @@ package beginner;
 
 import com.sandwich.koan.Koan;
 
-import static com.google.common.base.Predicates.equalTo;
 import static com.sandwich.util.Assert.*;
 
 public class AboutAssertions {
