@@ -1,16 +1,15 @@
 package edu.pdx.cs410J.torral2;
 
 import edu.pdx.cs410J.AirlineDumper;
+import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
+import org.w3c.dom.DocumentType;
 import org.w3c.dom.Element;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.IOException;
@@ -54,7 +53,7 @@ public class XmlDumper implements AirlineDumper<Airline> {
 
             // Creating flight element
             Element flightRoot = doc.createElement("flight") ;
-            name.appendChild(flightRoot);
+            rootElement.appendChild(flightRoot);
 
             // Adding flight number to flightRoot
             Element flightNumber = doc.createElement("number");
@@ -76,8 +75,8 @@ public class XmlDumper implements AirlineDumper<Airline> {
                 calendar.setTime(flight.getDeparture());
 
                 Element date = doc.createElement("date");
-                date.setAttribute("day",String.valueOf(calendar.get(Calendar.DAY_OF_WEEK)) + 1);
-                date.setAttribute("month", String.valueOf(calendar.get(Calendar.MONTH)) + 1);
+                date.setAttribute("day",String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)));
+                date.setAttribute("month", String.valueOf(calendar.get(Calendar.MONTH) + 1));
                 date.setAttribute("year", String.valueOf(calendar.get(Calendar.YEAR)));
 
                Element time = doc.createElement("time");
@@ -102,24 +101,35 @@ public class XmlDumper implements AirlineDumper<Airline> {
                 calendar.setTime(flight.getArrival());
 
                 Element date = doc.createElement("date");
-                date.setAttribute("day",String.valueOf(calendar.get(Calendar.DAY_OF_WEEK)) + 1);
-                date.setAttribute("month", String.valueOf(calendar.get(Calendar.MONTH)) + 1);
+                date.setAttribute("day",String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)));
+                date.setAttribute("month", String.valueOf(calendar.get(Calendar.MONTH) + 1));
                 date.setAttribute("year", String.valueOf(calendar.get(Calendar.YEAR)));
 
                 Element time = doc.createElement("time");
                 time.setAttribute("hour", String.valueOf(calendar.get(Calendar.HOUR)));
                 time.setAttribute("minute", String.valueOf(calendar.get(Calendar.MINUTE)));
 
-                depart.appendChild(date);
-                depart.appendChild(time);
+                arrive.appendChild(date);
+                arrive.appendChild(time);
             }
         }
 
         // Creating XML file
+
+
+        DOMImplementation domImp = doc.getImplementation();
+        DocumentType docType = domImp.createDocumentType("doctype", "", "http://web.cecs.pdx.edu/~whitlock/dtds/airline.dtd");
+
+
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer;
         try {
             transformer = transformerFactory.newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+            transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, docType.getSystemId());
+            transformer.setOutputProperty(OutputKeys.ENCODING, "us-ascii");
+            transformer.setOutputProperty(OutputKeys.METHOD, "xml");
         } catch (TransformerConfigurationException e) {
             throw new RuntimeException(e);
         }

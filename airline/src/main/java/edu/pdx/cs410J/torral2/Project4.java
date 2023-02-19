@@ -73,7 +73,7 @@ public class Project4 {
 
 
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException {
 
     Flight flight = null;
     Airline airline = null;
@@ -215,6 +215,17 @@ public class Project4 {
       return;
     }
 
+  airline.addFlight(flight);
+
+    if(xmlFile) {
+      File file = new File(xmlFileName);
+      FileWriter fileWriter = new FileWriter(file);
+      XmlDumper xmlDumper = new XmlDumper(fileWriter);
+      xmlDumper.dump(airline);
+
+      return;
+    }
+
 
     // If our read/write flag was set, we will first read all information from text file and put it into the airline
     // object, then we will add out current flight passed in via command line, then we will write back to the file all
@@ -223,10 +234,6 @@ public class Project4 {
 
       // Reading/writing airline to file.
       File file = new File(fileName);
-
-
-
-
       // Checking to see if the file exists, if not we create it.
       boolean exists = file.exists();
       if (!exists) {
