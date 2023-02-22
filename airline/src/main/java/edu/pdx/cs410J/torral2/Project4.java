@@ -81,7 +81,6 @@ public class Project4 {
     TextParser textParser = null;
     TextDumper textdumper = null;
 
-
     //arraylist or command line arguments
     ArrayList<String> list = new ArrayList<>(List.of(args));
 
@@ -106,12 +105,7 @@ public class Project4 {
     }
 
 
-    XmlParser xmlParser = new XmlParser(new File("newXmlFile.xml"));
-    xmlParser.parse();
-    if(true) {
-      return ;
-    }
-
+    // Checking for README, exiting program after printing
     if (list.contains("-README")) {
       readTheREADME();
       return;
