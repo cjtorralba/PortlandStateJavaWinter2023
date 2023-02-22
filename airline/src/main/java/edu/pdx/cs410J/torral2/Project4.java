@@ -73,7 +73,7 @@ public class Project4 {
 
 
 
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) throws IOException, ParserException {
 
     Flight flight = null;
     Airline airline = null;
@@ -103,6 +103,13 @@ public class Project4 {
               "\t\t-pretty prettyFileName Prints output of airline in a human-readable format to specified file, use '-' to print to console\n" +
               "Date and time should be in the format: mm/dd/yyyy hh:mm");
       return;
+    }
+
+
+    XmlParser xmlParser = new XmlParser(new File("newXmlFile.xml"));
+    xmlParser.parse();
+    if(true) {
+      return ;
     }
 
     if (list.contains("-README")) {
