@@ -82,6 +82,7 @@ public class TextParser implements AirlineParser<Airline> {
         parseSegments(src, departureDate, departureTime, destination, arrivalDate, arrivalTime);
 
         Airline airline = new Airline(airlineName);
+        System.out.println(airlineName);
         Flight flight = new Flight(flightNumber, src, departureDate, departureTime, destination, arrivalDate, arrivalTime);
 
         airline.addFlight(flight);

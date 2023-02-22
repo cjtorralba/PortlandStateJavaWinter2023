@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!DOCTYPE airline SYSTEM "http://web.cecs.pdx.edu/~whitlock/dtds/airline.dtd">
+<airline>
+    <name>valid Flight Airline</name>
+    <flight>
+        <number>666</number>
+        <src>SFO</src>
+        <depart>
+            <date day="23" month="10" year="2023"/>
+            <time hour="0" minute="32"/>
+        </depart>
+        <dest>LAX</dest>
+        <arrive>
+            <date day="24" month="11" year="2023"/>
+            <time hour="1" minute="45"/>
+        </arrive>
+    </flight>
+</airline>

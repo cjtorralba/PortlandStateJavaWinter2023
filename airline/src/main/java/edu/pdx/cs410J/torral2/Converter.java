@@ -37,8 +37,12 @@ public class Converter {
         File textFile = new File(textFileName);
 
         if(!textFile.exists()) {
-            System.err.println("Text file is empty!");
-            return;
+            try {
+                textFile.createNewFile();
+            } catch(IOException e) {
+                System.err.println("File does not exist and could not be created.");
+                return;
+            }
         }
 
 
@@ -57,6 +61,8 @@ public class Converter {
             System.err.println("Could not parse the text file.");
             return;
         }
+
+        System.out.println(airline.getName());
 
         try {
             fileWriter = new FileWriter(new File(xmlFileName));

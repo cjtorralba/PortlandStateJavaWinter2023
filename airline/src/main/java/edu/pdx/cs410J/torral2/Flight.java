@@ -121,6 +121,7 @@ public class Flight extends AbstractFlight implements Comparable<Flight> {
         }
 
         if (arrivalDateAndTime.before(departureDateAndTime)) {
+            System.out.println(arrivalDateAndTime + " " + departureDateAndTime);
             throw new IllegalArgumentException("Cannot have arrival date before departure date.");
         }
 
