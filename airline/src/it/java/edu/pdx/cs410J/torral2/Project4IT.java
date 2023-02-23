@@ -232,8 +232,8 @@ class Project4IT extends InvokeMainTestCase {
    */
   @Test
   void testXmlFileWriteToFileThatDoesExist() throws IOException {
-    String xmlFileName = "C:\\Users\\cjtorralba\\IdeaProjects\\PortlandStateJavaWinter2023\\airline\\src\\test\\resources\\edu\\pdx\\cs410J\\torral2\\valid-airline.xml";
-    File xmlFile = new File(xmlFileName);
+    String xmlFileName = "valid-airline.xml";
+    File xmlFile = new File(getClass().getResource(xmlFileName).getFile());
     assertThat(xmlFile.exists(), equalTo(true));
     MainMethodResult result = invokeMain("-xmlFile", xmlFileName, "Valid Airlines", "737", "PDX", "10/23/1923", "12:42", "pm", "LAX", "12/23/2003", "3:03","pm");
     BufferedReader br = new BufferedReader(new FileReader(new File(xmlFileName)));
