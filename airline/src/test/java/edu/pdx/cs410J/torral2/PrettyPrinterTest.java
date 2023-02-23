@@ -13,7 +13,7 @@ import static org.hamcrest.Matchers.equalTo;
  * Test class for the PrettyPrinter class, ensuring that format and location will be correct.
  *
  * @author Christian Torralba
- * @version 1.0
+ * @version 2.0
  * @since 1.0
  */
 public class PrettyPrinterTest {

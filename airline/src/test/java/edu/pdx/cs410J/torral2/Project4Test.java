@@ -15,7 +15,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  *  certain flights after they have been created.
  *
  * @author Christian Torralba
- * @version 3.0
+ * @version 4.0
  * @since 1.0
  */
 class Project4Test {

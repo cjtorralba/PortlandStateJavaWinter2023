@@ -15,7 +15,7 @@ import static org.hamcrest.Matchers.equalTo;
  * and formatted properly
  *
  * @author Christian Toralba
- * @version 3.0
+ * @version 4.0
  * @since 1.0
  */
 public class TextDumperTest {

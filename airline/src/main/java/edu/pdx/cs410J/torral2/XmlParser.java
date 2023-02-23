@@ -14,13 +14,31 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * This class is used to parse a XML file to find the airline and flights within it.
+ * @author Christian Torralba
+ * @version 1.0
+ * @since 1.0
+ */
 public class XmlParser implements AirlineParser {
 
+    /**
+     * File location of xml file.
+     */
     private final File file;
 
-
+    /**
+     * Constructor for new XmlParser.
+     * @param file File location of xml file.
+     */
     public XmlParser(File file) { this.file = file; }
 
+    /**
+     * Parses a given file to find the airline and flights within that file.
+     * @return an airline with the name and flights given in the xml file.
+     * @throws ParserException If file could not be found or contains invalid information.
+     */
     @Override
     public Airline parse() throws ParserException {
 

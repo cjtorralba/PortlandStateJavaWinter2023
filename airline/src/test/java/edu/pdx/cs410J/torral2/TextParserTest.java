@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * This class is used to test the TextParser class and the range of possibilities that could happen to it
  *
  * @author Christian Torralba
- * @version 3.0
+ * @version 4.0
  * @since 1.0
  */
 public class TextParserTest {

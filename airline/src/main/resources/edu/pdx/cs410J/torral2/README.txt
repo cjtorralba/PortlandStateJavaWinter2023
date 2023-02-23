@@ -25,4 +25,13 @@ but with information in it already, it will be overwritten, please be aware of t
 The source and arrival airport codes must be EXACTLY three characters, no numbers allowed. If it is not, then the program
 will exit and prompt you to run it again.
 
+There is also the option to have our airline and flights stored in xml format. By using the command line option '-xmlFile'
+You may specify the location of where you wish your airline to be stored.
+
+If you already have an airline stored within a textfile and wish to have it converted, you can use the Converter class.
+The converter class allows you to convert a textfile with valid information in it to an xml file containing the same information.
+To usage for the converter class is: java edu.pdx.cs410J.torral2.Converter textFile xmlFile
+Where 'textFile' is the location or path of the file you wish to convert, and 'xmlFile' is the location of the newly created
+xml file.
+
 To see command line usage for this program please run with no arguments.

@@ -11,12 +11,18 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+/**
+ * Class is used to test some functionality of the xml parsing classes.
+ * @author David Whitlock
+ * @version 1.0
+ * @since 1.0
+ */
+
 class AirlineXmlHelperTest {
 
   @Test
   void canParseValidXmlFile() throws ParserConfigurationException, IOException, SAXException {
     AirlineXmlHelper helper = new AirlineXmlHelper();
-
 
     DocumentBuilderFactory factory =
       DocumentBuilderFactory.newInstance();

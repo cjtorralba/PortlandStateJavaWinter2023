@@ -8,9 +8,20 @@ import java.io.File;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
+
+/**
+ * This class is used to test the functionality of the XmlParser class.
+ *
+ * @author Christian Torralba
+ * @version 1.0
+ * @since 1.0
+ */
 public class XmlParserTest {
 
-
+   /**
+    * Tests to make sure that the airline parsed from an XML file matches the correct airline name
+    * @throws ParserException If there is an airline mismatch error.
+    */
    @Test
    void testXmlParseValidAirline() throws ParserException {
       XmlParser xmlParser = new XmlParser(new File("C:\\Users\\cjtorralba\\IdeaProjects\\PortlandStateJavaWinter2023\\airline\\src\\test\\resources\\edu\\pdx\\cs410J\\torral2\\valid-airline.xml"));
@@ -18,5 +29,4 @@ public class XmlParserTest {
 
       assertThat(airline.getName(), equalTo("Valid Airlines"));
    }
-
 }

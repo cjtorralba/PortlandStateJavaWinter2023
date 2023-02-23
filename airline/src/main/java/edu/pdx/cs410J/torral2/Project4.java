@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  * This class contains the main logic of the program
  *
  * @author Christian Torralba
- * @version 3.0
+ * @version 4.0
  * @since 1.0
  */
 public class Project4 {

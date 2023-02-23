@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * This class contains unit tests for the Flight class.
  *
  * @author Christian Torralba
- * @version 3.0
+ * @version 4.0
  * @since 1.0
  */
 public class FlightTest {

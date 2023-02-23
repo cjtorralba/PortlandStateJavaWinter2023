@@ -1,17 +1,18 @@
 package edu.pdx.cs410J.torral2;
 
-import edu.pdx.cs410J.ParserException;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ *  This class is used to convert a properly formatted text file containing airline objects to a xml file.
+ *
+ * @author Christian Torrlba
+ * @version 1.0
+ * @since 1.0
+ */
 public class Converter {
-
-
-    /*
-     * Usage: java edu.pdx.cs410J.<login-id>.Converter textFile xmlFile
-     */
 
 
     static public void main(String[] args) {
@@ -24,10 +25,14 @@ public class Converter {
         XmlDumper xmlDumper = null;
         FileWriter fileWriter = null;
 
+        // Processing command line arguments
         ArrayList<String> list = new ArrayList<>(List.of(args));
+
         try {
+
+            // Incorrect number of command line arguements triggers usage statement
             if (list.size() != 2) {
-                System.err.println("usage: java edu.pdx.cd410J.torral2.Converter textFile xmlFile");
+                System.err.println("usage: java edu.pdx.cs410J.torral2.Converter textFile xmlFile");
                 return;
             }
 
@@ -40,21 +45,14 @@ public class Converter {
                 textFile.createNewFile();
             }
 
-
             fileReader = new FileReader(textFile);
-
             textParser = new TextParser(fileReader);
-
             airline = textParser.parse();
 
-            System.out.println(airline.getName());
-
             fileWriter = new FileWriter(new File(xmlFileName));
-            System.err.println("Could not open file to write to.");
-
             xmlDumper = new XmlDumper(fileWriter);
-
             xmlDumper.dump(airline);
+
         }catch(Exception e) {
             System.err.println("Could not convert file.");
             return;
