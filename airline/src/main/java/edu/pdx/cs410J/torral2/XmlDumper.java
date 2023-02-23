@@ -118,7 +118,7 @@ public class XmlDumper implements AirlineDumper<Airline> {
 
 
         DOMImplementation domImp = doc.getImplementation();
-        DocumentType docType = domImp.createDocumentType("doctype", "", "http://web.cecs.pdx.edu/~whitlock/dtds/airline.dtd");
+        DocumentType docType = domImp.createDocumentType("doctype", AirlineXmlHelper.PUBLIC_ID, AirlineXmlHelper.SYSTEM_ID);
 
 
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
