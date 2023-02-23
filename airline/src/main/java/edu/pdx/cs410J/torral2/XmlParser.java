@@ -50,6 +50,7 @@ public class XmlParser implements AirlineParser {
 
         try {
             docBuilder = documentBuilderFactory.newDocumentBuilder();
+            docBuilder.setEntityResolver(new AirlineXmlHelper());
         } catch (ParserConfigurationException e) {
             throw new RuntimeException(e);
         }

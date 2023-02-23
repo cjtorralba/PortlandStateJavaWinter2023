@@ -10,7 +10,7 @@ public class AirlineXmlHelper extends ProjectXmlHelper {
 
   /** The System ID for the Family Tree DTD */
   protected static final String SYSTEM_ID =
-    "http://www.cs.pdx.edu/~whitlock/dtds/airline.dtd";
+    "https://www.cs.pdx.edu/~whitlock/dtds/airline.dtd";
 
   /** The Public ID for the Family Tree DTD */
   protected static final String PUBLIC_ID =

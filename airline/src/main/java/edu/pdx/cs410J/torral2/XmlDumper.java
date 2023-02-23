@@ -33,6 +33,7 @@ public class XmlDumper implements AirlineDumper<Airline> {
         DocumentBuilder docBuilder;
         try {
             docBuilder = docFactory.newDocumentBuilder();
+            docBuilder.setEntityResolver(new AirlineXmlHelper());
         } catch (ParserConfigurationException e) {
             throw new RuntimeException(e);
         }
