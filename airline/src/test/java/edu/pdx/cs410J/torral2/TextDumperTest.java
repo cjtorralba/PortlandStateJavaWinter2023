@@ -61,5 +61,6 @@ public class TextDumperTest {
     TextParser parser = new TextParser(new FileReader(textFile));
     Airline read = parser.parse();
     assertThat(read.getName(), equalTo(airlineName));
+    textFile.delete();
   }
 }

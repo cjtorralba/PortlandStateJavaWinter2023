@@ -216,14 +216,16 @@ public class Project4 {
       return;
     }
 
-  airline.addFlight(flight);
+
+    if (airline != null) {
+      airline.addFlight(flight);
+    }
 
     if(xmlFile) {
       File file = new File(xmlFileName);
       FileWriter fileWriter = new FileWriter(file);
       XmlDumper xmlDumper = new XmlDumper(fileWriter);
       xmlDumper.dump(airline);
-
       return;
     }
 

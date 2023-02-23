@@ -228,53 +228,52 @@ public class Flight extends AbstractFlight implements Comparable<Flight> {
 
         for (int i = 0; i < xmlFlightNodeInfo.getLength(); ++i) {
             switch (xmlFlightNodeInfo.item(i).getNodeName()) {
-                case "number" -> {
+                case "number":
                     flightNumber = Integer.parseInt(xmlFlightNodeInfo.item(i).getTextContent());
-                }
-                case "src" -> {
+                    break;
+                case "src":
                     src = xmlFlightNodeInfo.item(i).getTextContent();
-                }
-                case "depart" -> {
+                    break;
+                case "depart":
                     NodeList departNodes = xmlFlightNodeInfo.item(i).getChildNodes();
                     for (int j = 0; j < departNodes.getLength(); ++j) {
                         if (departNodes.item(j) != null) {
                             switch (departNodes.item(j).getNodeName()) {
-                                case "date" -> {
+                                case "date":
                                     departDateDay = departNodes.item(j).getAttributes().getNamedItem("day").getTextContent();
                                     departDateMonth = departNodes.item(j).getAttributes().getNamedItem("month").getTextContent();
                                     departDateYear = departNodes.item(j).getAttributes().getNamedItem("year").getTextContent();
-                                }
-                                case "time" -> {
+                                    break;
+                                case "time":
                                     departTimeHour = departNodes.item(j).getAttributes().getNamedItem("hour").getTextContent();
                                     departTimeMinute = departNodes.item(j).getAttributes().getNamedItem("minute").getTextContent();
-                                }
-                            }
+                                    break;
                         }
                     }
                 }
-                case "dest" -> {
+            case "dest":
                     dest = xmlFlightNodeInfo.item(i).getTextContent();
-                }
-                case "arrive" -> {
+                    break;
+            case "arrive":
                     NodeList arriveNodes = xmlFlightNodeInfo.item(i).getChildNodes();
                     for (int j = 0; j < arriveNodes.getLength(); ++j) {
                         if (arriveNodes.item(j) != null) {
                             switch (arriveNodes.item(j).getNodeName()) {
-                                case "date" -> {
+                                case "date":
                                     arriveDateDay = arriveNodes.item(j).getAttributes().getNamedItem("day").getTextContent();
                                     arriveDateMonth = arriveNodes.item(j).getAttributes().getNamedItem("month").getTextContent();
                                     arriveDateYear = arriveNodes.item(j).getAttributes().getNamedItem("year").getTextContent();
-                                }
-                                case "time" -> {
+                                    break;
+                                case "time":
                                     arriveTimeHour = arriveNodes.item(j).getAttributes().getNamedItem("hour").getTextContent();
                                     arriveTimeMinute = arriveNodes.item(j).getAttributes().getNamedItem("minute").getTextContent();
-                                }
+                                    break;
                             }
                         }
                     }
+                    break;
                 }
             }
-        }
 
         int parsedArriveTimeHour = Integer.parseInt(arriveTimeHour);
         int parsedDepartTimeHour = Integer.parseInt(departTimeHour);
