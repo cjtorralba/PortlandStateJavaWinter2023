@@ -1,12 +1,11 @@
 package edu.pdx.cs410J.torral2;
 
+import com.sun.tools.javac.Main;
 import edu.pdx.cs410J.InvokeMainTestCase;
+import edu.pdx.cs410J.ParserException;
 import org.junit.jupiter.api.Test;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.containsString;
@@ -212,6 +211,44 @@ class Project4IT extends InvokeMainTestCase {
 
     assertThat(line, containsString("Airline: MyAirline"));
     file.delete();
+  }
+
+
+
+  @Test
+  void testXmlFileWriteToFileThatDoesNotExist() throws IOException , ParserException {
+    String xmlFilename = "testXmlFile-" + UUID.randomUUID() + ".xml";
+    File xmlFile = new File(xmlFilename);
+
+
+    MainMethodResult result = invokeMain("-xmlFile", xmlFilename, "MyAirline", "737", "PDX", "10/23/1923", "12:42", "pm", "LAX", "12/23/2003", "3:03","pm");
+
+    BufferedReader br = new BufferedReader(new FileReader(xmlFile));
+    String line = br.readLine();
+
+    assertThat(line, containsString("<?xml version="));
+  }
+
+  @Test
+  void testXmlFileWriteToFileThatDoesExist() throws IOException {
+    String xmlFileName = "C:\\Users\\cjtorralba\\IdeaProjects\\PortlandStateJavaWinter2023\\airline\\src\\test\\resources\\edu\\pdx\\cs410J\\torral2\\valid-airline.xml";
+    File xmlFile = new File(xmlFileName);
+    assertThat(xmlFile.exists(), equalTo(true));
+    MainMethodResult result = invokeMain("-xmlFile", xmlFileName, "Valid Airlines", "737", "PDX", "10/23/1923", "12:42", "pm", "LAX", "12/23/2003", "3:03","pm");
+    BufferedReader br = new BufferedReader(new FileReader(new File(xmlFileName)));
+    String line = br.readLine();
+    assertThat(line, containsString("<?xml version="));
+  }
+
+  @Test
+  void textXmlMisMatchAirline() throws IOException {
+    String xmlFileName = "C:\\Users\\cjtorralba\\IdeaProjects\\PortlandStateJavaWinter2023\\airline\\src\\test\\resources\\edu\\pdx\\cs410J\\torral2\\valid-airline.xml";
+    File xmlFile = new File(xmlFileName);
+    assertThat(xmlFile.exists(), equalTo(true));
+    MainMethodResult result = invokeMain("-xmlFile", xmlFileName, "Invalid Airlines", "737", "PDX", "10/23/1923", "12:42", "pm", "LAX", "12/23/2003", "3:03","pm");
+    assertThat(result.getTextWrittenToStandardError(), containsString("Can not have mismatched"));
+
+
   }
 
 }

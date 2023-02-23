@@ -80,6 +80,8 @@ public class Project4 {
     Airline textFileAirline = null;
     TextParser textParser = null;
     TextDumper textdumper = null;
+    XmlParser xmlParser = null;
+    XmlDumper xmlDumper = null;
 
     //arraylist or command line arguments
     ArrayList<String> list = new ArrayList<>(List.of(args));
@@ -99,6 +101,7 @@ public class Project4 {
               "\t\t-print                 Prints a description of the new flight\n" +
               "\t\t-README                Prints a README for this project and exits\n" +
               "\t\t-textFile fileName     Prints output of airline and its flights to file specified\n" +
+              "\t\t-xmlFile xmlFileName   Where to read/write the airline info in xml form\n" +
               "\t\t-pretty prettyFileName Prints output of airline in a human-readable format to specified file, use '-' to print to console\n" +
               "Date and time should be in the format: mm/dd/yyyy hh:mm");
       return;
@@ -119,7 +122,7 @@ public class Project4 {
     boolean print = list.remove("-print");
 
     // Textfile
-    boolean writeToFile = list.contains("-textFile");
+    boolean textFile = list.contains("-textFile");
     String fileName = null;
 
     // Pretty print
@@ -127,10 +130,10 @@ public class Project4 {
     String prettyFileName = null;
 
     // XMLFile
-    boolean xmlFile = list.contains("-xmlFile");
+    boolean writeXmlFile = list.contains("-xmlFile");
     String xmlFileName = null;
 
-    if (writeToFile) {
+    if (textFile) {
       fileName = list.get(list.indexOf("-textFile") + 1);
       list.remove("-textFile");
       list.remove(fileName);
@@ -142,7 +145,7 @@ public class Project4 {
       list.remove(prettyFileName);
     }
 
-    if(xmlFile) {
+    if(writeXmlFile) {
       xmlFileName = list.get(list.indexOf("-xmlFile") + 1);
       list.remove("-xmlFile");
       list.remove(xmlFileName);
@@ -205,10 +208,11 @@ public class Project4 {
     }
 
     // Adding current flight to airline
-    if (!writeToFile) {
+    if (!textFile) {
       airline = new Airline(airlineName);
     }
 
+    // Creating a new flight
     try {
       flight = new Flight(flightNumber, src, departureDate, departureTime, destination, arrivalDate, arrivalTime);
     } catch (IllegalArgumentException e) {
@@ -216,24 +220,10 @@ public class Project4 {
       return;
     }
 
-
-    if (airline != null) {
-      airline.addFlight(flight);
-    }
-
-    if(xmlFile) {
-      File file = new File(xmlFileName);
-      FileWriter fileWriter = new FileWriter(file);
-      XmlDumper xmlDumper = new XmlDumper(fileWriter);
-      xmlDumper.dump(airline);
-      return;
-    }
-
-
     // If our read/write flag was set, we will first read all information from text file and put it into the airline
     // object, then we will add out current flight passed in via command line, then we will write back to the file all
     // the flights added to the airline.
-    if (writeToFile) {
+    if (textFile) {
 
       // Reading/writing airline to file.
       File file = new File(fileName);
@@ -303,7 +293,52 @@ public class Project4 {
         System.err.println("File could not be created, please try re-running the program with a different path.");
         return;
       }
-    } else {  // Not working with external file, so only information adding to airline will be via command line
+    }
+
+    else if(writeXmlFile) {
+        File xmlFile = new File(xmlFileName);
+
+        // XML File does not exist, we will add flight THEN write to file
+        if(xmlFile.exists()) {
+          xmlParser = new XmlParser(xmlFile);
+
+          // Attempting to parse xml file
+          try {
+            airline = xmlParser.parse();
+          } catch (ParserException pe) {
+            System.err.println("Could not read xml file.");
+            return;
+          }
+
+          // If successful with parsing, check airline name and add new flight
+          if (airline != null && airline.getName().equals(airlineName)) {
+            airline.addFlight(flight);
+
+            // Now rewriting back to xml file
+            xmlDumper = new XmlDumper(new FileWriter(xmlFile));
+            try {
+              xmlDumper.dump(airline);
+            } catch (IOException e) {
+              System.err.println("Could not write to the xml file.");
+              return;
+            }
+          } else { // return since cannot have mismatched airline names
+            System.err.println("Can not have mismatched airline names.");
+            return;
+          }
+        } else { // File does NOT exist
+
+          if(!xmlFile.createNewFile()) {
+            System.err.println("Could not create file.");
+            return;
+          }
+          airline.addFlight(flight);
+          xmlDumper = new XmlDumper(new FileWriter(xmlFile));
+          xmlDumper.dump(airline);
+        }
+
+    }
+    else {  // Not working with external file, so only information adding to airline will be via command line
       airline = new Airline(airlineName);
       airline.addFlight(flight);
     }
