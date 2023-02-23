@@ -106,4 +106,17 @@
             <time hour="3" minute="3"/>
         </arrive>
     </flight>
+    <flight>
+        <number>737</number>
+        <src>PDX</src>
+        <depart>
+            <date day="23" month="10" year="1923"/>
+            <time hour="0" minute="42"/>
+        </depart>
+        <dest>LAX</dest>
+        <arrive>
+            <date day="23" month="12" year="2003"/>
+            <time hour="3" minute="3"/>
+        </arrive>
+    </flight>
 </airline>
