@@ -17,8 +17,8 @@ import static java.net.HttpURLConnection.HTTP_OK;
  * an example of how to make gets and posts to a URL.  You'll need to change it
  * to do something other than just send dictionary entries.
  */
-public class AirlineRestClient
-{
+public class AirlineRestClient {
+
     private static final String WEB_APP = "airline";
     private static final String SERVLET = "flights";
 
@@ -68,17 +68,32 @@ public class AirlineRestClient
     throwExceptionIfNotOkayHttpStatus(response);
   }
 
-  public void removeAllDictionaryEntries() throws IOException {
-    Response response = http.delete(Map.of());
-    throwExceptionIfNotOkayHttpStatus(response);
-  }
-
-  private void throwExceptionIfNotOkayHttpStatus(Response response) {
-    int code = response.getHttpStatusCode();
-    if (code != HTTP_OK) {
-      String message = response.getContent();
-      throw new RestException(code, message);
+    public void addFlightEntry(String airlineName, String flightNumber, String source, String departDate, String departTime, String destination, String arrivalDate, String arrivalTime) throws IOException {
+            Response response = http.post(Map.of(
+                    AirlineServlet.AIRLINE_NAME_PARAMETER, airlineName,
+                    AirlineServlet.FLIGHT_NUMBER_PARAMETER, flightNumber,
+                    AirlineServlet.FLIGHT_SOURCE_PARAMETER, source,
+                    AirlineServlet.FLIGHT_DEPART_DATE_PARAMETER, departDate,
+                    AirlineServlet.FLIGHT_DEPART_TIME_PARAMETER, departTime,
+                    AirlineServlet.FLIGHT_DESTINATION_PARAMETER, destination,
+                    AirlineServlet.FLIGHT_ARRIVAL_DATE_PARAMETER, arrivalDate,
+                    AirlineServlet.FLIGHT_ARRIVAL_TIME_PARAMETER, arrivalTime
+                    ));
+//        Response response = http.post(Map.of(AirlineServlet.WORD_PARAMETER, word, AirlineServlet.DEFINITION_PARAMETER, definition));
+        throwExceptionIfNotOkayHttpStatus(response);
     }
-  }
+
+    public void removeAllDictionaryEntries() throws IOException {
+        Response response = http.delete(Map.of());
+        throwExceptionIfNotOkayHttpStatus(response);
+    }
+
+    private void throwExceptionIfNotOkayHttpStatus(Response response) {
+        int code = response.getHttpStatusCode();
+        if (code != HTTP_OK) {
+            String message = response.getContent();
+            throw new RestException(code, message);
+        }
+    }
 
 }
