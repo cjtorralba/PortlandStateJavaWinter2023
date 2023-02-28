@@ -71,12 +71,12 @@ public class Project5 {
 
             } else if (definition == null) {
                 // Print all dictionary entries
-                message = PrettyPrinter.formatDictionaryEntry(word, client.getDefinition(word));
+              //  message = PrettyPrinter.formatDictionaryEntry(word, client.getDefinition(word));
 
             } else {
                 // Post the word/definition pair
-                client.addDictionaryEntry(word, definition);
-                message = Messages.definedWordAs(word, definition);
+               // client.addDictionaryEntry(word, definition);
+                //message = Messages.definedWordAs(word, definition);
             }
 
         } catch (IOException | ParserException ex ) {
@@ -84,7 +84,7 @@ public class Project5 {
             return;
         }
 
-        System.out.println(message);
+       // System.out.println(message);
     }
 
     private static void error( String message )

@@ -33,7 +33,7 @@ public class AirlineRestClientTest {
 
   private HttpRequestHelper.Response dictionaryAsText(Map<String, String> dictionary) {
     StringWriter writer = new StringWriter();
-    new TextDumper(writer).dump(dictionary);
+    new OldTextDumper(writer).dump(dictionary);
 
     return new HttpRequestHelper.Response(writer.toString());
   }

@@ -47,38 +47,41 @@ public class AirlineRestClient {
     Response response = http.get(Map.of());
     throwExceptionIfNotOkayHttpStatus(response);
 
-    TextParser parser = new TextParser(new StringReader(response.getContent()));
+    OldTextParser parser = new OldTextParser(new StringReader(response.getContent()));
     return parser.parse();
   }
 
   /**
    * Returns the definition for the given word
    */
-  public String getDefinition(String word) throws IOException, ParserException {
-    Response response = http.get(Map.of(AirlineServlet.WORD_PARAMETER, word));
+  public String getAirlineName(String airlineName) throws IOException, ParserException {
+    Response response = http.get(Map.of(AirlineServlet.AIRLINE_NAME_PARAMETER, airlineName));
     throwExceptionIfNotOkayHttpStatus(response);
     String content = response.getContent();
 
     TextParser parser = new TextParser(new StringReader(content));
-    return parser.parse().get(word);
+    return airlineName;
   }
 
-  public void addDictionaryEntry(String word, String definition) throws IOException {
-    Response response = http.post(Map.of(AirlineServlet.WORD_PARAMETER, word, AirlineServlet.DEFINITION_PARAMETER, definition));
-    throwExceptionIfNotOkayHttpStatus(response);
-  }
+/*
+    public void addDictionaryEntry(String word, String definition) throws IOException {
+        Response response = http.post(Map.of(AirlineServlet.WORD_PARAMETER, word, AirlineServlet.DEFINITION_PARAMETER, definition));
+        throwExceptionIfNotOkayHttpStatus(response);
+    }
+
+ */
 
     public void addFlightEntry(String airlineName, String flightNumber, String source, String departDate, String departTime, String destination, String arrivalDate, String arrivalTime) throws IOException {
-            Response response = http.post(Map.of(
-                    AirlineServlet.AIRLINE_NAME_PARAMETER, airlineName,
-                    AirlineServlet.FLIGHT_NUMBER_PARAMETER, flightNumber,
-                    AirlineServlet.FLIGHT_SOURCE_PARAMETER, source,
-                    AirlineServlet.FLIGHT_DEPART_DATE_PARAMETER, departDate,
-                    AirlineServlet.FLIGHT_DEPART_TIME_PARAMETER, departTime,
-                    AirlineServlet.FLIGHT_DESTINATION_PARAMETER, destination,
-                    AirlineServlet.FLIGHT_ARRIVAL_DATE_PARAMETER, arrivalDate,
-                    AirlineServlet.FLIGHT_ARRIVAL_TIME_PARAMETER, arrivalTime
-                    ));
+        Response response = http.post(Map.of(
+                AirlineServlet.AIRLINE_NAME_PARAMETER, airlineName,
+                AirlineServlet.FLIGHT_NUMBER_PARAMETER, flightNumber,
+                AirlineServlet.FLIGHT_SOURCE_PARAMETER, source,
+                AirlineServlet.FLIGHT_DEPART_DATE_PARAMETER, departDate,
+                AirlineServlet.FLIGHT_DEPART_TIME_PARAMETER, departTime,
+                AirlineServlet.FLIGHT_DESTINATION_PARAMETER, destination,
+                AirlineServlet.FLIGHT_ARRIVAL_DATE_PARAMETER, arrivalDate,
+                AirlineServlet.FLIGHT_ARRIVAL_TIME_PARAMETER, arrivalTime
+        ));
 //        Response response = http.post(Map.of(AirlineServlet.WORD_PARAMETER, word, AirlineServlet.DEFINITION_PARAMETER, definition));
         throwExceptionIfNotOkayHttpStatus(response);
     }

@@ -22,12 +22,12 @@ public class TextDumperParserTest {
 
   private Map<String, String> dumpAndParse(Map<String, String> map) throws ParserException {
     StringWriter sw = new StringWriter();
-    TextDumper dumper = new TextDumper(sw);
+    OldTextDumper dumper = new OldTextDumper(sw);
     dumper.dump(map);
 
     String text = sw.toString();
 
-    TextParser parser = new TextParser(new StringReader(text));
+    OldTextParser parser = new OldTextParser(new StringReader(text));
     return parser.parse();
   }
 

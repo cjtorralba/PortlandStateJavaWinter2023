@@ -47,9 +47,16 @@ public class AirlineServlet extends HttpServlet {
         String destination = getParameter(FLIGHT_DESTINATION_PARAMETER, request);
         String arriveDate = getParameter(FLIGHT_ARRIVAL_DATE_PARAMETER, request);
         String arriveTime = getParameter(FLIGHT_ARRIVAL_TIME_PARAMETER, request);
-        if (airlineName != null && flightNumber != null && source != null && departDate != null && departTime != null && destination != null && arriveDate != null && arriveTime != null) {
-            writeDefinition(word, response);
 
+        int parsedFlightNumber = -1;
+        try {
+            parsedFlightNumber = Integer.parseInt(flightNumber);
+        } catch(NumberFormatException ne) {
+
+        }
+        if (airlineName != null && flightNumber != null && source != null && departDate != null && departTime != null && destination != null && arriveDate != null && arriveTime != null) {
+            writeAirline(airlineName, response);
+            //List.of(new Flight(parsedFlightNumber, source, departDate, departTime, destination, arriveDate, arriveTime))
         } else {
             writeAllDictionaryEntries(response);
         }
@@ -118,13 +125,13 @@ public class AirlineServlet extends HttpServlet {
         Optional<Airline> optionalAirline = this.airlines.stream().filter(airline -> airline.getName().equals(airlineName)).findFirst();
 
         if(optionalAirline.isEmpty()) {
-            airlines.add(new Airline(airlineName, List.of(new Flight(parsedFlightNumber, source, departDate, departTime, arriveDate, arriveTime, destination))));
+            airlines.add(new Airline(airlineName, List.of(new Flight(parsedFlightNumber, source, departDate, departTime, destination, arriveDate, arriveTime))));
         } else {
-            optionalAirline.get().addFlight(new Flight(parsedFlightNumber, source, departDate, departTime, arriveDate, arriveTime, destination));
+            optionalAirline.get().addFlight(new Flight(parsedFlightNumber, source, departDate, departTime, destination, arriveDate, arriveTime));
         }
 
         PrintWriter pw = response.getWriter();
-        pw.println(Messages.definedWordAs(word, definition));
+        pw.println(optionalAirline.isEmpty() ? "airline is empty" : optionalAirline.get().getName());
         pw.flush();
 
         response.setStatus(HttpServletResponse.SC_OK);
@@ -139,7 +146,7 @@ public class AirlineServlet extends HttpServlet {
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/plain");
 
-        this.dictionary.clear();
+        //this.dictionary.clear();
 
         PrintWriter pw = response.getWriter();
         pw.println(Messages.allDictionaryEntriesDeleted());
@@ -163,34 +170,40 @@ public class AirlineServlet extends HttpServlet {
     /**
      * Writes the definition of the given word to the HTTP response.
      * <p>
-     * The text of the message is formatted with {@link TextDumper}
+     * The text of the message is formatted with {@link OldTextDumper}
      */
-    private void writeFlight(Flight flight, HttpServletResponse response) throws IOException {
-        String definition = this.airlines.get();
+    private void writeAirline(String airlineName, HttpServletResponse response) throws IOException {
+        //String definition = this.airlines.get();
 
-        if (definition == null) {
+        if (airlineName == null) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 
         } else {
             PrintWriter pw = response.getWriter();
-
-            Map<String, String> wordDefinition = Map.of(word, definition);
             TextDumper dumper = new TextDumper(pw);
-            dumper.dump(wordDefinition);
 
-            response.setStatus(HttpServletResponse.SC_OK);
+            Optional<Airline> optionalAirline = airlines.stream().filter(airline -> airline.getName().equals(airlineName)).findFirst();
+
+            if(optionalAirline.isPresent()) {
+                dumper.dump(optionalAirline.get());
+                response.setStatus(HttpServletResponse.SC_OK);
+            } else {
+                response.sendError(HttpServletResponse.SC_PRECONDITION_FAILED);
+            }
+
+
         }
     }
 
     /**
      * Writes all of the dictionary entries to the HTTP response.
      * <p>
-     * The text of the message is formatted with {@link TextDumper}
+     * The text of the message is formatted with {@link OldTextDumper}
      */
     private void writeAllDictionaryEntries(HttpServletResponse response) throws IOException {
         PrintWriter pw = response.getWriter();
-        TextDumper dumper = new TextDumper(pw);
-        dumper.dump(dictionary);
+        OldTextDumper dumper = new OldTextDumper(pw);
+        //dumper.dump(dictionary);
 
         response.setStatus(HttpServletResponse.SC_OK);
     }
@@ -213,6 +226,7 @@ public class AirlineServlet extends HttpServlet {
 
     @VisibleForTesting
     String getDefinition(String word) {
-        return this.dictionary.get(word);
+        //return this.dictionary.get(word);
+        return "getDefinion was called";
     }
 }

@@ -94,7 +94,7 @@ public class Flight extends AbstractFlight implements Comparable<Flight> {
 
         this.src = src;
         this.dest = dest;
-
+        /*
         if (!Project4.validDateFormat(departDate))
             throw new IllegalArgumentException("Invalid departure date provided.");
 
@@ -107,15 +107,19 @@ public class Flight extends AbstractFlight implements Comparable<Flight> {
         if (!Project4.validTimeFormat(arriveTime))
             throw new IllegalArgumentException("Invalid arrival time provided.");
 
+         */
+
         try {
             arrivalDateAndTime = df.parse(arriveDate + " " + arriveTime);
         } catch (ParseException pe) {
+            System.err.println("You had: " + arriveDate + " or " + arriveTime);
             throw new IllegalArgumentException("Incorrect arrival date or time format.");
         }
 
         try {
             departureDateAndTime = df.parse(departDate + " " + departTime);
         } catch (ParseException PE) {
+            System.err.println("You had: " + departDate + " or " + departTime);
             throw new IllegalArgumentException("Incorrect departure date or time format.");
         }
 
