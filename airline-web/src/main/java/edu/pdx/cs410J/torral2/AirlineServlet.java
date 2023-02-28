@@ -125,8 +125,10 @@ public class AirlineServlet extends HttpServlet {
         Optional<Airline> optionalAirline = this.airlines.stream().filter(airline -> airline.getName().equals(airlineName)).findFirst();
 
         if(optionalAirline.isEmpty()) {
+            System.err.println("Adding to an empty list...");
             airlines.add(new Airline(airlineName, List.of(new Flight(parsedFlightNumber, source, departDate, departTime, destination, arriveDate, arriveTime))));
         } else {
+            System.err.println("Adding a flight to an existing airline...");
             optionalAirline.get().addFlight(new Flight(parsedFlightNumber, source, departDate, departTime, destination, arriveDate, arriveTime));
         }
 

@@ -1,0 +1,2 @@
+The Test Airline has the following flights: 
+	Flight 123 leaving from Portland, OR(PDX) 10/23/23, 10:45 PM arrives in Los Angeles, CA(LAX) at 10/23/23, 11:45 PM, the length of this flight is 60 minutes.
