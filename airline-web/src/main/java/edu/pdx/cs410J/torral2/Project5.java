@@ -5,6 +5,7 @@ import edu.pdx.cs410J.ParserException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -18,21 +19,32 @@ public class Project5 {
     public static void main(String... args) {
         String hostName = null;
         String portString = null;
-        String word = null;
-        String definition = null;
+
+        String airlineName = null;
+
+        int flightNumber = -1;
+
+        String source = null;
+        String departDate = null;
+        String departTime = null;
+
+        String destination = null;
+        String arrivalDate = null;
+        String arrivalTime = null;
+
 
         for (String arg : args) {
             if (hostName == null) {
                 hostName = arg;
 
-            } else if ( portString == null) {
+            } else if (portString == null) {
                 portString = arg;
 
-            } else if (word == null) {
-                word = arg;
+            } else if (airlineName == null) {
+                airlineName = arg;
 
-            } else if (definition == null) {
-                definition = arg;
+            } else if (source == null) {
+                source = arg;
 
             } else {
                 usage("Extraneous command line argument: " + arg);
@@ -40,18 +52,17 @@ public class Project5 {
         }
 
         if (hostName == null) {
-            usage( MISSING_ARGS );
+            usage(MISSING_ARGS);
             return;
 
-        } else if ( portString == null) {
-            usage( "Missing port" );
+        } else if (portString == null) {
+            usage("Missing port");
             return;
         }
 
         int port;
         try {
-            port = Integer.parseInt( portString );
-
+            port = Integer.parseInt(portString);
         } catch (NumberFormatException ex) {
             usage("Port \"" + portString + "\" must be an integer");
             return;
@@ -61,44 +72,43 @@ public class Project5 {
 
         String message;
         try {
-            if (word == null) {
+            if (airlineName == null) {
                 // Print all word/definition pairs
-                Map<String, String> dictionary = client.getAllDictionaryEntries();
+                //                ArrayList<Airline> airlines = client.getAllAirlineEntries();
                 StringWriter sw = new StringWriter();
                 PrettyPrinter pretty = new PrettyPrinter(sw);
                 pretty.dump(dictionary);
                 message = sw.toString();
 
-            } else if (definition == null) {
+            } else if (source == null) {
                 // Print all dictionary entries
-              //  message = PrettyPrinter.formatDictionaryEntry(word, client.getDefinition(word));
+                //  message = PrettyPrinter.formatDictionaryEntry(word, client.getDefinition(word));
 
             } else {
                 // Post the word/definition pair
-               // client.addDictionaryEntry(word, definition);
+                // client.addDictionaryEntry(word, definition);
                 //message = Messages.definedWordAs(word, definition);
             }
 
-        } catch (IOException | ParserException ex ) {
+        } catch (IOException | ParserException ex) {
             error("While contacting server: " + ex.getMessage());
             return;
         }
 
-       // System.out.println(message);
+        // System.out.println(message);
     }
 
-    private static void error( String message )
-    {
+    private static void error(String message) {
         PrintStream err = System.err;
         err.println("** " + message);
     }
 
     /**
      * Prints usage information for this program and exits
+     *
      * @param message An error message to print
      */
-    private static void usage( String message )
-    {
+    private static void usage(String message) {
         PrintStream err = System.err;
         err.println("** " + message);
         err.println();

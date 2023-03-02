@@ -38,27 +38,12 @@ public class AirlineServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/plain");
-
         String airlineName = getParameter(AIRLINE_NAME_PARAMETER, request);
-        String flightNumber = getParameter(FLIGHT_NUMBER_PARAMETER, request);
-        String source = getParameter(FLIGHT_SOURCE_PARAMETER, request);
-        String departDate = getParameter(FLIGHT_DEPART_DATE_PARAMETER, request);
-        String departTime = getParameter(FLIGHT_DEPART_TIME_PARAMETER, request);
-        String destination = getParameter(FLIGHT_DESTINATION_PARAMETER, request);
-        String arriveDate = getParameter(FLIGHT_ARRIVAL_DATE_PARAMETER, request);
-        String arriveTime = getParameter(FLIGHT_ARRIVAL_TIME_PARAMETER, request);
 
-        int parsedFlightNumber = -1;
-        try {
-            parsedFlightNumber = Integer.parseInt(flightNumber);
-        } catch(NumberFormatException ne) {
-
-        }
-        if (airlineName != null && flightNumber != null && source != null && departDate != null && departTime != null && destination != null && arriveDate != null && arriveTime != null) {
+        if(airlineName != null) {
             writeAirline(airlineName, response);
-            //List.of(new Flight(parsedFlightNumber, source, departDate, departTime, destination, arriveDate, arriveTime))
         } else {
-            writeAllDictionaryEntries(response);
+            writeAllAirlineEntries(response);
         }
     }
 
@@ -125,7 +110,7 @@ public class AirlineServlet extends HttpServlet {
         Optional<Airline> optionalAirline = this.airlines.stream().filter(airline -> airline.getName().equals(airlineName)).findFirst();
 
         if(optionalAirline.isEmpty()) {
-            airlines.add(new Airline(airlineName, List.of(new Flight(parsedFlightNumber, source, departDate, departTime, destination, arriveDate, arriveTime))));
+            airlines.add(new Airline(airlineName, new ArrayList<>(List.of(new Flight(parsedFlightNumber, source, departDate, departTime, destination, arriveDate, arriveTime)))));
         } else {
             optionalAirline.get().addFlight(new Flight(parsedFlightNumber, source, departDate, departTime, destination, arriveDate, arriveTime));
         }
@@ -173,7 +158,6 @@ public class AirlineServlet extends HttpServlet {
      * The text of the message is formatted with {@link OldTextDumper}
      */
     private void writeAirline(String airlineName, HttpServletResponse response) throws IOException {
-        //String definition = this.airlines.get();
 
         if (airlineName == null) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -200,11 +184,12 @@ public class AirlineServlet extends HttpServlet {
      * <p>
      * The text of the message is formatted with {@link OldTextDumper}
      */
-    private void writeAllDictionaryEntries(HttpServletResponse response) throws IOException {
+    private void writeAllAirlineEntries(HttpServletResponse response) throws IOException {
         PrintWriter pw = response.getWriter();
-        OldTextDumper dumper = new OldTextDumper(pw);
-        //dumper.dump(dictionary);
-
+        TextDumper dumper = new TextDumper(pw);
+        for(Airline airline : airlines) {
+            dumper.dump(airline);
+        }
         response.setStatus(HttpServletResponse.SC_OK);
     }
 
@@ -222,11 +207,5 @@ public class AirlineServlet extends HttpServlet {
         } else {
             return value;
         }
-    }
-
-    @VisibleForTesting
-    String getDefinition(String word) {
-        //return this.dictionary.get(word);
-        return "getDefinion was called";
     }
 }

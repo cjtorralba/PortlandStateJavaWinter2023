@@ -43,11 +43,11 @@ public class AirlineRestClient {
   /**
    * Returns all dictionary entries from the server
    */
-  public Map<String, String> getAllDictionaryEntries() throws IOException, ParserException {
+  public Airline getAllAirlineEntries() throws IOException, ParserException {
     Response response = http.get(Map.of());
     throwExceptionIfNotOkayHttpStatus(response);
 
-    OldTextParser parser = new OldTextParser(new StringReader(response.getContent()));
+    TextParser parser = new TextParser(new StringReader(response.getContent()));
     return parser.parse();
   }
 
@@ -63,13 +63,6 @@ public class AirlineRestClient {
     return airlineName;
   }
 
-/*
-    public void addDictionaryEntry(String word, String definition) throws IOException {
-        Response response = http.post(Map.of(AirlineServlet.WORD_PARAMETER, word, AirlineServlet.DEFINITION_PARAMETER, definition));
-        throwExceptionIfNotOkayHttpStatus(response);
-    }
-
- */
 
     public void addFlightEntry(String airlineName, String flightNumber, String source, String departDate, String departTime, String destination, String arrivalDate, String arrivalTime) throws IOException {
         Response response = http.post(Map.of(
