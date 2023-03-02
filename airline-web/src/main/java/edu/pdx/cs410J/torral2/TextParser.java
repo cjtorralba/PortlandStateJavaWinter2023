@@ -104,6 +104,7 @@ public class TextParser implements AirlineParser<Airline> {
                     }
                 }
             }
+            System.out.println(airlines);
             return airlines;
         } catch (IOException e) {
             throw new ParserException("Error while parsing airline text");

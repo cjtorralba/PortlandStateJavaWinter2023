@@ -41,7 +41,7 @@ public class TextDumper implements AirlineDumper<Airline> {
       for(Flight f : list) {
         pw.println(airline.getName() + "|" + f.getFlightAsTextFileString());
       }
-      pw.flush();
+//      pw.flush();
     }
   }
 }

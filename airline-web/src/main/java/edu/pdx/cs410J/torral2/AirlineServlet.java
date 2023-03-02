@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.*;
 
 /**
@@ -185,11 +186,21 @@ public class AirlineServlet extends HttpServlet {
      * The text of the message is formatted with {@link OldTextDumper}
      */
     private void writeAllAirlineEntries(HttpServletResponse response) throws IOException {
-        PrintWriter pw = response.getWriter();
-        TextDumper dumper = new TextDumper(pw);
+        StringWriter sw = new StringWriter();
+        TextDumper dumper = new TextDumper(sw);
         for(Airline airline : airlines) {
             dumper.dump(airline);
         }
+        Arrays.stream(sw.toString().split("\n")).forEach(line -> {
+            try {
+                response.getWriter().println(line);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+
+
         response.setStatus(HttpServletResponse.SC_OK);
     }
 

@@ -78,7 +78,9 @@ public class Project5 {
                 StringWriter sw = new StringWriter();
                 PrettyPrinter pretty = new PrettyPrinter(sw);
                 for(Airline airline : airlines) {
-                    pretty.dump(airline);
+                    if(airline != null) {
+                        pretty.dump(airline);
+                    }
                 }
                 message = sw.toString();
 

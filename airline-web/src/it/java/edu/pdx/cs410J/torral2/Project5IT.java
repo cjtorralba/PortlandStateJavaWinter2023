@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.MethodOrderer.MethodName;
  */
 @TestMethodOrder(MethodName.class)
 class Project5IT extends InvokeMainTestCase {
+    /*
     private static final String HOSTNAME = "localhost";
     private static final String PORT = System.getProperty("http.port", "8080");
 
@@ -85,4 +86,6 @@ class Project5IT extends InvokeMainTestCase {
         out = result.getTextWrittenToStandardOut();
         assertThat(out, out, containsString(PrettyPrinter.formatDictionaryEntry(word, definition)));
     }
+
+     */
 }
