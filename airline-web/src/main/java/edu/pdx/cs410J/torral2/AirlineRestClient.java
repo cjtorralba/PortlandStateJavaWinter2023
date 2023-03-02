@@ -6,6 +6,7 @@ import edu.pdx.cs410J.web.HttpRequestHelper;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.Map;
 
 import static edu.pdx.cs410J.web.HttpRequestHelper.Response;
@@ -43,12 +44,12 @@ public class AirlineRestClient {
   /**
    * Returns all dictionary entries from the server
    */
-  public Airline getAllAirlineEntries() throws IOException, ParserException {
+  public ArrayList<Airline> getAllAirlineEntries() throws IOException, ParserException {
     Response response = http.get(Map.of());
     throwExceptionIfNotOkayHttpStatus(response);
 
     TextParser parser = new TextParser(new StringReader(response.getContent()));
-    return parser.parse();
+    return parser.parseAll();
   }
 
   /**

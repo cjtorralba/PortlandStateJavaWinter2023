@@ -74,10 +74,12 @@ public class Project5 {
         try {
             if (airlineName == null) {
                 // Print all word/definition pairs
-                //                ArrayList<Airline> airlines = client.getAllAirlineEntries();
+                ArrayList<Airline> airlines = client.getAllAirlineEntries();
                 StringWriter sw = new StringWriter();
                 PrettyPrinter pretty = new PrettyPrinter(sw);
-                pretty.dump(dictionary);
+                for(Airline airline : airlines) {
+                    pretty.dump(airline);
+                }
                 message = sw.toString();
 
             } else if (source == null) {
