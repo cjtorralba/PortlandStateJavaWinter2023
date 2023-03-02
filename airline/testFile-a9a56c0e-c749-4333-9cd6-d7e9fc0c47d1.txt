@@ -1,0 +1,2 @@
+The MyAirline has the following flights: 
+	Flight 737 leaving from Portland, OR(PDX) 10/23/23, 12:42 PM arrives in Los Angeles, CA(LAX) at 12/23/03, 3:03 PM, the length of this flight is 42164781 minutes.
