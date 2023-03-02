@@ -117,15 +117,15 @@ public class AirlineServlet extends HttpServlet {
         int parsedFlightNumber = -1;
         try {
             parsedFlightNumber = Integer.parseInt(flightNumber);
-        } catch(NumberFormatException ne) {
+        } catch  (NumberFormatException ne) {
             response.sendError(HttpServletResponse.SC_PRECONDITION_FAILED, "The flight number entered is not valid.");
         }
 
 
         Optional<Airline> optionalAirline = this.airlines.stream().filter(airline -> airline.getName().equals(airlineName)).findFirst();
 
-        if(optionalAirline.isEmpty()) {
-            airlines.add(new Airline(airlineName, List.of(new Flight(parsedFlightNumber, source, departDate, departTime, destination, arriveDate, arriveTime))));
+        if (optionalAirline.isEmpty()) {
+            airlines.add(new Airline(airlineName, new ArrayList<>(List.of(new Flight(parsedFlightNumber, source, departDate, departTime, destination, arriveDate, arriveTime)))));
         } else {
             optionalAirline.get().addFlight(new Flight(parsedFlightNumber, source, departDate, departTime, destination, arriveDate, arriveTime));
         }
