@@ -1,14 +1,16 @@
 package edu.pdx.cs410J.torral2;
 
-import com.google.common.annotations.VisibleForTesting;
+import org.checkerframework.checker.units.qual.A;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * This servlet ultimately provides a REST API for working with an
@@ -40,8 +42,12 @@ public class AirlineServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/plain");
         String airlineName = getParameter(AIRLINE_NAME_PARAMETER, request);
+        String src = getParameter(FLIGHT_SOURCE_PARAMETER, request);
+        String destination = getParameter(FLIGHT_DESTINATION_PARAMETER, request);
 
-        if(airlineName != null) {
+        if (airlineName != null && src != null && destination != null) {
+            writeAirline(airlineName, src, destination, response);
+        } else if (airlineName != null) {
             writeAirline(airlineName, response);
         } else {
             writeAllAirlineEntries(response);
@@ -103,14 +109,14 @@ public class AirlineServlet extends HttpServlet {
         int parsedFlightNumber = -1;
         try {
             parsedFlightNumber = Integer.parseInt(flightNumber);
-        } catch(NumberFormatException ne) {
+        } catch (NumberFormatException ne) {
             response.sendError(HttpServletResponse.SC_PRECONDITION_FAILED, "The flight number entered is not valid.");
         }
 
 
         Optional<Airline> optionalAirline = this.airlines.stream().filter(airline -> airline.getName().equals(airlineName)).findFirst();
 
-        if(optionalAirline.isEmpty()) {
+        if (optionalAirline.isEmpty()) {
             airlines.add(new Airline(airlineName, new ArrayList<>(List.of(new Flight(parsedFlightNumber, source, departDate, departTime, destination, arriveDate, arriveTime)))));
         } else {
             optionalAirline.get().addFlight(new Flight(parsedFlightNumber, source, departDate, departTime, destination, arriveDate, arriveTime));
@@ -164,13 +170,15 @@ public class AirlineServlet extends HttpServlet {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 
         } else {
+
             PrintWriter pw = response.getWriter();
             TextDumper dumper = new TextDumper(pw);
+            XmlDumper xmlDumper = new XmlDumper(pw);
 
             Optional<Airline> optionalAirline = airlines.stream().filter(airline -> airline.getName().equals(airlineName)).findFirst();
 
-            if(optionalAirline.isPresent()) {
-                dumper.dump(optionalAirline.get());
+            if (optionalAirline.isPresent()) {
+                xmlDumper.dump(optionalAirline.get());
                 response.setStatus(HttpServletResponse.SC_OK);
             } else {
                 response.sendError(HttpServletResponse.SC_PRECONDITION_FAILED);
@@ -180,17 +188,51 @@ public class AirlineServlet extends HttpServlet {
         }
     }
 
+
+    private void writeAirline(String airlineName, String src, String destination, HttpServletResponse response) throws IOException {
+
+        if (airlineName == null || src == null || destination == null) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+
+        } else {
+
+            PrintWriter pw = response.getWriter();
+            TextDumper dumper = new TextDumper(pw);
+            XmlDumper xmlDumper = new XmlDumper(pw);
+
+            Optional<Airline> optionalByNameAirline = airlines.stream().filter(airline -> airline.getName().equals(airlineName)).findFirst();
+            if (optionalByNameAirline.isEmpty()) {
+                // Add error message
+                return;
+            }
+            List<Flight> filteredFlights = optionalByNameAirline.get().getFlights().stream().filter(f -> f.getDestination().equals(destination) && f.getSource().equals(src)).collect(Collectors.toList());
+
+            if (filteredFlights.isEmpty()) {
+                response.sendError(HttpServletResponse.SC_PRECONDITION_FAILED);
+            } else {
+                for(Flight f : filteredFlights) {
+
+                }
+            }
+
+
+        }
+    }
+
+
     /**
      * Writes all of the dictionary entries to the HTTP response.
      * <p>
      * The text of the message is formatted with {@link OldTextDumper}
      */
     private void writeAllAirlineEntries(HttpServletResponse response) throws IOException {
-        StringWriter sw = new StringWriter();
-        TextDumper dumper = new TextDumper(sw);
-        for(Airline airline : airlines) {
-            dumper.dump(airline);
+        PrintWriter pw = response.getWriter();
+//        TextDumper dumper = new TextDumper(sw);
+        XmlDumper xmlDumper = new XmlDumper(pw);
+        for (Airline airline : airlines) {
+            xmlDumper.dump(airline);
         }
+        /*
         Arrays.stream(sw.toString().split("\n")).forEach(line -> {
             try {
                 response.getWriter().println(line);
@@ -199,9 +241,7 @@ public class AirlineServlet extends HttpServlet {
             }
         });
 
-
-
-        response.setStatus(HttpServletResponse.SC_OK);
+         */
     }
 
     /**

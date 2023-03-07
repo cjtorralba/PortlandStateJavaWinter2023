@@ -55,7 +55,7 @@ public class AirlineRestClient {
   /**
    * Returns the definition for the given word
    */
-  public String getAirlineName(String airlineName) throws IOException, ParserException {
+  public String getAirlineByName(String airlineName) throws IOException, ParserException {
     Response response = http.get(Map.of(AirlineServlet.AIRLINE_NAME_PARAMETER, airlineName));
     throwExceptionIfNotOkayHttpStatus(response);
     String content = response.getContent();

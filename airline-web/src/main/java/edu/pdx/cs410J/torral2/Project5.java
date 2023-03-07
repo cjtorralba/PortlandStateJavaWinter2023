@@ -77,8 +77,8 @@ public class Project5 {
                 ArrayList<Airline> airlines = client.getAllAirlineEntries();
                 StringWriter sw = new StringWriter();
                 PrettyPrinter pretty = new PrettyPrinter(sw);
-                for(Airline airline : airlines) {
-                    if(airline != null) {
+                for (Airline airline : airlines) {
+                    if (airline != null) {
                         pretty.dump(airline);
                     }
                 }
