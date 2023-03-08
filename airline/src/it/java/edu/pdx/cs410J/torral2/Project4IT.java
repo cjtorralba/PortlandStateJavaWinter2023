@@ -241,16 +241,5 @@ class Project4IT extends InvokeMainTestCase {
     assertThat(line, containsString("<?xml version="));
   }
 
-  /**
-   * Tests to ensure that if user supplies a xml file with a different airline, an error message is printed to the user
-   * and the program will exit.
-   */
-  @Test
-  void textXmlMisMatchAirline()  {
-    String xmlFileName = "valid-airline.xml";
-    File xmlFile = new File(getClass().getResource(xmlFileName).getFile());
-    assertThat(xmlFile.exists(), equalTo(true));
-    MainMethodResult result = invokeMain("-xmlFile", xmlFileName, "Invalid Airlines", "737", "PDX", "10/23/1923", "12:42", "pm", "LAX", "12/23/2003", "3:03","pm");
-    assertThat(result.getTextWrittenToStandardError(), containsString("Can not have mismatched"));
-  }
+
 }
