@@ -41,16 +41,6 @@ public class AirlineRestClient {
       this.http = http;
     }
 
-  /**
-   * Returns all dictionary entries from the server
-   */
-  public ArrayList<Airline> getAllAirlineEntries() throws IOException, ParserException {
-    Response response = http.get(Map.of());
-    throwExceptionIfNotOkayHttpStatus(response);
-
-    TextParser parser = new TextParser(new StringReader(response.getContent()));
-    return parser.parseAll();
-  }
 
   /**
    * Returns the definition for the given word
@@ -64,17 +54,6 @@ public class AirlineRestClient {
     return xmlParser.parse();
   }
 
-  /*
-  public ArrayList<Flight> getAirlineByNameSourceDest(String airlineName, String src, String dest) throws IOException, ParserException {
-        Response response = http.get(Map.of(AirlineServlet.AIRLINE_NAME_PARAMETER, airlineName, AirlineServlet.FLIGHT_SOURCE_PARAMETER, src, AirlineServlet.FLIGHT_DESTINATION_PARAMETER, dest));
-        throwExceptionIfNotOkayHttpStatus(response);
-        String content = response.getContent();
-
-        TextParser parser = new TextParser(new StringReader(content));
-        return null;
-  }
-
-   */
 
 
     public void addFlightEntry(String airlineName, String flightNumber, String source, String departDate, String departTime, String destination, String arrivalDate, String arrivalTime) throws IOException {
@@ -88,14 +67,9 @@ public class AirlineRestClient {
                 AirlineServlet.FLIGHT_ARRIVAL_DATE_PARAMETER, arrivalDate,
                 AirlineServlet.FLIGHT_ARRIVAL_TIME_PARAMETER, arrivalTime
         ));
-//        Response response = http.post(Map.of(AirlineServlet.WORD_PARAMETER, word, AirlineServlet.DEFINITION_PARAMETER, definition));
         throwExceptionIfNotOkayHttpStatus(response);
     }
 
-    public void removeAllDictionaryEntries() throws IOException {
-        Response response = http.delete(Map.of());
-        throwExceptionIfNotOkayHttpStatus(response);
-    }
 
     private void throwExceptionIfNotOkayHttpStatus(Response response) {
         int code = response.getHttpStatusCode();

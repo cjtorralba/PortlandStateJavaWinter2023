@@ -8,6 +8,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,47 +23,46 @@ public class Project5 {
         String hostName = null;
         String portString = null;
 
-        String airlineName = null;
-
-        int flightNumber = -1;
-
-        String source = null;
-        String departDate = null;
-        String departTime = null;
-
-        String destination = null;
-        String arrivalDate = null;
-        String arrivalTime = null;
 
 
-        for (String arg : args) {
-            if (hostName == null) {
-                hostName = arg;
 
-            } else if (portString == null) {
-                portString = arg;
+        ArrayList<String> list = new ArrayList<>(List.of(args));
 
-            } else if (airlineName == null) {
-                airlineName = arg;
+        // Checking for arguments
+        boolean hasHostName = list.contains("-host");
+        boolean hasPort = list.contains("-port");
 
-            } else if (source == null) {
-                source = arg;
+        boolean hasSearch = list.contains("-search");
+        boolean hasPrint = list.contains("-print");
+        boolean hasReadme = list.contains("-README");
 
-            } else if (destination == null) {
-                destination = arg;
-            } else {
-                usage("Extraneous command line argument: " + arg);
-            }
+        if(!hasHostName || !hasPort) { // Missing both hostname and port
+            System.err.println("Missing hostname or port.");
+            return;
         }
+
+        // Getting port
+        portString = list.get(list.indexOf("-port") + 1);
+        list.remove(portString);
+        list.remove("-port");
+
+        // Getting hostname
+        hostName = list.get(list.indexOf("-host") + 1);
+        list.remove(hostName);
+        list.remove("-host");
+
+        list.remove("-search");
+        list.remove("-print");
+        list.remove("-README");
 
         if (hostName == null) {
             usage(MISSING_ARGS);
             return;
-
         } else if (portString == null) {
             usage("Missing port");
             return;
         }
+
 
         int port;
         try {
@@ -74,43 +74,103 @@ public class Project5 {
 
         AirlineRestClient client = new AirlineRestClient(hostName, port);
 
-        String message;
-        try {
-            if (airlineName == null) {
-                // Getting ALL airlines from server
-                ArrayList<Airline> airlines = client.getAllAirlineEntries();
+        Airline tempAirline = null;
+        Flight tempFlight = null;
 
-                // Making pretty printer
-                StringWriter sw = new StringWriter();
-                PrettyPrinter pretty = new PrettyPrinter(sw);
-                for (Airline airline : airlines) {
-                    if (airline != null) {
-                        pretty.dump(airline);
+        String airlineName = null;
+
+        String flightNumberString = null;
+        int parsedFlightNumber = -1;
+
+        String source = null;
+        String departDate = null;
+        String departTime = null;
+        String departAMPM = null;
+
+        String destination = null;
+        String arrivalDate = null;
+        String arrivalTime = null;
+        String arrivalAMPM = null;
+
+        switch(list.size()) {
+            case 1:
+                // Searching for airline by name only and pretty printing all its flights
+                if(hasSearch) {
+                    airlineName = list.get(0);
+
+                    try {
+                        tempAirline = client.getAirlineByName(airlineName);
+                    } catch (Exception e) {
+                        error("Could not parse airline by name.");
+                        return;
+                    }
+
+                    PrettyPrinter prettyPrinter = new PrettyPrinter(new OutputStreamWriter(System.out));
+                    prettyPrinter.dump(tempAirline);
+                }
+                break;
+
+            case 3:
+                // Searching for all flights given a specific airline name source and destination code
+                if(hasSearch) {
+                    airlineName = list.get(0);
+                    source = list.get(1);
+                    destination = list.get(2);
+
+
+                    try {
+                        tempAirline = client.getAirlineByName(airlineName);
+                    } catch (Exception e) {
+                        error("Could not find specified flight.");
                     }
                 }
-                message = sw.toString();
+                break;
 
-            } else if (airlineName != null && (source == null || destination == null)) { // Getting all airlines by airline name
-                Airline airline = client.getAirlineByName(airlineName);
-                    System.out.println(airline.getName());
+            case 10:
+                // Adding a given flight to the server.
+                airlineName = list.get(0);
 
-            } else if (airlineName != null && source != null && destination != null){
-                Airline airline = client.getAirlineByName(airlineName);
-                final String finalSource = source;
-                final String finalDestination = destination;
-                System.out.println(airline.getName());
-                PrettyPrinter prettyPrinter = new PrettyPrinter(new OutputStreamWriter(System.out));
-                airline.getFlights().stream()
-                        .filter(f -> f.getSource().equals(finalSource) && f.getDestination().equals(finalDestination))
-                        .forEach(prettyPrinter::dump);
-            }
+                flightNumberString = list.get(1);
 
-        } catch (IOException | ParserException ex) {
-            error("While contacting server: " + ex.getMessage());
-            return;
+                source = list.get(2);
+                departDate = list.get(3);
+                departTime = list.get(4);
+                departAMPM = list.get(5);
+
+                destination = list.get(6);
+                arrivalDate = list.get(7);
+                arrivalTime = list.get(8);
+                arrivalAMPM = list.get(9);
+
+                try {
+                    parsedFlightNumber = Integer.parseInt(flightNumberString);
+                } catch(NumberFormatException ne) {
+                    error("Invalid flight number provided");
+                    return;
+                }
+
+
+                tempAirline = new Airline(airlineName);
+                tempFlight = new Flight(parsedFlightNumber, source, departDate, departTime + " " + departAMPM, destination, arrivalDate, arrivalTime + " " + arrivalAMPM);
+                tempAirline.addFlight(tempFlight);
+
+                try {
+                    client.addFlightEntry(airlineName, flightNumberString, source, departDate, departTime + " " + departAMPM, destination, arrivalDate, arrivalTime + " " + arrivalAMPM);
+                } catch (IOException e) {
+                    error("Could not add flight to specified airline.");
+                }
+
+                if(hasPrint) {
+                    PrettyPrinter prettyPrinter = new PrettyPrinter(new OutputStreamWriter(System.out));
+                    prettyPrinter.dump(tempAirline);
+                }
+                break;
+
+            default:
+                error(MISSING_ARGS);
+                return;
         }
 
-        // System.out.println(message);
     }
 
     private static void error(String message) {

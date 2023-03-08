@@ -1,7 +1,5 @@
 package edu.pdx.cs410J.torral2;
 
-import org.checkerframework.checker.units.qual.A;
-
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,7 +8,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * This servlet ultimately provides a REST API for working with an
@@ -39,16 +36,12 @@ public class AirlineServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/plain");
-        String airlineName = getParameter(AIRLINE_NAME_PARAMETER, request);
-        String src = getParameter(FLIGHT_SOURCE_PARAMETER, request);
-        String destination = getParameter(FLIGHT_DESTINATION_PARAMETER, request);
 
-        if (airlineName != null && src != null && destination != null) {
-            writeAirline(airlineName, src, destination, response);
-        } else if (airlineName != null) {
+        String airlineName = getParameter(AIRLINE_NAME_PARAMETER, request);
+        if (airlineName != null) {
             writeAirline(airlineName, response);
         } else {
-            writeAllAirlineEntries(response);
+            System.err.println("Airline name not provided.");
         }
     }
 
@@ -120,31 +113,10 @@ public class AirlineServlet extends HttpServlet {
             optionalAirline.get().addFlight(new Flight(parsedFlightNumber, source, departDate, departTime, destination, arriveDate, arriveTime));
         }
 
-        PrintWriter pw = response.getWriter();
-        pw.println(optionalAirline.isEmpty() ? "airline is empty" : optionalAirline.get().getName());
-        pw.flush();
 
         response.setStatus(HttpServletResponse.SC_OK);
     }
 
-    /**
-     * Handles an HTTP DELETE request by removing all dictionary entries.  This
-     * behavior is exposed for testing purposes only.  It's probably not
-     * something that you'd want a real application to expose.
-     */
-    @Override
-    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/plain");
-
-        //this.dictionary.clear();
-
-        PrintWriter pw = response.getWriter();
-        pw.println(Messages.allDictionaryEntriesDeleted());
-        pw.flush();
-
-        response.setStatus(HttpServletResponse.SC_OK);
-
-    }
 
     /**
      * Writes an error message about a missing parameter to the HTTP response.
@@ -157,10 +129,11 @@ public class AirlineServlet extends HttpServlet {
         response.sendError(HttpServletResponse.SC_PRECONDITION_FAILED, message);
     }
 
+
     /**
      * Writes the definition of the given word to the HTTP response.
      * <p>
-     * The text of the message is formatted with {@link OldTextDumper}
+     * The text of the message is formatted with {@link XmlDumper}
      */
     private void writeAirline(String airlineName, HttpServletResponse response) throws IOException {
 
@@ -170,7 +143,6 @@ public class AirlineServlet extends HttpServlet {
         } else {
 
             PrintWriter pw = response.getWriter();
-            TextDumper dumper = new TextDumper(pw);
             XmlDumper xmlDumper = new XmlDumper(pw);
 
             Optional<Airline> optionalAirline = airlines.stream().filter(airline -> airline.getName().equals(airlineName)).findFirst();
@@ -186,59 +158,6 @@ public class AirlineServlet extends HttpServlet {
         }
     }
 
-
-    private void writeAirline(String airlineName, String src, String destination, HttpServletResponse response) throws IOException {
-
-        if (airlineName == null || src == null || destination == null) {
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-
-        } else {
-
-            PrintWriter pw = response.getWriter();
-            TextDumper dumper = new TextDumper(pw);
-            XmlDumper xmlDumper = new XmlDumper(pw);
-
-            Optional<Airline> optionalByNameAirline = airlines.stream().filter(airline -> airline.getName().equals(airlineName)).findFirst();
-            if (optionalByNameAirline.isEmpty()) {
-                // Add error message
-                return;
-            }
-            List<Flight> filteredFlights = optionalByNameAirline.get().getFlights().stream().filter(f -> f.getDestination().equals(destination) && f.getSource().equals(src)).collect(Collectors.toList());
-
-            if (filteredFlights.isEmpty()) {
-                response.sendError(HttpServletResponse.SC_PRECONDITION_FAILED);
-            } else {
-                for(Flight f : filteredFlights) {
-
-                }
-            }
-        }
-    }
-
-
-    /**
-     * Writes all of the dictionary entries to the HTTP response.
-     * <p>
-     * The text of the message is formatted with {@link OldTextDumper}
-     */
-    private void writeAllAirlineEntries(HttpServletResponse response) throws IOException {
-        PrintWriter pw = response.getWriter();
-//        TextDumper dumper = new TextDumper(sw);
-        XmlDumper xmlDumper = new XmlDumper(pw);
-        for (Airline airline : airlines) {
-            xmlDumper.dump(airline);
-        }
-        /*
-        Arrays.stream(sw.toString().split("\n")).forEach(line -> {
-            try {
-                response.getWriter().println(line);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
-
-         */
-    }
 
     /**
      * Returns the value of the HTTP request parameter with the given name.

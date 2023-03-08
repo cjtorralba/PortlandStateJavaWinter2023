@@ -1,3 +1,5 @@
+
+
 package edu.pdx.cs410J.torral2;
 
 /**
@@ -11,13 +13,6 @@ public class Messages
         return String.format("The required parameter \"%s\" is missing", parameterName);
     }
 
-    public static String definedWordAs(Airline airline)
-    {
-        return String.format( "Airline %s : Flight", airline.getName());
-    }
-
-    public static String allDictionaryEntriesDeleted() {
-        return "All dictionary entries have been deleted";
-    }
-
 }
+
+
