@@ -16,15 +16,36 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.Calendar;
 
+
+/**
+ * This class dumps the contents of an airline in xml format to a specified Writer.
+ *
+ * @author Christian Torralba
+ * @version 2.0
+ * @since 1.0
+ */
+
 public class XmlDumper implements AirlineDumper<Airline> {
 
 
+    /**
+     * Writer to be specified by programmer.
+     */
     private final Writer writer;
 
 
+    /**
+     * Constructor for the XmlDumper class. Returns a new XmlDumper
+     * @param writer Writer to be specified.
+     */
     public XmlDumper(Writer writer) { this.writer = writer; }
 
 
+    /**
+     * Dumps contents of an airline in XML format. Writes it to a specified writer.
+     * @param airline The airline being written to a destination
+     * @throws IOException If airline could not be written
+     */
     @Override
     public void dump(Airline airline) throws IOException {
 

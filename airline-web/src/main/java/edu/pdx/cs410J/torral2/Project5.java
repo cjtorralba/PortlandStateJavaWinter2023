@@ -17,6 +17,10 @@ import java.util.Map;
  */
 public class Project5 {
 
+
+    /**
+     * For ease of use so we can use shortcut to specify missing command line arguments
+     */
     public static final String MISSING_ARGS = "Missing command line arguments";
 
     public static void main(String... args) {
@@ -229,17 +233,19 @@ public class Project5 {
         PrintStream err = System.err;
         err.println("** " + message);
         err.println();
-        err.println("usage: java Project5 host port [word] [definition]");
-        err.println("  host         Host of web server");
-        err.println("  port         Port of web server");
-        err.println("  word         Word in dictionary");
-        err.println("  definition   Definition of word");
-        err.println();
-        err.println("This simple program posts words and their definitions");
-        err.println("to the server.");
-        err.println("If no definition is specified, then the word's definition");
-        err.println("is printed.");
-        err.println("If no word is specified, all dictionary entries are printed");
-        err.println();
+        err.println("usage: java -jar target/airline-client.jar [options] <args>");
+        err.println(" args are (int this order): ");
+        err.println("   airline        The name of the airline");
+        err.println("   flightNumber   The flight number");
+        err.println("   src            Three-letter code of departure");
+        err.println("   Depart         Departure date/time ");
+        err.println("   dest           Three letter code of arrival");
+        err.println("   arrive         Arrival date/time");
+        err.println("options are (options may appear in any order):");
+        err.println("  -host hostname   Host computer on which the server runs");
+        err.println("  -port port       Port on which the server is listening");
+        err.println("  -search search   Search for flights");
+        err.println("  -print           Prints a descriptions of the new flight");
+        err.println("  -README          Prints a README for this project and exits");
     }
 }

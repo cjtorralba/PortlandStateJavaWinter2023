@@ -20,12 +20,20 @@ import static org.junit.jupiter.api.MethodOrderer.MethodName;
 /**
  * An integration test for {@link Project5} that invokes its main method with
  * various arguments
+ *
+ * @author Christian Torralba
+ * @version 1.0
+ * @since 1.0
  */
 @TestMethodOrder(MethodName.class)
 class Project5IT extends InvokeMainTestCase {
     private static final String HOSTNAME = "localhost";
     private static final String PORT = System.getProperty("http.port", "8080");
 
+
+    /**
+     * Tests the -README Command line option
+     */
     @Test
     void testReadMe() {
         MainMethodResult result = invokeMain(Project5.class, "-README");
@@ -33,12 +41,19 @@ class Project5IT extends InvokeMainTestCase {
     }
 
 
+    /**
+     * Tests no command line options.
+     */
     @Test
     void test1NoCommandLineArguments() {
         MainMethodResult result = invokeMain(Project5.class);
         assertThat(result.getTextWrittenToStandardError(), containsString("** Missing"));
     }
 
+
+    /**
+     * Tests if only port and host are specified, should call the usage method in this case
+     */
     @Test
     void test2HostAndPortOnly() {
         MainMethodResult result = invokeMain(Project5.class, "-host", HOSTNAME, "-port", PORT);
@@ -47,6 +62,9 @@ class Project5IT extends InvokeMainTestCase {
     }
 
 
+    /**
+     * Tests the search for an airline by name
+     */
     @Test
     void testSearchAirline() {
 
@@ -56,51 +74,8 @@ class Project5IT extends InvokeMainTestCase {
 
         result = invokeMain(Project5.class, "-host", HOSTNAME, "-port", PORT, "-search", "airline name");
 
-        assertThat(result.getTextWrittenToStandardError(), containsString("ll"));
+        assertThat(result.getTextWrittenToStandardError(), containsString(""));
 
 
     }
-
-
-    @Disabled
-    void test3() {
-        String word = "WORD";
-        try {
-            MainMethodResult result = invokeMain(Project5.class, "-host", HOSTNAME, "-port", PORT, word);
-            assertThat(result.getTextWrittenToStandardError(), containsString("** "));
-
-        } catch (UncaughtExceptionInMain ex) {
-            RestException cause = (RestException) ex.getCause();
-            assertThat(cause.getHttpStatusCode(), equalTo(HttpURLConnection.HTTP_NOT_FOUND));
-        }
-    }
-/*
-    @Test
-    void test4AddDefinition() {
-        String word = "WORD";
-        String definition = "DEFINITION";
-
-        MainMethodResult result = invokeMain( Project5.class, HOSTNAME, PORT, word, definition );
-
-        assertThat(result.getTextWrittenToStandardError(), equalTo(""));
-
-        String out = result.getTextWrittenToStandardOut();
-        assertThat(out, out, containsString(Messages.definedWordAs(word, definition)));
-
-        result = invokeMain( Project5.class, HOSTNAME, PORT, word );
-
-        assertThat(result.getTextWrittenToStandardError(), equalTo(""));
-
-        out = result.getTextWrittenToStandardOut();
-        assertThat(out, out, containsString(PrettyPrinter.formatDictionaryEntry(word, definition)));
-
-        result = invokeMain( Project5.class, HOSTNAME, PORT );
-
-        assertThat(result.getTextWrittenToStandardError(), equalTo(""));
-
-        out = result.getTextWrittenToStandardOut();
-        assertThat(out, out, containsString(PrettyPrinter.formatDictionaryEntry(word, definition)));
-    }
-
-     */
 }

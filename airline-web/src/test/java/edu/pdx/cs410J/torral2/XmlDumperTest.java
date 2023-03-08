@@ -13,7 +13,7 @@ import static org.hamcrest.Matchers.equalTo;
  * This class is used to test the XmlDumper class.
  *
  * @author Christian Torralba
- * @version 1.0
+ * @version 2.0
  * @since 1.0
  */
 

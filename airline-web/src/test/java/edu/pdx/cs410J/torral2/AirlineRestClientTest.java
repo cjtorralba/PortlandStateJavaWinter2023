@@ -18,6 +18,10 @@ import static org.mockito.Mockito.*;
 /**
  * A unit test for the REST client that demonstrates using mocks and
  * dependency injection
+ *
+ * @author Christian Torralba
+ * @version 1.0
+ * @since  1.0
  */
 public class AirlineRestClientTest {
 

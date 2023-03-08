@@ -17,7 +17,7 @@ import java.util.Locale;
  * and the arrival time and date.
  *
  * @author Christian Torralba
- * @version 3.0
+ * @version 5.0
  * @since 1.0
  */
 public class Flight extends AbstractFlight implements Comparable<Flight> {

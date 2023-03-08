@@ -22,7 +22,8 @@ import java.util.List;
  * This class is used to parse a XML file to find the airline and flights within it.
  *
  * @author Christian Torralba
- * @version 1.0
+ * @version
+ * 2.0
  * @since 1.0
  */
 public class XmlParser implements AirlineParser {
@@ -44,6 +45,11 @@ public class XmlParser implements AirlineParser {
         this.stringInput = null;
     }
 
+    /**
+     * This constructor is used when a String is passed in.
+     * Returns a new XmlParser with the specified string
+     * @param string String to be used to be parsed.
+     */
     public XmlParser(String string) {
         this.stringInput = string;
         this.file = null;

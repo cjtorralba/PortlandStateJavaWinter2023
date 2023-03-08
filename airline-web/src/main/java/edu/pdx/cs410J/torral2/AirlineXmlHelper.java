@@ -5,6 +5,10 @@ import edu.pdx.cs410J.ProjectXmlHelper;
 /**
  * This class provides easy access to the SYSTEM and PUBLIC ids for the
  * Airline XML DTD and implements some convenient error handling methods.
+ *
+ * @author Christian Torralba
+ * @version 1.0
+ * @since 1.0
  */
 public class AirlineXmlHelper extends ProjectXmlHelper {
 

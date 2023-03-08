@@ -11,9 +11,11 @@ import java.util.Optional;
 
 /**
  * This servlet ultimately provides a REST API for working with an
- * <code>Airline</code>.  However, in its current state, it is an example
- * of how to use HTTP and Java servlets to store simple dictionary of words
- * and their definitions.
+ * <code>Airline</code>.
+ *
+ * @author Christian Torralba
+ * @version 1.0
+ * @since 1.0
  */
 public class AirlineServlet extends HttpServlet {
     static final String AIRLINE_NAME_PARAMETER = "airlineName";
@@ -28,10 +30,8 @@ public class AirlineServlet extends HttpServlet {
     private final List<Airline> airlines = new ArrayList<>();
 
     /**
-     * Handles an HTTP GET request from a client by writing the definition of the
-     * word specified in the "word" HTTP parameter to the HTTP response.  If the
-     * "word" parameter is not specified, all of the entries in the dictionary
-     * are written to the HTTP response.
+     * Handles an HTTP GET request from a client by writing the airline given by the client. If the airline name is null
+     * then we error out. If the airline name is provided then we search for the airline and return one if we can find it.
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -46,8 +46,8 @@ public class AirlineServlet extends HttpServlet {
     }
 
     /**
-     * Handles an HTTP POST request by storing the dictionary entry for the
-     * "word" and "definition" request parameters.  It writes the dictionary
+     * Handles an HTTP POST request by storing the airline for the
+     * request parameters.  It writes the airline
      * entry to the HTTP response.
      */
     @Override
@@ -131,7 +131,7 @@ public class AirlineServlet extends HttpServlet {
 
 
     /**
-     * Writes the definition of the given word to the HTTP response.
+     * Writes the contents and name of a given airline based off the airline name passed in
      * <p>
      * The text of the message is formatted with {@link XmlDumper}
      */
@@ -153,7 +153,6 @@ public class AirlineServlet extends HttpServlet {
             } else {
                 response.sendError(HttpServletResponse.SC_PRECONDITION_FAILED);
             }
-
 
         }
     }

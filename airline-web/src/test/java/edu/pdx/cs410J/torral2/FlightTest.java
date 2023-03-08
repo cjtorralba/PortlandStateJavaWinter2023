@@ -15,18 +15,25 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * This class contains unit tests for the Flight class.
  *
  * @author Christian Torralba
- * @version 4.0
+ * @version 5.0
  * @since 1.0
  */
 public class FlightTest {
 
 
+    /**
+     * Tests to compare two flights that are the same.
+     */
     @Test
     void testCompareToEqualFlights() {
         Flight flightOne = new Flight(123, "PDX", "10/20/2000", "11:54 pm", "LAX", "10/21/2000", "4:20 am");
         Flight flightTwo = new Flight(123, "PDX", "10/20/2000", "11:54 pm", "LAX", "10/21/2000", "4:20 am");
         assertThat(flightOne.compareTo(flightTwo) == 0, equalTo(true));
     }
+
+    /**
+     * Tests to compare two flights that are different.
+     */
     @Test
     void testCompareToInvalidFlights() {
         Flight flightOne = new Flight(123, "PDX", "10/20/2000", "11:54 pm", "LAX", "10/21/2000", "4:20 am");
@@ -137,8 +144,4 @@ public class FlightTest {
     }
 
 
-    @Test
-    void testParseNodeXml() {
-
-    }
 }
