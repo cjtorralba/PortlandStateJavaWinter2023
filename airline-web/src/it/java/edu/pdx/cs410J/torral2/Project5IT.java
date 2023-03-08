@@ -1,8 +1,10 @@
 package edu.pdx.cs410J.torral2;
 
+import com.sun.tools.javac.Main;
 import edu.pdx.cs410J.InvokeMainTestCase;
 import edu.pdx.cs410J.UncaughtExceptionInMain;
 import edu.pdx.cs410J.web.HttpRequestHelper.RestException;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
@@ -21,45 +23,58 @@ import static org.junit.jupiter.api.MethodOrderer.MethodName;
  */
 @TestMethodOrder(MethodName.class)
 class Project5IT extends InvokeMainTestCase {
-    /*
     private static final String HOSTNAME = "localhost";
     private static final String PORT = System.getProperty("http.port", "8080");
 
     @Test
-    void test0RemoveAllMappings() throws IOException {
-      AirlineRestClient client = new AirlineRestClient(HOSTNAME, Integer.parseInt(PORT));
-      client.removeAllDictionaryEntries();
+    void testReadMe() {
+        MainMethodResult result = invokeMain(Project5.class, "-README");
+        assertThat(result.getTextWrittenToStandardOut(), containsString("The purpose"));
     }
+
 
     @Test
     void test1NoCommandLineArguments() {
-        MainMethodResult result = invokeMain( Project5.class );
-        assertThat(result.getTextWrittenToStandardError(), containsString(Project5.MISSING_ARGS));
+        MainMethodResult result = invokeMain(Project5.class);
+        assertThat(result.getTextWrittenToStandardError(), containsString("** Missing"));
     }
 
     @Test
-    void test2EmptyServer() {
-        MainMethodResult result = invokeMain( Project5.class, HOSTNAME, PORT );
+    void test2HostAndPortOnly() {
+        MainMethodResult result = invokeMain(Project5.class, "-host", HOSTNAME, "-port", PORT);
 
+        assertThat(result.getTextWrittenToStandardError(), containsString("** Missing"));
+    }
+
+
+    @Test
+    void testSearchAirline() {
+
+        MainMethodResult result = invokeMain(Project5.class, "-host", HOSTNAME, "-port", PORT, "airline name", "123", "PDX", "10/20/2000", "5:15", "PM", "LAX", "10/21/2000", "6:45", "AM");
+        assertThat(result.getTextWrittenToStandardOut(), equalTo(""));
         assertThat(result.getTextWrittenToStandardError(), equalTo(""));
 
-        String out = result.getTextWrittenToStandardOut();
-        assertThat(out, out, containsString(PrettyPrinter.formatWordCount(0)));
+        result = invokeMain(Project5.class, "-host", HOSTNAME, "-port", PORT, "-search", "airline name");
+
+        assertThat(result.getTextWrittenToStandardError(), containsString("ll"));
+
+
     }
 
-    @Test
-    void test3NoDefinitionsThrowsAppointmentBookRestException() {
+
+    @Disabled
+    void test3() {
         String word = "WORD";
         try {
-            invokeMain(Project5.class, HOSTNAME, PORT, word);
-            fail("Should have thrown a RestException");
+            MainMethodResult result = invokeMain(Project5.class, "-host", HOSTNAME, "-port", PORT, word);
+            assertThat(result.getTextWrittenToStandardError(), containsString("** "));
 
         } catch (UncaughtExceptionInMain ex) {
             RestException cause = (RestException) ex.getCause();
             assertThat(cause.getHttpStatusCode(), equalTo(HttpURLConnection.HTTP_NOT_FOUND));
         }
     }
-
+/*
     @Test
     void test4AddDefinition() {
         String word = "WORD";

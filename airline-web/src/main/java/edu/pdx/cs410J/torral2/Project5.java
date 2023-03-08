@@ -20,10 +20,14 @@ public class Project5 {
     public static final String MISSING_ARGS = "Missing command line arguments";
 
     public static void main(String... args) {
+
+        if (args.length == 0) {
+            usage(MISSING_ARGS);
+            return;
+        }
+
         String hostName = null;
         String portString = null;
-
-
 
 
         ArrayList<String> list = new ArrayList<>(List.of(args));
@@ -34,9 +38,47 @@ public class Project5 {
 
         boolean hasSearch = list.contains("-search");
         boolean hasPrint = list.contains("-print");
-        boolean hasReadme = list.contains("-README");
+        if (list.contains("-README")) {
+            System.out.printf("The purpose of this program is made to be a simple way to store flights associated with certain airlines.\n" +
+                    "For example, if you were to be traveling via plane soon, it would be a good idea to run this with information\n" +
+                    "about the flight number, the departing and arrival airport code, the departure date and time, as well as\n" +
+                    "the arrival date and time, and the name of the airline you will be flying with. Just so you can stay extra organized!\n" +
+                    "\n" +
+                    "This program was written by Christian Torralba for the Advanced Java class (CS410P) taught by David Whitlock\n" +
+                    "Winter term of 2023.\n" +
+                    "\n" +
+                    "This program will take necessary information related to an Airline and its flights. Each flight will have a flight number,\n" +
+                    "a three letter source code for the airport the flight is leaving from, a departure date and time,  an arrival date and time,\n" +
+                    "and three letter arrival airport code.\n" +
+                    "\n" +
+                    "The date and time must be passed in with the following format: MM/dd/yyyy h/mm AM|PM\n" +
+                    "An example of this could be: 07/26/2001 7:56 pm or 12/01/1996 12:03 AM\n" +
+                    "Be careful to have the am/pm separated from the actual time, as if you do not then an error will occur.\n" +
+                    "This program does NOT support 24-hour time format.\n" +
+                    "\n" +
+                    "If you chose to use the option to write to an external file, do keep in mind that if the file does not exist, one will\n" +
+                    "be created for you. If a file already does exist, and it contains misconfigured information, the program will NOT write to\n" +
+                    "the file, but exit instead.\n" +
+                    "\n" +
+                    "The pretty print option will work in a similar way. If the file does not exist, one will be created. If a file does exist,\n" +
+                    "but with information in it already, it will be overwritten, please be aware of this before you run the program.\n" +
+                    "\n" +
+                    "The source and arrival airport codes must be EXACTLY three characters, no numbers allowed. If it is not, then the program\n" +
+                    "will exit and prompt you to run it again.\n" +
+                    "\n" +
+                    "There is also the option to have our airline and flights stored in xml format. By using the command line option '-xmlFile'\n" +
+                    "You may specify the location of where you wish your airline to be stored.\n" +
+                    "\n" +
+                    "The Rest adaptation of this program integrates a Java servlet. Using this servlet allows us to stores airlines on an external server." +
+                    "Program five allows the user to communicate with the web server, whether it be adding, or searching.\n" +
+                    "This program will allow you to search for an airline by either the airline name, or you may also find all flights associated with an airline with flights starting\n" +
+                    "at a certain location and terminating at a certain destination." +
+                    "To see command line usage for this program please run with no arguments." +
+                    "");
+            return;
+        }
 
-        if(!hasHostName || !hasPort) { // Missing both hostname and port
+        if (!hasHostName || !hasPort) { // Missing both hostname and port
             System.err.println("Missing hostname or port.");
             return;
         }
@@ -92,10 +134,10 @@ public class Project5 {
         String arrivalTime = null;
         String arrivalAMPM = null;
 
-        switch(list.size()) {
+        switch (list.size()) {
             case 1:
                 // Searching for airline by name only and pretty printing all its flights
-                if(hasSearch) {
+                if (hasSearch) {
                     airlineName = list.get(0);
 
                     try {
@@ -112,7 +154,7 @@ public class Project5 {
 
             case 3:
                 // Searching for all flights given a specific airline name source and destination code
-                if(hasSearch) {
+                if (hasSearch) {
                     airlineName = list.get(0);
                     source = list.get(1);
                     destination = list.get(2);
@@ -144,7 +186,7 @@ public class Project5 {
 
                 try {
                     parsedFlightNumber = Integer.parseInt(flightNumberString);
-                } catch(NumberFormatException ne) {
+                } catch (NumberFormatException ne) {
                     error("Invalid flight number provided");
                     return;
                 }
@@ -160,7 +202,7 @@ public class Project5 {
                     error("Could not add flight to specified airline.");
                 }
 
-                if(hasPrint) {
+                if (hasPrint) {
                     PrettyPrinter prettyPrinter = new PrettyPrinter(new OutputStreamWriter(System.out));
                     prettyPrinter.dump(tempAirline);
                 }

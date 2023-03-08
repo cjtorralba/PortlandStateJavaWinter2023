@@ -123,9 +123,6 @@ public class Flight extends AbstractFlight implements Comparable<Flight> {
     }
 
 
-    public String getFlightAsTextFileString() {
-        return this.flightNumber + "|" + this.src + "|" + this.departDate + "|" + this.departTime + "|" + this.dest + "|" + this.arriveDate + "|" + this.arriveTime;
-    }
 
     /**
      * @return The flight number for current flight

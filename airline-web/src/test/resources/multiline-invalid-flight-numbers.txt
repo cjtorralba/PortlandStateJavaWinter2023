@@ -1,0 +1,4 @@
+Invalid Flight Airline|123|PDX|10/23/4567|10:46 pm|LAX|10/56/1290|10:23 pm
+Invalid Flight Airline|seven ten|PDX|10/23/4567|10:46 pm|LAX|10/56/1290|10:23 pm
+Invalid Flight Airline|fourty four|PDX|10/23/4567|10:46 pm|LAX|10/56/1290|10:23 pm
+Invalid Flight Airline|one hundered|PDX|10/23/4567|10:46 pm|LAX|10/56/1290|10:23 pm
