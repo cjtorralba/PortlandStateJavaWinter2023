@@ -19,9 +19,7 @@ import java.util.stream.Collectors;
  * and their definitions.
  */
 public class AirlineServlet extends HttpServlet {
-    //  static final String WORD_PARAMETER = "word";
     static final String AIRLINE_NAME_PARAMETER = "airlineName";
-    //    static final String DEFINITION_PARAMETER = "definition";
     static final String FLIGHT_NUMBER_PARAMETER = "flightNumber";
     static final String FLIGHT_SOURCE_PARAMETER = "flightSource";
     static final String FLIGHT_DEPART_DATE_PARAMETER = "flightDepartDate";
@@ -61,7 +59,7 @@ public class AirlineServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/plain");
+        response.setContentType("text/xml");
 
         String airlineName = getParameter(AIRLINE_NAME_PARAMETER, request);
         String flightNumber = getParameter(FLIGHT_NUMBER_PARAMETER, request);
@@ -214,8 +212,6 @@ public class AirlineServlet extends HttpServlet {
 
                 }
             }
-
-
         }
     }
 

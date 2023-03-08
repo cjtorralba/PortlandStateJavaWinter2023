@@ -55,14 +55,26 @@ public class AirlineRestClient {
   /**
    * Returns the definition for the given word
    */
-  public String getAirlineByName(String airlineName) throws IOException, ParserException {
+  public Airline getAirlineByName(String airlineName) throws IOException, ParserException {
     Response response = http.get(Map.of(AirlineServlet.AIRLINE_NAME_PARAMETER, airlineName));
     throwExceptionIfNotOkayHttpStatus(response);
     String content = response.getContent();
 
-    TextParser parser = new TextParser(new StringReader(content));
-    return airlineName;
+    XmlParser xmlParser = new XmlParser(content);
+    return xmlParser.parse();
   }
+
+  /*
+  public ArrayList<Flight> getAirlineByNameSourceDest(String airlineName, String src, String dest) throws IOException, ParserException {
+        Response response = http.get(Map.of(AirlineServlet.AIRLINE_NAME_PARAMETER, airlineName, AirlineServlet.FLIGHT_SOURCE_PARAMETER, src, AirlineServlet.FLIGHT_DESTINATION_PARAMETER, dest));
+        throwExceptionIfNotOkayHttpStatus(response);
+        String content = response.getContent();
+
+        TextParser parser = new TextParser(new StringReader(content));
+        return null;
+  }
+
+   */
 
 
     public void addFlightEntry(String airlineName, String flightNumber, String source, String departDate, String departTime, String destination, String arrivalDate, String arrivalTime) throws IOException {

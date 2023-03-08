@@ -1,8 +1,10 @@
 package edu.pdx.cs410J.torral2;
 
 import edu.pdx.cs410J.ParserException;
+import org.checkerframework.checker.units.qual.A;
 
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -46,6 +48,8 @@ public class Project5 {
             } else if (source == null) {
                 source = arg;
 
+            } else if (destination == null) {
+                destination = arg;
             } else {
                 usage("Extraneous command line argument: " + arg);
             }
@@ -73,8 +77,10 @@ public class Project5 {
         String message;
         try {
             if (airlineName == null) {
-                // Print all word/definition pairs
+                // Getting ALL airlines from server
                 ArrayList<Airline> airlines = client.getAllAirlineEntries();
+
+                // Making pretty printer
                 StringWriter sw = new StringWriter();
                 PrettyPrinter pretty = new PrettyPrinter(sw);
                 for (Airline airline : airlines) {
@@ -84,14 +90,19 @@ public class Project5 {
                 }
                 message = sw.toString();
 
-            } else if (source == null) {
-                // Print all dictionary entries
-                //  message = PrettyPrinter.formatDictionaryEntry(word, client.getDefinition(word));
+            } else if (airlineName != null && (source == null || destination == null)) { // Getting all airlines by airline name
+                Airline airline = client.getAirlineByName(airlineName);
+                    System.out.println(airline.getName());
 
-            } else {
-                // Post the word/definition pair
-                // client.addDictionaryEntry(word, definition);
-                //message = Messages.definedWordAs(word, definition);
+            } else if (airlineName != null && source != null && destination != null){
+                Airline airline = client.getAirlineByName(airlineName);
+                final String finalSource = source;
+                final String finalDestination = destination;
+                System.out.println(airline.getName());
+                PrettyPrinter prettyPrinter = new PrettyPrinter(new OutputStreamWriter(System.out));
+                airline.getFlights().stream()
+                        .filter(f -> f.getSource().equals(finalSource) && f.getDestination().equals(finalDestination))
+                        .forEach(prettyPrinter::dump);
             }
 
         } catch (IOException | ParserException ex) {
