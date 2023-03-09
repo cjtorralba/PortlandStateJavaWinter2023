@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!DOCTYPE airline SYSTEM "http://www.cs.pdx.edu/~whitlock/dtds/airline.dtd">
+<airline>
+    <name>Test Airline</name>
+    <flight>
+        <number>123</number>
+        <src>PDX</src>
+        <depart>
+            <date day="23" month="10" year="2345"/>
+            <time hour="10" minute="45"/>
+        </depart>
+        <dest>LAX</dest>
+        <arrive>
+            <date day="13" month="12" year="3234"/>
+            <time hour="1" minute="23"/>
+        </arrive>
+    </flight>
+</airline>

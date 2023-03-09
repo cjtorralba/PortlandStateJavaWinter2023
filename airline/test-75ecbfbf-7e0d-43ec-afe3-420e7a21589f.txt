@@ -1,0 +1,4 @@
+Airline: Test Airline
+------------------------------------------------------------------------------------------------------------------------------
+Flight Number        Source Airport        Departure Time          Arrival Time       Arrival Airport  Length of flight (Minutes)
+123                 Portland, OR         10/23/23, 10:45 PM         10/23/23, 11:45 PM       Los Angeles, CA                    60

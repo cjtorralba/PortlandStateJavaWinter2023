@@ -1,6 +1,7 @@
 package edu.pdx.cs410J.torral2;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -24,7 +25,7 @@ public class XmlDumperTest {
      * @throws IOException File could not be located or created.
      */
     @Test
-    void testDumpInXmlFormat() throws IOException {
+    void testDumpInXmlFormat(@TempDir File tempDir) throws IOException {
         Airline testAirline = new Airline("Test Airline");
         Flight flight = new Flight(123, "PDX", "10/23/2345", "10:45 PM", "LAX", "12/13/3234", "1:23 AM");
 

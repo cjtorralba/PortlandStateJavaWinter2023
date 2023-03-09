@@ -121,11 +121,11 @@ public class AirlineServlet extends HttpServlet {
     /**
      * Writes an error message about a missing parameter to the HTTP response.
      * <p>
-     * The text of the error message is created by {@link Messages#missingRequiredParameter(String)}
+     * The text of the error message is created by {@link Messages#(String)}
      */
     private void missingRequiredParameter(HttpServletResponse response, String parameterName)
             throws IOException {
-        String message = Messages.missingRequiredParameter(parameterName);
+        String message = String.format("The required parameter \"%s\" is missing", parameterName);
         response.sendError(HttpServletResponse.SC_PRECONDITION_FAILED, message);
     }
 
