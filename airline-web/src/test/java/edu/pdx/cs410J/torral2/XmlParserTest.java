@@ -27,17 +27,31 @@ public class XmlParserTest {
     */
    @Test
    void testXmlParseValidAirline() throws ParserException, IOException {
-      /*
 
-      System.out.println(XmlParserTest.class.getResourceAsStream("valid-airline.xml"));
-
-      File is = new File(getClass().getResource("valid-airline.xml").getFile());
-      XmlParser xmlParser = new XmlParser(is);
+      String xmlTestString = "<?xml version=\"1.0\" encoding=\"us-ascii\" standalone=\"no\"?>\n" +
+              "<!DOCTYPE airline SYSTEM \"http://www.cs.pdx.edu/~whitlock/dtds/airline.dtd\">\n" +
+              "<airline>\n" +
+              "    <name>Airlines</name>\n" +
+              "    <flight>\n" +
+              "        <number>737</number>\n" +
+              "        <src>PDX</src>\n" +
+              "        <depart>\n" +
+              "            <date day=\"23\" month=\"10\" year=\"1923\"/>\n" +
+              "            <time hour=\"0\" minute=\"42\"/>\n" +
+              "        </depart>\n" +
+              "        <dest>LAX</dest>\n" +
+              "        <arrive>\n" +
+              "            <date day=\"23\" month=\"12\" year=\"2003\"/>\n" +
+              "            <time hour=\"3\" minute=\"3\"/>\n" +
+              "        </arrive>\n" +
+              "    </flight>\n" +
+              "</airline>";
+      XmlParser xmlParser = new XmlParser(xmlTestString);
       Airline airline = xmlParser.parse();
 
       assertThat(airline.getName(), equalTo("Airlines"));
 
-       */
+
 
    }
 }

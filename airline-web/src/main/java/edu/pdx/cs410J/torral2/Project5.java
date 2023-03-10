@@ -1,15 +1,14 @@
 package edu.pdx.cs410J.torral2;
 
-import edu.pdx.cs410J.ParserException;
-import org.checkerframework.checker.units.qual.A;
+import edu.pdx.cs410J.AirportNames;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintStream;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * The main class that parses the command line and communicates with the
@@ -160,12 +159,27 @@ public class Project5 {
                 // Searching for all flights given a specific airline name source and destination code
                 if (hasSearch) {
                     airlineName = list.get(0);
-                    source = list.get(1);
-                    destination = list.get(2);
+                    final String finalSource = list.get(1).toUpperCase();
+                    final String finalDestination = list.get(2).toUpperCase();
+
+                    if(AirportNames.getName(finalSource).equals(null) || AirportNames.getName(finalDestination).equals(null)) {
+                        error("Invalid airport codes");
+                        return;
+                    }
 
 
                     try {
                         tempAirline = client.getAirlineByName(airlineName);
+                        Stream<Flight> flights = tempAirline.getFlights().stream().filter(f -> f.getSource().equals(finalSource) && f.getDestination().equals(finalDestination));
+                        if(flights.toArray().length == 0) {
+                            System.err.println(airlineName + " has no flights taking off in " + AirportNames.getName(finalSource) + " and landing in " + AirportNames.getName(finalDestination));
+                            return;
+                        }
+
+                        System.out.println(airlineName + " has the following flights taking off at " + AirportNames.getName(finalSource) + " and landing in " + AirportNames.getName(finalDestination) + ":");
+                        for(Flight f : flights.collect(Collectors.toList())) {
+                            System.out.println("\t" + f);
+                        }
                     } catch (Exception e) {
                         error("Could not find specified flight.");
                     }

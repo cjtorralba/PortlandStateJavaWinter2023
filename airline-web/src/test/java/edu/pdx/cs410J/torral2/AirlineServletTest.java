@@ -19,6 +19,12 @@ import static org.mockito.Mockito.*;
  * provide mock http requests and responses.
  */
 class AirlineServletTest {
+
+
+  /**
+   * Tests that there are no airlines on server startup
+   * @throws IOException
+   */
   @Test
   void initiallyServletContainsNoAirlines() throws IOException {
     AirlineServlet servlet = new AirlineServlet();
@@ -37,6 +43,11 @@ class AirlineServletTest {
     verify(response).sendError(HttpServletResponse.SC_PRECONDITION_FAILED);
   }
 
+
+  /**
+   * Tests adding a single flight to server
+   * @throws IOException If unable to add flight
+   */
 
   @Test
   void addOneFlightToAirline() throws IOException {
