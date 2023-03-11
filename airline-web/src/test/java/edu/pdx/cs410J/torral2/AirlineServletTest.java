@@ -40,7 +40,7 @@ class AirlineServletTest {
     servlet.doGet(request, response);
 
     // Nothing is written to the response's PrintWriter
-    verify(response).sendError(HttpServletResponse.SC_PRECONDITION_FAILED);
+    verify(response).sendError(HttpServletResponse.SC_NOT_FOUND);
   }
 
 

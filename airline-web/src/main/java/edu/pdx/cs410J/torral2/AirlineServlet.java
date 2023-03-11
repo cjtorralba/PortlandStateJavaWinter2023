@@ -64,10 +64,6 @@ public class AirlineServlet extends HttpServlet {
         String arriveTime = getParameter(FLIGHT_ARRIVAL_TIME_PARAMETER, request);
 
 
-        if (airlineName == null) {
-            missingRequiredParameter(response, AIRLINE_NAME_PARAMETER);
-            return;
-        }
         if (flightNumber == null) {
             missingRequiredParameter(response, FLIGHT_NUMBER_PARAMETER);
             return;
@@ -76,24 +72,8 @@ public class AirlineServlet extends HttpServlet {
             missingRequiredParameter(response, FLIGHT_SOURCE_PARAMETER);
             return;
         }
-        if (departDate == null) {
-            missingRequiredParameter(response, FLIGHT_DEPART_DATE_PARAMETER);
-            return;
-        }
-        if (departTime == null) {
-            missingRequiredParameter(response, FLIGHT_DEPART_TIME_PARAMETER);
-            return;
-        }
         if (destination == null) {
             missingRequiredParameter(response, FLIGHT_DESTINATION_PARAMETER);
-            return;
-        }
-        if (arriveDate == null) {
-            missingRequiredParameter(response, FLIGHT_ARRIVAL_DATE_PARAMETER);
-            return;
-        }
-        if (arriveTime == null) {
-            missingRequiredParameter(response, FLIGHT_ARRIVAL_TIME_PARAMETER);
             return;
         }
 
@@ -121,7 +101,7 @@ public class AirlineServlet extends HttpServlet {
     /**
      * Writes an error message about a missing parameter to the HTTP response.
      * <p>
-     * The text of the error message is created by {@link Messages#(String)}
+     * The text of the error message is created by
      */
     private void missingRequiredParameter(HttpServletResponse response, String parameterName)
             throws IOException {
@@ -151,7 +131,7 @@ public class AirlineServlet extends HttpServlet {
                 xmlDumper.dump(optionalAirline.get());
                 response.setStatus(HttpServletResponse.SC_OK);
             } else {
-                response.sendError(HttpServletResponse.SC_PRECONDITION_FAILED);
+                response.sendError(HttpServletResponse.SC_NOT_FOUND);
             }
 
         }

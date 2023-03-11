@@ -217,7 +217,7 @@ public class Project5 {
                 try {
                     client.addFlightEntry(airlineName, flightNumberString, source, departDate, departTime + " " + departAMPM, destination, arrivalDate, arrivalTime + " " + arrivalAMPM);
                 } catch (IOException e) {
-                    error("Could not add flight to specified airline.");
+                    error("Server could not be contected.");
                 }
 
                 if (hasPrint) {
