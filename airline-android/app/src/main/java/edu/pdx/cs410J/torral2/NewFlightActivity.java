@@ -111,10 +111,6 @@ public class NewFlightActivity extends AppCompatActivity {
             return;
         }
 
-        // Creating airline object with airline name set by user
-//        airline = new Airline(airlineNameText, List.of(flight));
-
-        // TODO: add .xml to the end of files that don't have it
 
         File airlineFile = AndroidAirlineStorage.parseFile(getFilesDir(), airlineNameText);
         Airline tempAirline;
@@ -135,18 +131,19 @@ public class NewFlightActivity extends AppCompatActivity {
                 arrivalDate.getText().clear();
                 arrivalTime.getText().clear();
 
+                // TODO: Remove TOAST file outputs
                 Toast.makeText(this, "Added your Flight!", Toast.LENGTH_SHORT).show();
 
             } catch (IOException | ParserException e) {
-                Toast.makeText(this, "Could not add Airline to file. ONE", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Could not add Airline to file.", Toast.LENGTH_SHORT).show();
             }
 
             Toast.makeText(this, "Added airline to file: " + airlineFile.getAbsolutePath(), Toast.LENGTH_SHORT).show();
             return;
-        } else {
+        } else { // File does NOT exist, so we are creating a new XML file which is the name of the airline, ex: "My_Airline.xml"
             try {
                 airline = new Airline(airlineNameText, List.of(flight));
-                new XmlDumper(new FileWriter(new File(getFilesDir(), airlineNameText))).dump(airline);
+                new XmlDumper(new FileWriter(new File(getFilesDir(), airlineNameText + ".xml"))).dump(airline);
 
                 // Clearing text from edit fields
                 airlineName.getText().clear();
@@ -158,10 +155,11 @@ public class NewFlightActivity extends AppCompatActivity {
                 arrivalDate.getText().clear();
                 arrivalTime.getText().clear();
 
+                // TODO: Remove TOAST file outputs
                 Toast.makeText(this, "Added your Flight!" + getFilesDir().getAbsolutePath() , Toast.LENGTH_SHORT).show();
                 return;
             } catch (Exception e) {
-                Toast.makeText(this, "Could not add Airline to file. TWO", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Could not add Airline to file.", Toast.LENGTH_SHORT).show();
                 Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 return;
             }

@@ -32,6 +32,11 @@
             />
 
 
+        <activity
+            android:name=".SearchAirlineFlightActivity"
+            android:parentActivityName=".MainActivity"
+            />
+
 
         <activity
             android:name=".MainActivity"
