@@ -12,9 +12,15 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import edu.pdx.cs410J.ParserException;
 
 public class NewFlightActivity extends AppCompatActivity {
 
@@ -106,20 +112,63 @@ public class NewFlightActivity extends AppCompatActivity {
         }
 
         // Creating airline object with airline name set by user
-        airline = new Airline(airlineNameText, List.of(flight));
+//        airline = new Airline(airlineNameText, List.of(flight));
 
-        Toast.makeText(this, flight.toString(), Toast.LENGTH_SHORT).show();
+        // TODO: add .xml to the end of files that don't have it
+
+        File airlineFile = AndroidAirlineStorage.parseFile(getFilesDir(), airlineNameText);
+        Airline tempAirline;
+
+        if(airlineFile != null) { // File DID exist so we can add flight to airline acquired from file then write back to file
+            try {
+                tempAirline = new XmlParser(airlineFile).parse();
+                tempAirline.addFlight(flight);
+                new XmlDumper(new FileWriter(airlineFile)).dump(tempAirline);
+
+                // Clearing text from edit fields
+                airlineName.getText().clear();
+                flightNumber.getText().clear();
+                source.getText().clear();
+                departDate.getText().clear();
+                departTime.getText().clear();
+                destination.getText().clear();
+                arrivalDate.getText().clear();
+                arrivalTime.getText().clear();
+
+                Toast.makeText(this, "Added your Flight!", Toast.LENGTH_SHORT).show();
+
+            } catch (IOException | ParserException e) {
+                Toast.makeText(this, "Could not add Airline to file. ONE", Toast.LENGTH_SHORT).show();
+            }
+
+            Toast.makeText(this, "Added airline to file: " + airlineFile.getAbsolutePath(), Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            try {
+                airline = new Airline(airlineNameText, List.of(flight));
+                new XmlDumper(new FileWriter(new File(getFilesDir(), airlineNameText))).dump(airline);
+
+                // Clearing text from edit fields
+                airlineName.getText().clear();
+                flightNumber.getText().clear();
+                source.getText().clear();
+                departDate.getText().clear();
+                departTime.getText().clear();
+                destination.getText().clear();
+                arrivalDate.getText().clear();
+                arrivalTime.getText().clear();
+
+                Toast.makeText(this, "Added your Flight!" + getFilesDir().getAbsolutePath() , Toast.LENGTH_SHORT).show();
+                return;
+            } catch (Exception e) {
+                Toast.makeText(this, "Could not add Airline to file. TWO", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
 
 
-       // Clearing text from edit fields
-        airlineName.getText().clear();
-        flightNumber.getText().clear();
-        source.getText().clear();
-        departDate.getText().clear();
-        departTime.getText().clear();
-        destination.getText().clear();
-        arrivalDate.getText().clear();
-        arrivalTime.getText().clear();
+
 
 
 
