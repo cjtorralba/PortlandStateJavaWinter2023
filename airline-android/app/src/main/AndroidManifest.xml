@@ -14,8 +14,23 @@
 
         <activity
             android:name=".NewFlightActivity"
+            android:label="Add a new Flight"
             android:parentActivityName=".MainActivity"
             />
+
+        <activity
+            android:name=".SearchFlightActivity"
+            android:label="Search for a Flight"
+            android:parentActivityName=".MainActivity"
+            />
+
+        <activity
+            android:name=".SearchAirlineActivity"
+            android:label="Search for an Airline"
+            android:parentActivityName=".MainActivity"
+
+            />
+
 
 
         <activity

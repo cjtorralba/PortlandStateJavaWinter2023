@@ -11,8 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 public class NewFlightActivity extends AppCompatActivity {
 
 
-    Activity mainMenu;
-    Intent mainMenuIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

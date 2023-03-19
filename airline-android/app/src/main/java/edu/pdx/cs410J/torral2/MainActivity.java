@@ -27,4 +27,17 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    public void searchFlight(View view) {
+
+        Intent intent = new Intent(MainActivity.this, SearchFlightActivity.class);
+        startActivity(intent);
+    }
+
+    public void searchAirline(View view) {
+
+        Intent intent = new Intent(MainActivity.this, SearchAirlineActivity.class);
+        startActivity(intent);
+
+    }
 }
