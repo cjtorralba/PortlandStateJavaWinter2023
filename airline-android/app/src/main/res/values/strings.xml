@@ -3,4 +3,11 @@
     <string name="welcome">Welcome to the Android Airline application.</string>
     <string name="airline_name">Airline Name</string>
     <string name="flight_number">Flight Number</string>
+    <string name="source_airport">Source Airport</string>
+    <string name="departure_date">Departure Date</string>
+    <string name="departure_time">Departure Time</string>
+    <string name="destination_airport">Destination Airport</string>
+    <string name="arrival_date">Arrival Date</string>
+    <string name="arrival_time">Arrival Time</string>
+    <string name="submit">Submit</string>
 </resources>

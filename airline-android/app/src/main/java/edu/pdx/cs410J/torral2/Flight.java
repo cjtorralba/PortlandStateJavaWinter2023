@@ -1,6 +1,8 @@
 package edu.pdx.cs410J.torral2;
 
 import edu.pdx.cs410J.AbstractFlight;
+import edu.pdx.cs410J.AirportNames;
+
 import org.w3c.dom.NodeList;
 
 import java.text.DateFormat;
@@ -8,6 +10,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 
 /**
@@ -90,26 +93,24 @@ public class Flight extends AbstractFlight implements Comparable<Flight> {
     public Flight(int flightNumber, String src, String departDate, String departTime, String dest, String arriveDate, String arriveTime) {
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy h:mm a");
 
-        this.flightNumber = flightNumber;
 
-        this.src = src;
-        this.dest = dest;
+        // Checking valid flight number
+        if( flightNumber < 1 || flightNumber > 9999) {
+            throw new IllegalArgumentException("Invalid flight number.");
+        }
+
+        // Checking source code
+        if (AirportNames.getName(src) == null) {
+            throw new IllegalArgumentException("Invalid airport source code.");
+        }
+
+        // Checking valid destination code
+        if (AirportNames.getName(dest) == null) {
+            throw new IllegalArgumentException("Invalid airport arrival code.");
+        }
 
 
-        // TODO: Either add this back in or throw it out since we have date/time check the format
-        /*
-        if (!Project4.validDateFormat(departDate))
-            throw new IllegalArgumentException("Invalid departure date provided.");
-
-        if (!Project4.validDateFormat(arriveDate))
-            throw new IllegalArgumentException("Invalid arrival date provided.");
-
-        if (!Project4.validTimeFormat(departTime))
-            throw new IllegalArgumentException("Invalid departure time provided.");
-
-        if (!Project4.validTimeFormat(arriveTime))
-            throw new IllegalArgumentException("Invalid arrival time provided.");
-    */
+        // Checking valid Date and Time for both arrival and departure
         try {
             arrivalDateAndTime = df.parse(arriveDate + " " + arriveTime);
         } catch (ParseException pe) {
@@ -118,14 +119,22 @@ public class Flight extends AbstractFlight implements Comparable<Flight> {
 
         try {
             departureDateAndTime = df.parse(departDate + " " + departTime);
-        } catch (ParseException PE) {
+        } catch (ParseException pe) {
             throw new IllegalArgumentException("Incorrect departure date or time format.");
         }
 
+
+        // Ensuring that arrival date is not before departure date
         if (arrivalDateAndTime.before(departureDateAndTime)) {
             System.out.println(arrivalDateAndTime + " " + departureDateAndTime);
             throw new IllegalArgumentException("Cannot have arrival date before departure date.");
         }
+
+
+        this.flightNumber = flightNumber;
+
+        this.src = src;
+        this.dest = dest;
 
         this.departDate = departDate;
         this.departTime = departTime;
@@ -250,13 +259,13 @@ public class Flight extends AbstractFlight implements Comparable<Flight> {
                                     departTimeHour = departNodes.item(j).getAttributes().getNamedItem("hour").getTextContent();
                                     departTimeMinute = departNodes.item(j).getAttributes().getNamedItem("minute").getTextContent();
                                     break;
+                            }
                         }
                     }
-                }
-            case "dest":
+                case "dest":
                     dest = xmlFlightNodeInfo.item(i).getTextContent();
                     break;
-            case "arrive":
+                case "arrive":
                     NodeList arriveNodes = xmlFlightNodeInfo.item(i).getChildNodes();
                     for (int j = 0; j < arriveNodes.getLength(); ++j) {
                         if (arriveNodes.item(j) != null) {
@@ -274,8 +283,8 @@ public class Flight extends AbstractFlight implements Comparable<Flight> {
                         }
                     }
                     break;
-                }
             }
+        }
 
         int parsedArriveTimeHour = Integer.parseInt(arriveTimeHour);
         int parsedDepartTimeHour = Integer.parseInt(departTimeHour);
