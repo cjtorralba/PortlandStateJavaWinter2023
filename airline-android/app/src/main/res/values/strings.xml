@@ -10,4 +10,6 @@
     <string name="arrival_date">Arrival Date</string>
     <string name="arrival_time">Arrival Time</string>
     <string name="submit">Submit</string>
+    <string name="airline_name_optional">Airline name (Optional)</string>
+    <string name="source_airport_code">Source Airport Code</string>
 </resources>

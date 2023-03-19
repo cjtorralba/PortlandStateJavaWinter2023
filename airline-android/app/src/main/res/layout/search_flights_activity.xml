@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/searchFlightLayout"
         android:layout_width="342dp"
         android:layout_height="503dp"
         android:orientation="vertical"
@@ -25,7 +25,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:ems="10"
-            android:hint="Airline name (Optional)"
+            android:hint="@string/airline_name_optional"
             android:inputType="textPersonName" />
 
         <EditText
@@ -35,7 +35,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:ems="10"
-            android:hint="Source Airport Code"
+            android:hint="@string/source_airport_code"
             android:inputType="textPersonName" />
 
         <EditText
