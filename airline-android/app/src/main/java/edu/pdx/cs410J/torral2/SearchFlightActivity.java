@@ -1,5 +1,6 @@
 package edu.pdx.cs410J.torral2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import edu.pdx.cs410J.ParserException;
@@ -30,8 +32,11 @@ public class SearchFlightActivity extends AppCompatActivity {
 
     public void searchFlights(View view) {
 
-        Airline airline;
-        ArrayList<Flight> listOfFlights = new ArrayList<>();
+
+       Intent intent = new Intent(SearchFlightActivity.this, ListSearchedFlightsActivity.class);
+
+
+
 
         LinearLayout linearLayout = findViewById(R.id.searchFlightLayout);
 
@@ -44,33 +49,13 @@ public class SearchFlightActivity extends AppCompatActivity {
         EditText destination = linearLayout.findViewById(R.id.editSearchFlightAirportDestination);
         String destinationText = destination.getText().toString();
 
-        if(airlineNameText.trim().isEmpty()) { // User did not supply airline name, searching all airlines
-            File fileDirectory = getFilesDir();
-            for(File file : fileDirectory.listFiles()) {
-                if(file != null) {
-                    try {
-                         listOfFlights.addAll(new XmlParser(file).parse()
-                                .getFlights()
-                                .stream()
-                                .filter( f -> f.getSource().equals(sourceText) && f.getDestination().equals(destinationText))
-                                .collect(Collectors.toList()));
-                    } catch (ParserException pe) {
-                        Toast.makeText(this, "Could not parse file: " + file.getAbsolutePath(), Toast.LENGTH_LONG).show();
-                    }
-                }
+        intent.putExtra("airlineName", airlineNameText);
+        intent.putExtra("source", sourceText);
+        intent.putExtra("destination", destinationText);
 
-            }
-            for (Flight f : listOfFlights) {
-                Toast.makeText(this, f.getFlightAsTextFileString(), Toast.LENGTH_SHORT).show();
-            }
+        startActivity(intent);
 
-        } else { // User DID supply airline name, so we will only be searching flights connected to specified airline
-
-        }
 
 
     }
-
-
-
 }

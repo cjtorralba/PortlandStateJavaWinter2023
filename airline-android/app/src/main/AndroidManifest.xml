@@ -42,6 +42,11 @@
             android:label="ReadMe"
             android:parentActivityName=".ReadMeActivity"
             />
+        
+        <activity android:name=".ListSearchedFlightsActivity"
+            android:label="Searched Flights"
+            android:parentActivityName=".SearchFlightActivity"
+            />
 
 
         <activity

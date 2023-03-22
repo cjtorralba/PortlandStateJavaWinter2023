@@ -32,4 +32,6 @@
         \nThanks for using this app! 😊
     </string>
     <string name="enter_the_airline_name_or_leave_empty_to_view_all_airlines">Enter the Airline name, or leave empty to view all airlines.</string>
+    <string name="destination_airport_code">Destination Airport Code</string>
+    <string name="search">Search</string>
 </resources>
