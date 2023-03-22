@@ -1,8 +1,5 @@
 package edu.pdx.cs410J.torral2;
 
-import edu.pdx.cs410J.AbstractFlight;
-import edu.pdx.cs410J.AirportNames;
-
 import org.w3c.dom.NodeList;
 
 import java.text.DateFormat;
@@ -10,7 +7,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.regex.Pattern;
+
+import edu.pdx.cs410J.AbstractFlight;
+import edu.pdx.cs410J.AirportNames;
 
 
 /**
@@ -95,7 +94,7 @@ public class Flight extends AbstractFlight implements Comparable<Flight> {
 
 
         // Checking valid flight number
-        if( flightNumber < 1 || flightNumber > 9999) {
+        if (flightNumber < 1 || flightNumber > 9999) {
             throw new IllegalArgumentException("Invalid flight number.");
         }
 

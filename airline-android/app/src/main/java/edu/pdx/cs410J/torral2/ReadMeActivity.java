@@ -1,7 +1,6 @@
 package edu.pdx.cs410J.torral2;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 

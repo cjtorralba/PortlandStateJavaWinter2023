@@ -1,22 +1,25 @@
 package edu.pdx.cs410J.torral2;
 
-import edu.pdx.cs410J.AirlineParser;
-import edu.pdx.cs410J.ParserException;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import edu.pdx.cs410J.AirlineParser;
+import edu.pdx.cs410J.ParserException;
+
 
 /**
  * This class is used to parse a XML file to find the airline and flights within it.
+ *
  * @author Christian Torralba
  * @version 1.0
  * @since 1.0
@@ -30,12 +33,16 @@ public class XmlParser implements AirlineParser {
 
     /**
      * Constructor for new XmlParser.
+     *
      * @param file File location of xml file.
      */
-    public XmlParser(File file) { this.file = file; }
+    public XmlParser(File file) {
+        this.file = file;
+    }
 
     /**
      * Parses a given file to find the airline and flights within that file.
+     *
      * @return an airline with the name and flights given in the xml file.
      * @throws ParserException If file could not be found or contains invalid information.
      */
@@ -68,11 +75,11 @@ public class XmlParser implements AirlineParser {
 
         List<Flight> arrayOfFlights = new ArrayList<>();
 
-        for(int i = 0; i < listOfFlights.getLength(); ++i) {
+        for (int i = 0; i < listOfFlights.getLength(); ++i) {
             arrayOfFlights.add(Flight.parseNodeXML(listOfFlights.item(i).getChildNodes()));
         }
 
-        if(airlineName != null && !arrayOfFlights.contains(null)) {
+        if (airlineName != null && !arrayOfFlights.contains(null)) {
             airline = new Airline(airlineName, arrayOfFlights);
         }
 

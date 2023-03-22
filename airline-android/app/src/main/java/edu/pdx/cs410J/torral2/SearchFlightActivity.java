@@ -5,17 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import edu.pdx.cs410J.ParserException;
 
 public class SearchFlightActivity extends AppCompatActivity {
 
@@ -29,13 +20,10 @@ public class SearchFlightActivity extends AppCompatActivity {
     }
 
 
-
     public void searchFlights(View view) {
 
 
-       Intent intent = new Intent(SearchFlightActivity.this, ListSearchedFlightsActivity.class);
-
-
+        Intent intent = new Intent(SearchFlightActivity.this, ListSearchedFlightsActivity.class);
 
 
         LinearLayout linearLayout = findViewById(R.id.searchFlightLayout);
@@ -54,7 +42,6 @@ public class SearchFlightActivity extends AppCompatActivity {
         intent.putExtra("destination", destinationText);
 
         startActivity(intent);
-
 
 
     }

@@ -3,7 +3,6 @@ package edu.pdx.cs410J.torral2;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +28,6 @@ public class ListSearchedFlightsActivity extends AppCompatActivity {
         setContentView(R.layout.list_searched_flights_activity);
 
 
-
         ArrayList<Airline> airlineList = new ArrayList<>();
         ArrayList<Flight> listOfFlights = new ArrayList<>();
 
@@ -39,26 +37,25 @@ public class ListSearchedFlightsActivity extends AppCompatActivity {
         String destination = getIntent().getExtras().getString("destination");
 
 
-
         File[] directory = getFilesDir().listFiles();
-        if(directory == null) {
+        if (directory == null) {
             Toast.makeText(this, "Could not find any airlines files.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if(airlineNameText.trim().isEmpty()) { // User did not supply airline name, searching all airlines
-            for(File file : directory) {
-                if(file != null) {
+        if (airlineNameText.trim().isEmpty()) { // User did not supply airline name, searching all airlines
+            for (File file : directory) {
+                if (file != null) {
                     try {
                         Airline airlineFromFile = new XmlParser(file).parse();
 
                         listOfFlights.addAll(airlineFromFile
                                 .getFlights()
                                 .stream()
-                                .filter( f -> f.getSource().equals(source) && f.getDestination().equals(destination))
+                                .filter(f -> f.getSource().equals(source) && f.getDestination().equals(destination))
                                 .collect(Collectors.toList()));
 
-                        if(!listOfFlights.isEmpty()) {
+                        if (!listOfFlights.isEmpty()) {
                             airlineList.add(new Airline(airlineFromFile.getName()));
                             airlineList
                                     .stream()
@@ -84,8 +81,8 @@ public class ListSearchedFlightsActivity extends AppCompatActivity {
             }
 
         } else { // User DID supply airline name, so we will only be searching flights connected to specified airline
-            for(File file : directory) {
-                if(file != null) {
+            for (File file : directory) {
+                if (file != null) {
                     try {
                         Airline airlineFromFile = new XmlParser(file).parse();
                         if (airlineFromFile.getName().equals(airlineNameText)) {
@@ -93,10 +90,10 @@ public class ListSearchedFlightsActivity extends AppCompatActivity {
                             listOfFlights.addAll(airlineFromFile
                                     .getFlights()
                                     .stream()
-                                    .filter( f -> f.getSource().equals(source) && f.getDestination().equals(destination))
+                                    .filter(f -> f.getSource().equals(source) && f.getDestination().equals(destination))
                                     .collect(Collectors.toList()));
 
-                            if(!listOfFlights.isEmpty()) {
+                            if (!listOfFlights.isEmpty()) {
                                 airlineList.add(new Airline(airlineFromFile.getName()));
                                 airlineList
                                         .stream()
@@ -114,7 +111,7 @@ public class ListSearchedFlightsActivity extends AppCompatActivity {
                                 listOfFlights.clear();
                             }
                         }
-                    } catch(ParserException pe) {
+                    } catch (ParserException pe) {
                         Toast.makeText(this, "Could not parse file.", Toast.LENGTH_SHORT).show();
                         return;
                     }
@@ -125,20 +122,21 @@ public class ListSearchedFlightsActivity extends AppCompatActivity {
 
         }
 
-        LinearLayout linearLayout = findViewById(R.id.listSearchedFlightsLayout);;
+        LinearLayout linearLayout = findViewById(R.id.listSearchedFlightsLayout);
+        ;
         TextView airlineNameView = new TextView(linearLayout.getContext());
         TextView flightNumberView = new TextView(linearLayout.getContext());
         TextView sourceView = new TextView(linearLayout.getContext());
-        TextView  departView = new TextView(linearLayout.getContext());
+        TextView departView = new TextView(linearLayout.getContext());
         TextView destinationView = new TextView(linearLayout.getContext());
         TextView arrivalView = new TextView(linearLayout.getContext());
 
         DateFormat format = new SimpleDateFormat("MM/dd/yyyy h:mm a");
-        for(Airline airline : airlineList) {
+        for (Airline airline : airlineList) {
 
             addTextView("\t" + airline.getName(), true, linearLayout, 19f);
 
-            for(Flight flight : airline.getFlights()) {
+            for (Flight flight : airline.getFlights()) {
                 addTextView("\t\tFlight Number: " + flight.getNumber(), true, linearLayout, 18f);
                 addTextView("\t\tSource Airport: " + AirportNames.getName(flight.getSource()), false, linearLayout, 18f);
                 addTextView("\t\tDeparture time: " + format.format(flight.getDeparture()), false, linearLayout, 18f);
@@ -161,17 +159,15 @@ public class ListSearchedFlightsActivity extends AppCompatActivity {
         textView.setTextSize(fontSize);
 
         textView.setText(text);
-        if(isBold) {
+        if (isBold) {
             textView.setTypeface(null, Typeface.BOLD);
         }
 
-        if(textView.getParent() != null) {
+        if (textView.getParent() != null) {
             ((ViewGroup) textView.getParent()).removeView(textView);
         }
         layout.addView(textView);
     }
-
-
 
 
 }

@@ -1,29 +1,21 @@
 package edu.pdx.cs410J.torral2;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import edu.pdx.cs410J.ParserException;
 
 public class NewFlightActivity extends AppCompatActivity {
-
 
 
     @Override
@@ -69,7 +61,7 @@ public class NewFlightActivity extends AppCompatActivity {
 
         // Adding space between AM/PM for time format
         departTimeText = departTimeText.trim();
-        if(departTimeText.length() < 6 || departTimeText.length() > 7) {
+        if (departTimeText.length() < 6 || departTimeText.length() > 7) {
             Toast.makeText(this, "Invalid departure time.", Toast.LENGTH_LONG).show();
             return;
         }
@@ -89,7 +81,7 @@ public class NewFlightActivity extends AppCompatActivity {
 
         // Adding space between AM/PM time format
         arrivalTimeText = arrivalTimeText.trim();
-        if(arrivalTimeText.length() < 6 || arrivalTimeText.length() > 7) {
+        if (arrivalTimeText.length() < 6 || arrivalTimeText.length() > 7) {
             Toast.makeText(this, "Invalid arrival time.", Toast.LENGTH_LONG).show();
             return;
         }
@@ -97,7 +89,7 @@ public class NewFlightActivity extends AppCompatActivity {
 
 
         // Ensuring airline name is not an empty string
-        if ( airlineNameText.isEmpty()) {
+        if (airlineNameText.isEmpty()) {
             Toast.makeText(this, "Cannot have empty airline name.", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -115,7 +107,7 @@ public class NewFlightActivity extends AppCompatActivity {
         File airlineFile = AndroidAirlineStorage.parseFile(getFilesDir(), airlineNameText);
         Airline tempAirline;
 
-        if(airlineFile != null) { // File DID exist so we can add flight to airline acquired from file then write back to file
+        if (airlineFile != null) { // File DID exist so we can add flight to airline acquired from file then write back to file
             try {
                 tempAirline = new XmlParser(airlineFile).parse();
                 tempAirline.addFlight(flight);
