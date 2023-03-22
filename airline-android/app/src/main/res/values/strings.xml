@@ -13,4 +13,7 @@
     <string name="airline_name_optional">Airline name (Optional)</string>
     <string name="source_airport_code">Source Airport Code</string>
     <string name="search_airline">Search Airline</string>
+    <string name="search_a_flight">Search a Flight</string>
+    <string name="add_a_flight">Add a Flight</string>
+    <string name="readme">ReadMe!</string>
 </resources>

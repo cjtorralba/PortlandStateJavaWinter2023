@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 import edu.pdx.cs410J.ParserException;
 
-public class SearchAirlineActivity extends AppCompatActivity implements Parcelable {
+public class SearchAirlineActivity extends AppCompatActivity {
 
 
 
@@ -35,51 +35,15 @@ public class SearchAirlineActivity extends AppCompatActivity implements Parcelab
 
 
         Intent intent = new Intent(SearchAirlineActivity.this, ListAirlineActivity.class);
-        Bundle bundle = new Bundle();
-
-
-
-
-        Airline airline = null;
-        ArrayList<Airline> airlineList = new ArrayList<>();    //(ArrayList<Airline>) getIntent().getSerializableExtra("airlines");
-        ArrayList<Airline> airlineListForActivity;
 
         LinearLayout linearLayout = findViewById(R.id.linearSearchAirline);
-
 
         EditText airlineName = linearLayout.findViewById(R.id.editSearchAirlineName);
         String airlineNameString = airlineName.getText().toString();
 
-        if(airlineNameString.trim().isEmpty()) { // We will list all airlines
-            for(File file : getFilesDir().listFiles()) {
-               if(file != null) {
-                  try {
-                          airlineList.add((new XmlParser(file)).parse());
 
-                  } catch (ParserException pe) {
-                      Toast.makeText(this, "Could not list all files.", Toast.LENGTH_SHORT).show();
-                      return;
-                  }
-               }
-            }
-        } else { // User DID enter an airline name
-            File fileDirectory = getFilesDir();
-            for(File file : fileDirectory.listFiles()) {
-                if (file != null) {
-                    try {
-                        Airline airlineFromFile = new XmlParser(file).parse();
-                        if(airlineFromFile != null && airlineFromFile.equals(airlineNameString)) { // Had a match
-                            airlineList.add(airlineFromFile);
-                        }
-                    } catch (ParserException pe) {
-                        Toast.makeText(this, "Could not locate airline/", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                }
-            }
-        }
-        Toast.makeText(this, "Starting new activity.", Toast.LENGTH_SHORT).show();
-        intent.putParcelableArrayListExtra("airlines", airlineList);
+        Toast.makeText(this, "Starting new activity with string: " + airlineNameString, Toast.LENGTH_SHORT).show();
+        intent.putExtra("airlineString", airlineNameString);
         startActivity(intent);
     }
 

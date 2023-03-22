@@ -16,6 +16,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/searchAirlineText"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="Enter the Airline name, or leave empty to view all airlines."
+            android:textSize="14sp" />
+
         <EditText
             android:id="@+id/editSearchAirlineName"
             android:layout_width="match_parent"
@@ -33,5 +40,6 @@
             android:layout_height="wrap_content"
             android:onClick="searchAirline"
             android:text="@string/search_airline" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

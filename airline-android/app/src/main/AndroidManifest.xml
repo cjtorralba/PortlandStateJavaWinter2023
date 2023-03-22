@@ -37,6 +37,12 @@
             android:parentActivityName=".SearchAirlineActivity"
             />
 
+        <activity
+            android:name=".ReadMeActivity"
+            android:label="ReadMe"
+            android:parentActivityName=".ReadMeActivity"
+            />
+
 
         <activity
             android:name=".MainActivity"

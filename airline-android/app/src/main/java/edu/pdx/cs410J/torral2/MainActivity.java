@@ -37,4 +37,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
+
+    public void readMe(View view) {
+        Intent intent = new Intent(MainActivity.this, ReadMeActivity.class);
+        startActivity(intent);
+    }
 }
