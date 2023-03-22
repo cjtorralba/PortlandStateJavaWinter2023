@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -36,6 +37,11 @@ public class SearchFlightActivity extends AppCompatActivity {
 
         EditText destination = linearLayout.findViewById(R.id.editSearchFlightAirportDestination);
         String destinationText = destination.getText().toString();
+
+        if(sourceText.trim().isEmpty() || destinationText.trim().isEmpty()) {
+            Toast.makeText(this, "Please enter some information.", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         intent.putExtra("airlineName", airlineNameText);
         intent.putExtra("source", sourceText);

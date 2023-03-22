@@ -69,7 +69,7 @@
             android:layout_marginBottom="10dp"
             android:ems="10"
             android:hint="@string/departure_time"
-            android:inputType="time"
+            android:inputType="text"
             android:minHeight="50dp" />
 
         <EditText
@@ -102,7 +102,7 @@
             android:layout_marginBottom="10dp"
             android:ems="10"
             android:hint="@string/arrival_time"
-            android:inputType="time"
+            android:inputType="text"
             android:minHeight="50dp" />
 
     </LinearLayout>

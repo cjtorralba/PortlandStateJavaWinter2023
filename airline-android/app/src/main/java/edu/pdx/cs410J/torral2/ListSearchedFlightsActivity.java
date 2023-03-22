@@ -33,8 +33,8 @@ public class ListSearchedFlightsActivity extends AppCompatActivity {
 
 
         String airlineNameText = getIntent().getExtras().getString("airlineName");
-        String source = getIntent().getExtras().getString("source");
-        String destination = getIntent().getExtras().getString("destination");
+        String source = getIntent().getExtras().getString("source").toUpperCase();
+        String destination = getIntent().getExtras().getString("destination").toUpperCase();
 
 
         File[] directory = getFilesDir().listFiles();

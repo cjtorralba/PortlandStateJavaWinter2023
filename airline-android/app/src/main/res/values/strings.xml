@@ -4,11 +4,11 @@
     <string name="airline_name">Airline Name</string>
     <string name="flight_number">Flight Number</string>
     <string name="source_airport">Source Airport</string>
-    <string name="departure_date">Departure Date</string>
-    <string name="departure_time">Departure Time</string>
+    <string name="departure_date">Departure Date (MM/dd/yyyy)</string>
+    <string name="departure_time">Departure Time ex: 10:15am</string>
     <string name="destination_airport">Destination Airport</string>
-    <string name="arrival_date">Arrival Date</string>
-    <string name="arrival_time">Arrival Time</string>
+    <string name="arrival_date">Arrival Date (MM/dd/yyyy)</string>
+    <string name="arrival_time">Arrival Time ex: 5:35pm</string>
     <string name="submit">Submit</string>
     <string name="airline_name_optional">Airline name (Optional)</string>
     <string name="source_airport_code">Source Airport Code</string>
