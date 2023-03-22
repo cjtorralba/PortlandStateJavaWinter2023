@@ -12,4 +12,5 @@
     <string name="submit">Submit</string>
     <string name="airline_name_optional">Airline name (Optional)</string>
     <string name="source_airport_code">Source Airport Code</string>
+    <string name="search_airline">Search Airline</string>
 </resources>

@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 import edu.pdx.cs410J.ParserException;
@@ -64,7 +65,6 @@ public class SearchFlightActivity extends AppCompatActivity {
             }
 
         } else { // User DID supply airline name, so we will only be searching flights connected to specified airline
-
 
         }
 

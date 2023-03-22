@@ -21,12 +21,8 @@ public class MainActivity extends AppCompatActivity {
     public void addFlight(View view) {
         //Flight flight = new Flight(123, "PDX", "10/23/2001", "12:54 AM", "LAX", "10/24/2001", "4:14 PM");
         //Toast.makeText(this, flight.toString(), Toast.LENGTH_SHORT).show();
-
-
         Intent intent = new Intent(MainActivity.this, NewFlightActivity.class);
         startActivity(intent);
-
-
     }
 
     public void searchFlight(View view) {

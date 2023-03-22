@@ -12,6 +12,7 @@
         android:theme="@style/Theme.Airline"
         tools:targetApi="31">
 
+
         <activity
             android:name=".NewFlightActivity"
             android:label="Add a new Flight"
@@ -30,17 +31,17 @@
             android:parentActivityName=".MainActivity"
 
             />
-
-
         <activity
-            android:name=".SearchAirlineFlightActivity"
-            android:parentActivityName=".MainActivity"
+            android:name=".ListAirlineActivity"
+            android:label="Airlines"
+            android:parentActivityName=".SearchAirlineActivity"
             />
 
 
         <activity
             android:name=".MainActivity"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
