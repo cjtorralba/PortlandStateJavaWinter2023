@@ -8,8 +8,8 @@
 
     <LinearLayout
         android:id="@+id/linearSearchAirline"
-        android:layout_width="359dp"
-        android:layout_height="531dp"
+        android:layout_width="366dp"
+        android:layout_height="603dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,8 +19,9 @@
         <TextView
             android:id="@+id/searchAirlineText"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:text="Enter the Airline name, or leave empty to view all airlines."
+            android:layout_height="51dp"
+            android:fontFamily="sans-serif-black"
+            android:text="@string/enter_the_airline_name_or_leave_empty_to_view_all_airlines"
             android:textSize="14sp" />
 
         <EditText

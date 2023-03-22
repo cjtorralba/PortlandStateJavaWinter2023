@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Airline</string>
+    <string name="app_name">Airline Tracker</string>
     <string name="welcome">Welcome to the Android Airline application.</string>
     <string name="airline_name">Airline Name</string>
     <string name="flight_number">Flight Number</string>
@@ -16,4 +16,20 @@
     <string name="search_a_flight">Search a Flight</string>
     <string name="add_a_flight">Add a Flight</string>
     <string name="readme">ReadMe!</string>
+    <string name="readme_text">This is a read me for the Android Airline project.
+        \nThis program was written by Christian Torralba for the Advanced Java course at Portland State University.
+        \nTo add a flight, click the \"Add a flight\" button.
+        \nThis will bring you to a page that will prompt you for all the information regarding the flight.
+        \nIf the airline specified does not already exist, then one will be created and stored in an XML file, containing all the related flights.
+        \n
+        \nTo search for a flight, click the \"Search a flight\" button. This will then bring you to a page where can input the source and destination of a flight.
+        \nYou may also filter flights based on specific airline.
+        \nTo view an airline and its flights, click the \"Search and Airline\" button. This will then prompt you for an airline name.
+        \nIf the specified airline exists, then all the flights related to that airline will be displayed.
+        \nYou may also leave the airline name text field blank to see all airlines and all flights.
+        \n
+        \n
+        \nThanks for using this app! 😊
+    </string>
+    <string name="enter_the_airline_name_or_leave_empty_to_view_all_airlines">Enter the Airline name, or leave empty to view all airlines.</string>
 </resources>

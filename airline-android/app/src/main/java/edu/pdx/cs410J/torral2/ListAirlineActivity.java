@@ -16,6 +16,8 @@ import org.checkerframework.checker.units.qual.A;
 import java.io.File;
 import java.io.Serializable;
 import java.io.StringWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -88,17 +90,17 @@ public class ListAirlineActivity extends AppCompatActivity implements Serializab
         TextView destinationView = new TextView(linearLayout.getContext());
         TextView arrivalView = new TextView(linearLayout.getContext());
 
-
+        DateFormat format = new SimpleDateFormat("MM/dd/yyyy h:mm a");
         for(Airline airline : airlineList) {
 
-            addTextView("\t" + airline.getName(), true, linearLayout, 18f);
+            addTextView("\t" + airline.getName(), true, linearLayout, 19f);
 
             for(Flight flight : airline.getFlights()) {
-                addTextView("\t\tFlight Number: " + flight.getNumber(), false, linearLayout, 18f);
+                addTextView("\t\tFlight Number: " + flight.getNumber(), true, linearLayout, 18f);
                 addTextView("\t\tSource Airport: " + AirportNames.getName(flight.getSource()), false, linearLayout, 18f);
-                addTextView("\t\tDeparture time: " + flight.getDeparture().toString(), false, linearLayout, 18f);
+                addTextView("\t\tDeparture time: " + format.format(flight.getDeparture()), false, linearLayout, 18f);
                 addTextView("\t\tDestination Airport: " + AirportNames.getName(flight.getDestination()), false, linearLayout, 18f);
-                addTextView("\t\tArrival Time: " + flight.getArrival().toString(), false, linearLayout, 18f);
+                addTextView("\t\tArrival Time: " + format.format(flight.getArrival()), false, linearLayout, 18f);
                 addTextView("\n", false, linearLayout, 18f);
             }
         }

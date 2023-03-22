@@ -131,15 +131,12 @@ public class NewFlightActivity extends AppCompatActivity {
                 arrivalDate.getText().clear();
                 arrivalTime.getText().clear();
 
-                // TODO: Remove TOAST file outputs
                 Toast.makeText(this, "Added your Flight!", Toast.LENGTH_SHORT).show();
 
             } catch (IOException | ParserException e) {
                 Toast.makeText(this, "Could not add Airline to file.", Toast.LENGTH_SHORT).show();
             }
 
-            Toast.makeText(this, "Added airline to file: " + airlineFile.getAbsolutePath(), Toast.LENGTH_SHORT).show();
-            return;
         } else { // File does NOT exist, so we are creating a new XML file which is the name of the airline, ex: "My_Airline.xml"
             try {
                 airline = new Airline(airlineNameText, List.of(flight));
@@ -155,21 +152,12 @@ public class NewFlightActivity extends AppCompatActivity {
                 arrivalDate.getText().clear();
                 arrivalTime.getText().clear();
 
-                // TODO: Remove TOAST file outputs
-                Toast.makeText(this, "Added your Flight!" + getFilesDir().getAbsolutePath() , Toast.LENGTH_SHORT).show();
-                return;
+                Toast.makeText(this, "Added your Flight!", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 Toast.makeText(this, "Could not add Airline to file.", Toast.LENGTH_SHORT).show();
                 Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                return;
             }
         }
-
-
-
-
-
-
 
     }
 

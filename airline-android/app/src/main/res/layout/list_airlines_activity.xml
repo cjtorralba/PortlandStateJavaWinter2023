@@ -6,18 +6,31 @@
     android:layout_height="match_parent">
 
 
+        <ScrollView
+            android:id="@+id/listAirlineScroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.499">
+
 
 
         <LinearLayout
             android:id="@+id/listAirlineLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="363dp"
+            android:layout_height="682dp"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:orientation="vertical">
-
-
+            app:layout_constraintVertical_bias="0.489">
         </LinearLayout>
+
+        </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
