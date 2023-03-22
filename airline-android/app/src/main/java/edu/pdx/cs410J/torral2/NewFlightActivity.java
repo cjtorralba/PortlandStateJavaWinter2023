@@ -57,7 +57,7 @@ public class NewFlightActivity extends AppCompatActivity {
 
         // Source Airport Code
         EditText source = linearLayout.findViewById(R.id.editSource);
-        String sourceText = source.getText().toString();
+        String sourceText = source.getText().toString().toUpperCase();
 
         // Departure Date
         EditText departDate = linearLayout.findViewById(R.id.editDepartDate);
@@ -77,7 +77,7 @@ public class NewFlightActivity extends AppCompatActivity {
 
         // Destination Airport Code
         EditText destination = linearLayout.findViewById(R.id.editDestination);
-        String destinationText = destination.getText().toString();
+        String destinationText = destination.getText().toString().toUpperCase();
 
         // Arrival Date
         EditText arrivalDate = linearLayout.findViewById(R.id.editArriveDate);

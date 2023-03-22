@@ -41,8 +41,6 @@ public class SearchAirlineActivity extends AppCompatActivity {
         EditText airlineName = linearLayout.findViewById(R.id.editSearchAirlineName);
         String airlineNameString = airlineName.getText().toString();
 
-
-        Toast.makeText(this, "Starting new activity with string: " + airlineNameString, Toast.LENGTH_SHORT).show();
         intent.putExtra("airlineString", airlineNameString);
         startActivity(intent);
     }

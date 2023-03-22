@@ -4,6 +4,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -42,10 +43,16 @@ public class ListAirlineActivity extends AppCompatActivity implements Serializab
 
 
        String airlineNameString = getIntent().getExtras().getString("airlineString");
-        ArrayList<Airline> airlineList = new ArrayList<>();
+       ArrayList<Airline> airlineList = new ArrayList<>();
 
+       if(airlineNameString.equalsIgnoreCase("banana")) {
+            LinearLayout linearLayout = findViewById(R.id.listAirlineLayout);
+            ImageView image = new ImageView(linearLayout.getContext());
+           Toast.makeText(this, "You found the golden banana!", Toast.LENGTH_SHORT).show();
+            image.setBackgroundResource(R.drawable.gold_banana);
+            linearLayout.addView(image);
+       }
 
-       Toast.makeText(this, "AirlineString: " + airlineNameString, Toast.LENGTH_SHORT).show();
 
        // Getting file directory
        File[] directory = getFilesDir().listFiles();
@@ -75,7 +82,7 @@ public class ListAirlineActivity extends AppCompatActivity implements Serializab
                             airlineList.add(airlineFromFile);
                         }
                     } catch (ParserException pe) {
-                        Toast.makeText(this, "Could not locate airline/", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "Could not locate airline.", Toast.LENGTH_LONG).show();
                         return;
                     }
                 }
