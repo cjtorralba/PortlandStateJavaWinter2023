@@ -13,6 +13,7 @@ import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import edu.pdx.cs410J.AirportNames;
@@ -137,11 +138,13 @@ public class ListSearchedFlightsActivity extends AppCompatActivity {
             addTextView("\t" + airline.getName(), true, linearLayout, 19f);
 
             for (Flight flight : airline.getFlights()) {
+                int flightDuration = (int) Math.abs(TimeUnit.MILLISECONDS.toMinutes(flight.getArrival().toInstant().toEpochMilli() - flight.getDeparture().toInstant().toEpochMilli()));
                 addTextView("\t\tFlight Number: " + flight.getNumber(), true, linearLayout, 18f);
                 addTextView("\t\tSource Airport: " + AirportNames.getName(flight.getSource()), false, linearLayout, 18f);
                 addTextView("\t\tDeparture time: " + format.format(flight.getDeparture()), false, linearLayout, 18f);
                 addTextView("\t\tDestination Airport: " + AirportNames.getName(flight.getDestination()), false, linearLayout, 18f);
                 addTextView("\t\tArrival Time: " + format.format(flight.getArrival()), false, linearLayout, 18f);
+                addTextView("\t\tFlight Duration (Minutes): " + flightDuration, false, linearLayout, 18f);
                 addTextView("\n", false, linearLayout, 18f);
             }
         }
