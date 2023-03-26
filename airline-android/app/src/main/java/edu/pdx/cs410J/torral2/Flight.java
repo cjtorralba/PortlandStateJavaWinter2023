@@ -124,7 +124,7 @@ public class Flight extends AbstractFlight implements Comparable<Flight> {
 
 
         // Ensuring that arrival date is not before departure date
-        if (arrivalDateAndTime.before(departureDateAndTime)) {
+        if (arrivalDateAndTime != null && arrivalDateAndTime.before(departureDateAndTime)) {
             System.out.println(arrivalDateAndTime + " " + departureDateAndTime);
             throw new IllegalArgumentException("Cannot have arrival date before departure date.");
         }
@@ -257,6 +257,9 @@ public class Flight extends AbstractFlight implements Comparable<Flight> {
                                 case "time":
                                     departTimeHour = departNodes.item(j).getAttributes().getNamedItem("hour").getTextContent();
                                     departTimeMinute = departNodes.item(j).getAttributes().getNamedItem("minute").getTextContent();
+                                    if(departTimeMinute.equals("0")) {
+                                        departTimeMinute += "0";
+                                    }
                                     break;
                             }
                         }
@@ -277,6 +280,9 @@ public class Flight extends AbstractFlight implements Comparable<Flight> {
                                 case "time":
                                     arriveTimeHour = arriveNodes.item(j).getAttributes().getNamedItem("hour").getTextContent();
                                     arriveTimeMinute = arriveNodes.item(j).getAttributes().getNamedItem("minute").getTextContent();
+                                    if(arriveTimeMinute.equals("0")) {
+                                        arriveTimeMinute += "0";
+                                    }
                                     break;
                             }
                         }
@@ -293,6 +299,11 @@ public class Flight extends AbstractFlight implements Comparable<Flight> {
 
         String departDateString = departDateMonth + "/" + departDateDay + "/" + departDateYear;
         String departTimeString = (parsedDepartTimeHour > 12 ? parsedDepartTimeHour - 12 : parsedDepartTimeHour) + ":" + departTimeMinute + (parsedDepartTimeHour > 12 ? " pm" : " am");
+
+        System.err.println("ArriveDateString: " + arriveDateString);
+        System.err.println("ArriveTimeString: " + arriveTimeString);
+        System.err.println("DepartDateString: " + departDateString);
+        System.err.println("DepartTimeString: " + departTimeString);
 
         return new Flight(flightNumber, src, departDateString, departTimeString, dest, arriveDateString, arriveTimeString);
     }
