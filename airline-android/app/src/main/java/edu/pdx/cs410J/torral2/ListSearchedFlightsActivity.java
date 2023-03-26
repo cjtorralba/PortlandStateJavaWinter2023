@@ -132,7 +132,7 @@ public class ListSearchedFlightsActivity extends AppCompatActivity {
         TextView destinationView = new TextView(linearLayout.getContext());
         TextView arrivalView = new TextView(linearLayout.getContext());
 
-        DateFormat format = new SimpleDateFormat("MM/dd/yyyy h:mm a");
+        DateFormat format = new SimpleDateFormat("MM/dd/yyyy h:mm aa");
         for (Airline airline : airlineList) {
 
             addTextView("\t" + airline.getName(), true, linearLayout, 19f);

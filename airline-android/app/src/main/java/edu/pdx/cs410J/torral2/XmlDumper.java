@@ -88,7 +88,7 @@ public class XmlDumper implements AirlineDumper<Airline> {
                 date.setAttribute("year", String.valueOf(calendar.get(Calendar.YEAR)));
 
                 Element time = doc.createElement("time");
-                time.setAttribute("hour", String.valueOf(calendar.get(Calendar.HOUR)));
+                time.setAttribute("hour", String.valueOf(calendar.get(Calendar.HOUR_OF_DAY)));
                 time.setAttribute("minute", String.valueOf(calendar.get(Calendar.MINUTE)));
 
                 depart.appendChild(date);
@@ -114,7 +114,7 @@ public class XmlDumper implements AirlineDumper<Airline> {
                 date.setAttribute("year", String.valueOf(calendar.get(Calendar.YEAR)));
 
                 Element time = doc.createElement("time");
-                time.setAttribute("hour", String.valueOf(calendar.get(Calendar.HOUR)));
+                time.setAttribute("hour", String.valueOf(calendar.get(Calendar.HOUR_OF_DAY)));
                 time.setAttribute("minute", String.valueOf(calendar.get(Calendar.MINUTE)));
 
                 arrive.appendChild(date);

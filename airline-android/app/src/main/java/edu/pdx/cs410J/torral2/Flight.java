@@ -90,7 +90,7 @@ public class Flight extends AbstractFlight implements Comparable<Flight> {
      * @param arriveTime   Time or arrival, as a String
      */
     public Flight(int flightNumber, String src, String departDate, String departTime, String dest, String arriveDate, String arriveTime) {
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy h:mm a");
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy h:mm aa");
 
 
         // Checking valid flight number
@@ -292,7 +292,9 @@ public class Flight extends AbstractFlight implements Comparable<Flight> {
         }
 
         int parsedArriveTimeHour = Integer.parseInt(arriveTimeHour);
+        System.err.println("Parsed arrive time hour: " + parsedArriveTimeHour);
         int parsedDepartTimeHour = Integer.parseInt(departTimeHour);
+        System.err.println("Parsed Depart Time Hour " + parsedDepartTimeHour);
 
         String arriveDateString = arriveDateMonth + "/" + arriveDateDay + "/" + arriveDateYear;
         String arriveTimeString = (parsedArriveTimeHour > 12 ? parsedArriveTimeHour - 12 : parsedArriveTimeHour) + ":" + arriveTimeMinute + (parsedArriveTimeHour > 12 ? " pm" : " am");
@@ -300,10 +302,12 @@ public class Flight extends AbstractFlight implements Comparable<Flight> {
         String departDateString = departDateMonth + "/" + departDateDay + "/" + departDateYear;
         String departTimeString = (parsedDepartTimeHour > 12 ? parsedDepartTimeHour - 12 : parsedDepartTimeHour) + ":" + departTimeMinute + (parsedDepartTimeHour > 12 ? " pm" : " am");
 
+        System.err.println("Flight: " + flightNumber);
         System.err.println("ArriveDateString: " + arriveDateString);
         System.err.println("ArriveTimeString: " + arriveTimeString);
         System.err.println("DepartDateString: " + departDateString);
         System.err.println("DepartTimeString: " + departTimeString);
+        System.err.println("\n");
 
         return new Flight(flightNumber, src, departDateString, departTimeString, dest, arriveDateString, arriveTimeString);
     }
